@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rambu: harga wajar & audit LP xStocks</title>
+<title>Rambu: xStock fair price & LP audit</title>
 <style>
   :root { --bg:#0b0d10; --panel:#12161b; --line:#232a33; --text:#e8edf2; --mute:#8a96a3; --go:#3ddc97; --stop:#ff5d5d; --warn:#ffb547; --info:#6cb6ff; }
   @media (prefers-color-scheme: light) { :root { --bg:#f6f7f9; --panel:#fff; --line:#e3e7ec; --text:#101418; --mute:#5d6975; --go:#0f8a55; --stop:#c62f2f; --warn:#a86200; --info:#1f6fc5; } }
@@ -36,44 +36,44 @@
 <body>
 <main>
   <h1>RAMBU<span>.</span></h1>
-  <p class="sub">Harga wajar untuk xStocks yang tahu sesi bursa, halt, dan dividen yang belum masuk multiplier, dan audit untung-rugi LP xStocks setelah LVR, dipecah per sesi bursa Pyth.</p>
-  <nav><a href="#fair">FairPrice</a><a href="#lp">Audit LP</a><a href="#method">Metode</a></nav>
+  <p class="sub">Fair prices for xStocks that know market sessions, halts, and dividends not yet folded into the multiplier, plus an LP profit-and-loss audit after LVR, split by Pyth market session.</p>
+  <nav><a href="#fair">FairPrice</a><a href="#lp">LP Audit</a><a href="#method">Method</a></nav>
 
   <h2 id="fair">FairPrice</h2>
-  <p class="sub">Harga per token raw: <code>(harga saham + dividen net yang sudah ex tapi belum masuk multiplier) × multiplier mint</code>. Dibandingkan dengan oracle naif (saham × multiplier), Chainlink (oracle Jupiter Lend), dan harga DEX (Jupiter).</p>
-  <div class="bar" id="fairMeta">memuat…</div>
+  <p class="sub">Price per raw token: <code>(stock price + net dividend already ex but not yet in the multiplier) × mint multiplier</code>. Compared with a naive oracle (stock × multiplier), Chainlink (Jupiter Lend oracle), and the DEX price (Jupiter).</p>
+  <div class="bar" id="fairMeta">loading…</div>
   <div class="wrap"><table>
-    <thead><tr><th>Token</th><th>Status</th><th>Sesi</th><th>Wajar</th><th>Naif</th><th>Chainlink</th><th>DEX</th><th>Sumber harga</th></tr></thead>
+    <thead><tr><th>Token</th><th>Status</th><th>Session</th><th>Fair</th><th>Naive</th><th>Chainlink</th><th>DEX</th><th>Price source</th></tr></thead>
     <tbody id="fairRows"></tbody>
   </table></div>
 
-  <h2 id="lp">Audit LP: SPYx/USDC (Raydium CLMM)</h2>
-  <p class="sub">Fee yang diterima LP (setelah potongan protokol) dikurangi LVR, yaitu nilai yang diambil arbitrase karena pool tertinggal dari harga wajar. Positif berarti LP lebih untung daripada portofolio yang di-rebalance di harga wajar.</p>
+  <h2 id="lp">LP Audit: SPYx/USDC (Raydium CLMM)</h2>
+  <p class="sub">Fees earned by LPs (after the protocol cut) minus LVR, the value arbitrageurs take because the pool lags the fair price. Positive means LPs beat a portfolio rebalanced at the fair price.</p>
   <div class="bar" id="lpMeta"></div>
   <select id="poolPick"></select>
   <div class="cards" id="lpCards"></div>
   <div class="wrap"><table>
-    <thead><tr><th>Sesi</th><th>Volume</th><th>Fee LP</th><th>LVR</th><th>Bersih</th><th>Bersih/hari (CI 95%)</th><th>Gerbang</th></tr></thead>
+    <thead><tr><th>Session</th><th>Volume</th><th>LP fees</th><th>LVR</th><th>Net</th><th>Net/day (95% CI)</th><th>Gate</th></tr></thead>
     <tbody id="lpRows"></tbody>
   </table></div>
 
   <div class="lookup">
-    <input id="who" placeholder="Alamat wallet atau mint NFT posisi Raydium">
-    <button id="go">Audit posisi saya</button>
+    <input id="who" placeholder="Wallet address or Raydium position NFT mint">
+    <button id="go">Audit my position</button>
   </div>
   <div class="bar" id="whoMsg"></div>
   <div class="wrap"><table>
-    <thead><tr><th>Posisi (NFT)</th><th>Pool</th><th>Rentang harga</th><th>In-range</th><th>Fee</th><th>LVR</th><th>Bersih</th></tr></thead>
-    <tbody id="posRows"><tr><td colspan="7" class="mute">Masukkan wallet, atau lihat 10 posisi terbesar di bawah.</td></tr></tbody>
+    <thead><tr><th>Position (NFT)</th><th>Pool</th><th>Price range</th><th>In range</th><th>Fees</th><th>LVR</th><th>Net</th></tr></thead>
+    <tbody id="posRows"><tr><td colspan="7" class="mute">Enter a wallet, or see the 10 largest positions below.</td></tr></tbody>
   </table></div>
 
-  <details id="method"><summary>Metode & batasan</summary><ul>
-    <li><b>Fee</b>: volume per menit (GeckoTerminal) × fee rate pool × (1 − potongan protokol+fund dari AmmConfig), dibagi pro-rata ke posisi yang in-range.</li>
-    <li><b>LVR</b>: setiap langkah harga wajar, r² × L × √P / 4 (Milionis dkk., bentuk CLMM in-range). L adalah jumlah likuiditas posisi yang in-range di harga itu; jumlahnya di tick saat ini sama persis dengan L pool.</li>
-    <li><b>Harga wajar historis</b>: SPY 5 menit (regular+pre/post), celah overnight diisi return futures ES, print buruk yang langsung berbalik dibuang, × multiplier, + dividen tertunda. Sumber ini (Yahoo) tidak resmi; diganti riwayat Pyth Pro saat token tersedia.</li>
-    <li><b>Sesi</b>: kalender sesi Pyth (<code>market_session_schedule</code>), termasuk libur dan early close.</li>
-    <li><b>Gerbang</b>: lolos kalau batas bawah CI 95% bootstrap harian di atas nol.</li>
-    <li><b>Batasan</b>: set posisi adalah snapshot hari ini (tanpa riwayat buka/tutup). LVR tidak memotong efek fee (batas atas). Harga pool per menit tidak dipakai karena berisik (lompatan ±25/±50bp).</li>
+  <details id="method"><summary>Method & limits</summary><ul>
+    <li><b>Fee</b>: per-minute volume (GeckoTerminal) × pool fee rate × (1 − protocol + fund cut from AmmConfig), split pro-rata across in-range positions.</li>
+    <li><b>LVR</b>: at every fair-price step, r² × L × √P / 4 (Milionis et al., CLMM in-range form). L is the summed liquidity of positions in range at that price; at the current tick it matches the pool's L exactly.</li>
+    <li><b>Historical fair price</b>: SPY 5-minute prints (regular + pre/post), overnight gaps filled with ES futures returns, bad prints that revert immediately dropped, × multiplier, + pending dividend. This source (Yahoo) is unofficial; Pyth Pro history replaces it once a key is set.</li>
+    <li><b>Sessions</b>: Pyth's session calendar (<code>market_session_schedule</code>), including holidays and early closes.</li>
+    <li><b>Gate</b>: passes when the lower bound of the 95% bootstrap CI of daily net is above zero.</li>
+    <li><b>Limits</b>: the position set is today's snapshot (no open/close history). LVR is not fee-adjusted (an upper bound). The pool's own minute prices are not used because they are noisy (±25/±50bp jumps).</li>
   </ul></details>
 </main>
 <script type="module">
@@ -82,16 +82,16 @@ const usd = (n, d = 0) => n == null ? "—" : (n < 0 ? "−$" : "$") + Math.abs(
 const sgn = (n) => `<span class="${n >= 0 ? "pos" : "neg"}">${usd(n)}</span>`;
 const bp = (x) => x == null ? "" : ` <span class="mute">${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)}bp</span>`;
 const STATUS = { Open: "go", Closed: "info", CorpActionPending: "warn", Halted: "stop", Stale: "warn" };
-const SESS_ID = { regular: "regular", pre: "pre-market", post: "post-market", overnight: "overnight", closed: "tutup/weekend" };
+const SESS_ID = { regular: "regular", pre: "pre-market", post: "post-market", overnight: "overnight", closed: "closed/weekend" };
 
 async function loadFair() {
   const { at, rows } = await (await fetch("data/fair.json")).json();
-  $("fairMeta").textContent = `${rows.length} token · snapshot ${new Date(at).toLocaleString()}`;
+  $("fairMeta").textContent = `${rows.length} tokens · snapshot ${new Date(at).toLocaleString("en-US")}`;
   $("fairRows").innerHTML = rows.map((r) => `<tr>
     <td><b>${r.symbol}</b><div class="mute">${r.reasons.join(", ") || "&nbsp;"}</div></td>
     <td><span class="pill ${STATUS[r.status]}">${r.status}</span></td>
     <td class="mute">${SESS_ID[r.session]}</td>
-    <td><b>${usd(r.fairRaw, 2)}</b>${r.pendingDiv ? `<div class="mute">+div net ${usd(r.pendingDiv.net, 4)}</div>` : ""}</td>
+    <td><b>${usd(r.fairRaw, 2)}</b>${r.pendingDiv ? `<div class="mute">+net div ${usd(r.pendingDiv.net, 4)}</div>` : ""}</td>
     <td>${usd(r.naiveRaw, 2)}${bp(r.naiveErrBp)}</td>
     <td>${usd(r.chainlinkRaw, 2)}${bp(r.chainlinkErrBp)}</td>
     <td>${usd(r.dexRaw, 2)}${bp(r.dexErrBp)}</td>
@@ -103,13 +103,13 @@ const priceOfTick = (t, p) => Math.pow(1.0001, t) / 10 ** (p.dec1 - p.dec0);
 function renderPool(i) {
   const p = sewa.pools[i], days = (p.to - p.from) / 864e5;
   const tot = Object.values(p.bySession).reduce((a, b) => ({ f: a.f + b.feesUsd, l: a.l + b.lvrUsd, v: a.v + b.volUsd }), { f: 0, l: 0, v: 0 });
-  $("lpMeta").textContent = `${p.pool.id} · fee ${p.pool.feeRate * 1e4}bp · potongan ${p.pool.protocolCut * 100}% · ${p.positions} posisi · ${days.toFixed(1)} hari sampai ${new Date(p.to).toLocaleString()}`;
-  $("lpCards").innerHTML = [["Volume", usd(tot.v)], ["Fee LP", usd(tot.f)], ["LVR", usd(tot.l)], ["Bersih LP", sgn(tot.f - tot.l)]]
-    .map(([k, v]) => `<div class="card"><span>${k} (${days.toFixed(0)} hari)</span><b>${v}</b></div>`).join("");
+  $("lpMeta").textContent = `${p.pool.id} · fee ${p.pool.feeRate * 1e4}bp · protocol cut ${p.pool.protocolCut * 100}% · ${p.positions} positions · ${days.toFixed(1)} days to ${new Date(p.to).toLocaleString("en-US")}`;
+  $("lpCards").innerHTML = [["Volume", usd(tot.v)], ["LP fees", usd(tot.f)], ["LVR", usd(tot.l)], ["LP net", sgn(tot.f - tot.l)]]
+    .map(([k, v]) => `<div class="card"><span>${k} (${days.toFixed(0)} days)</span><b>${v}</b></div>`).join("");
   $("lpRows").innerHTML = Object.entries(p.bySession).map(([s, b]) => {
     const g = p.gate[s], pass = g.lo > 0;
     return `<tr><td>${SESS_ID[s]}</td><td>${usd(b.volUsd)}</td><td>${usd(b.feesUsd)}</td><td>${usd(b.lvrUsd)}</td><td>${sgn(b.feesUsd - b.lvrUsd)}</td>
-      <td>${sgn(g.meanDaily)} <span class="mute">[${usd(g.lo)}, ${usd(g.hi)}]</span></td><td><span class="pill ${pass ? "go" : "warn"}">${pass ? "lolos" : "belum"}</span></td></tr>`;
+      <td>${sgn(g.meanDaily)} <span class="mute">[${usd(g.lo)}, ${usd(g.hi)}]</span></td><td><span class="pill ${pass ? "go" : "warn"}">${pass ? "pass" : "not yet"}</span></td></tr>`;
   }).join("");
 }
 const posRow = (r, p) => {
@@ -128,7 +128,7 @@ async function rpc(method, params) {
 }
 async function lookup() {
   const who = $("who").value.trim(); if (!who) return showTop();
-  $("whoMsg").textContent = "mencari…";
+  $("whoMsg").textContent = "searching…";
   const byNft = new Map(sewa.pools.flatMap((p) => p.pos.map((r) => [r[0], [r, p]])));
   let mints = [who];
   if (!byNft.has(who)) {
@@ -139,7 +139,7 @@ async function lookup() {
     }
   }
   const hits = mints.filter((m) => byNft.has(m)).map((m) => byNft.get(m));
-  $("whoMsg").textContent = hits.length ? `${hits.length} posisi ditemukan` : "Tidak ada posisi SPYx/USDC aktif untuk alamat ini.";
+  $("whoMsg").textContent = hits.length ? `${hits.length} position(s) found` : "No active SPYx/USDC positions for this address.";
   $("posRows").innerHTML = hits.map(([r, p]) => posRow(r, p)).join("") || `<tr><td colspan="7" class="mute">—</td></tr>`;
 }
 
@@ -150,8 +150,8 @@ async function loadSewa() {
   renderPool(0); showTop();
 }
 $("go").onclick = () => lookup().catch((e) => ($("whoMsg").textContent = "error: " + e.message));
-loadFair().catch((e) => ($("fairMeta").textContent = "belum ada data: jalankan `npm run board` (" + e.message + ")"));
-loadSewa().catch((e) => ($("lpMeta").textContent = "belum ada data: jalankan `npm run audit` (" + e.message + ")"));
+loadFair().catch((e) => ($("fairMeta").textContent = "no data yet: run `npm run board` (" + e.message + ")"));
+loadSewa().catch((e) => ($("lpMeta").textContent = "no data yet: run `npm run audit` (" + e.message + ")"));
 </script>
 </body>
 </html>
