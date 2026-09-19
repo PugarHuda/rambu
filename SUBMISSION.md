@@ -1,5 +1,7 @@
 # Rambu: Stocklana submission
 
+**Live demo:** https://rambu-kappa.vercel.app · **Code:** https://github.com/PugarHuda/rambu
+
 **One-liner:** Fair prices for tokenized stocks, and an honest P&L for the people who LP them.
 
 **Tracks:** Main (Infrastructure: price feeds, corporate actions, analytics), Pyth.

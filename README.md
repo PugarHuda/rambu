@@ -1,5 +1,7 @@
 # Rambu
 
+**Live:** https://rambu-kappa.vercel.app · **Repo:** https://github.com/PugarHuda/rambu
+
 **Fair prices for tokenized stocks, and an honest P&L for the people who LP them.**
 
 Two parts that share one price engine:
