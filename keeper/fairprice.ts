@@ -99,13 +99,14 @@ async function underlyingPx(ticker: string, session: Sess, now: number, mark: nu
   const maxAge = session === "closed" ? CLOSED_MAX_AGE : LIVE_MAX_AGE;
   const tag = (p: Px) => ({ ...p, stale: now - p.publishTime > maxAge });
   const feed = await feedOf(ticker);
-  const pro = await proPrice(feed.lazerId).catch(() => undefined);
+  let proErr = "";
+  const pro = await proPrice(feed.lazerId).catch((e) => { proErr = / 403/.test(e.message) ? "pyth-pro not entitled" : "pyth-pro error"; return undefined; });
   if (pro) return tag(pro);
   const id = await hermesId(feed.symbol);
   const push = id ? await pushPrice(id) : undefined;
   if (push && !tag(push).stale) return tag(push);
   // Last resort: issuer's underlying mark via Jupiter. Labeled, never silently treated as Pyth.
-  if (mark) return { price: mark, conf: 0, publishTime: now, source: push ? `xstocks-mark (pyth-push stale since ${new Date(push.publishTime).toISOString().slice(0, 10)})` : "xstocks-mark", stale: false };
+  if (mark) return { price: mark, conf: 0, publishTime: now, source: `xstocks-mark (${[proErr, push ? `pyth-push stale since ${new Date(push.publishTime).toISOString().slice(0, 10)}` : ""].filter(Boolean).join("; ")})`, stale: false };
   return push ? tag(push) : null;
 }
 
