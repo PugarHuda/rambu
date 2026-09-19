@@ -1,0 +1,4 @@
+{
+  "NVDA": { "haltCode": "T1", "minutes": 30 },
+  "TSLA": { "haltCode": "LUDP", "minutes": 5 }
+}

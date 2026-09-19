@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rambu: harga wajar & audit LP xStocks</title>
+<style>
+  :root { --bg:#0b0d10; --panel:#12161b; --line:#232a33; --text:#e8edf2; --mute:#8a96a3; --go:#3ddc97; --stop:#ff5d5d; --warn:#ffb547; --info:#6cb6ff; }
+  @media (prefers-color-scheme: light) { :root { --bg:#f6f7f9; --panel:#fff; --line:#e3e7ec; --text:#101418; --mute:#5d6975; --go:#0f8a55; --stop:#c62f2f; --warn:#a86200; --info:#1f6fc5; } }
+  * { box-sizing:border-box }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; padding:32px 16px }
+  main { max-width:1120px; margin:0 auto }
+  h1 { font-size:28px; margin:0 0 4px; letter-spacing:-.02em } h1 span { color:var(--warn) }
+  h2 { font-size:18px; margin:40px 0 4px }
+  p.sub { color:var(--mute); margin:0 0 16px; max-width:760px }
+  nav { display:flex; gap:8px; margin:16px 0 8px } nav a { text-decoration:none; padding:6px 12px; border:1px solid var(--line); border-radius:999px; color:var(--text) }
+  .bar { display:flex; gap:12px; flex-wrap:wrap; color:var(--mute); font-size:13px; margin-bottom:12px }
+  .wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel) }
+  table { width:100%; border-collapse:collapse; min-width:760px }
+  th, td { text-align:right; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; font-variant-numeric:tabular-nums }
+  th:first-child, td:first-child { text-align:left }
+  th { color:var(--mute); font-weight:500; font-size:12px; text-transform:uppercase; letter-spacing:.05em }
+  tr:last-child td { border-bottom:0 }
+  .pill { display:inline-block; padding:2px 10px; border-radius:999px; font-weight:600; font-size:12px }
+  .go { background:#3ddc9722; color:var(--go) } .stop { background:#ff5d5d22; color:var(--stop) } .warn { background:#ffb54722; color:var(--warn) } .info { background:#6cb6ff22; color:var(--info) }
+  .pos { color:var(--go) } .neg { color:var(--stop) } .mute { color:var(--mute) } a { color:var(--info) }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:12px 0 }
+  .card { border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:14px 16px }
+  .card b { display:block; font-size:22px; font-variant-numeric:tabular-nums } .card span { color:var(--mute); font-size:12px }
+  .lookup { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 8px }
+  input, select, button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit }
+  input { flex:1; min-width:260px } button { cursor:pointer; background:var(--text); color:var(--bg); font-weight:600; border:0 }
+  details { margin-top:16px; color:var(--mute) } details li { margin:4px 0 }
+</style>
+</head>
+<body>
+<main>
+  <h1>RAMBU<span>.</span></h1>
+  <p class="sub">Harga wajar untuk xStocks yang tahu sesi bursa, halt, dan dividen yang belum masuk multiplier, dan audit untung-rugi LP xStocks setelah LVR, dipecah per sesi bursa Pyth.</p>
+  <nav><a href="#fair">FairPrice</a><a href="#lp">Audit LP</a><a href="#method">Metode</a></nav>
+
+  <h2 id="fair">FairPrice</h2>
+  <p class="sub">Harga per token raw: <code>(harga saham + dividen net yang sudah ex tapi belum masuk multiplier) × multiplier mint</code>. Dibandingkan dengan oracle naif (saham × multiplier), Chainlink (oracle Jupiter Lend), dan harga DEX (Jupiter).</p>
+  <div class="bar" id="fairMeta">memuat…</div>
+  <div class="wrap"><table>
+    <thead><tr><th>Token</th><th>Status</th><th>Sesi</th><th>Wajar</th><th>Naif</th><th>Chainlink</th><th>DEX</th><th>Sumber harga</th></tr></thead>
+    <tbody id="fairRows"></tbody>
+  </table></div>
+
+  <h2 id="lp">Audit LP: SPYx/USDC (Raydium CLMM)</h2>
+  <p class="sub">Fee yang diterima LP (setelah potongan protokol) dikurangi LVR, yaitu nilai yang diambil arbitrase karena pool tertinggal dari harga wajar. Positif berarti LP lebih untung daripada portofolio yang di-rebalance di harga wajar.</p>
+  <div class="bar" id="lpMeta"></div>
+  <select id="poolPick"></select>
+  <div class="cards" id="lpCards"></div>
+  <div class="wrap"><table>
+    <thead><tr><th>Sesi</th><th>Volume</th><th>Fee LP</th><th>LVR</th><th>Bersih</th><th>Bersih/hari (CI 95%)</th><th>Gerbang</th></tr></thead>
+    <tbody id="lpRows"></tbody>
+  </table></div>
+
+  <div class="lookup">
+    <input id="who" placeholder="Alamat wallet atau mint NFT posisi Raydium">
+    <button id="go">Audit posisi saya</button>
+  </div>
+  <div class="bar" id="whoMsg"></div>
+  <div class="wrap"><table>
+    <thead><tr><th>Posisi (NFT)</th><th>Pool</th><th>Rentang harga</th><th>In-range</th><th>Fee</th><th>LVR</th><th>Bersih</th></tr></thead>
+    <tbody id="posRows"><tr><td colspan="7" class="mute">Masukkan wallet, atau lihat 10 posisi terbesar di bawah.</td></tr></tbody>
+  </table></div>
+
+  <details id="method"><summary>Metode & batasan</summary><ul>
+    <li><b>Fee</b>: volume per menit (GeckoTerminal) × fee rate pool × (1 − potongan protokol+fund dari AmmConfig), dibagi pro-rata ke posisi yang in-range.</li>
+    <li><b>LVR</b>: setiap langkah harga wajar, r² × L × √P / 4 (Milionis dkk., bentuk CLMM in-range). L adalah jumlah likuiditas posisi yang in-range di harga itu; jumlahnya di tick saat ini sama persis dengan L pool.</li>
+    <li><b>Harga wajar historis</b>: SPY 5 menit (regular+pre/post), celah overnight diisi return futures ES, print buruk yang langsung berbalik dibuang, × multiplier, + dividen tertunda. Sumber ini (Yahoo) tidak resmi; diganti riwayat Pyth Pro saat token tersedia.</li>
+    <li><b>Sesi</b>: kalender sesi Pyth (<code>market_session_schedule</code>), termasuk libur dan early close.</li>
+    <li><b>Gerbang</b>: lolos kalau batas bawah CI 95% bootstrap harian di atas nol.</li>
+    <li><b>Batasan</b>: set posisi adalah snapshot hari ini (tanpa riwayat buka/tutup). LVR tidak memotong efek fee (batas atas). Harga pool per menit tidak dipakai karena berisik (lompatan ±25/±50bp).</li>
+  </ul></details>
+</main>
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const usd = (n, d = 0) => n == null ? "—" : (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const sgn = (n) => `<span class="${n >= 0 ? "pos" : "neg"}">${usd(n)}</span>`;
+const bp = (x) => x == null ? "" : ` <span class="mute">${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)}bp</span>`;
+const STATUS = { Open: "go", Closed: "info", CorpActionPending: "warn", Halted: "stop", Stale: "warn" };
+const SESS_ID = { regular: "regular", pre: "pre-market", post: "post-market", overnight: "overnight", closed: "tutup/weekend" };
+
+async function loadFair() {
+  const { at, rows } = await (await fetch("data/fair.json")).json();
+  $("fairMeta").textContent = `${rows.length} token · snapshot ${new Date(at).toLocaleString()}`;
+  $("fairRows").innerHTML = rows.map((r) => `<tr>
+    <td><b>${r.symbol}</b><div class="mute">${r.reasons.join(", ") || "&nbsp;"}</div></td>
+    <td><span class="pill ${STATUS[r.status]}">${r.status}</span></td>
+    <td class="mute">${SESS_ID[r.session]}</td>
+    <td><b>${usd(r.fairRaw, 2)}</b>${r.pendingDiv ? `<div class="mute">+div net ${usd(r.pendingDiv.net, 4)}</div>` : ""}</td>
+    <td>${usd(r.naiveRaw, 2)}${bp(r.naiveErrBp)}</td>
+    <td>${usd(r.chainlinkRaw, 2)}${bp(r.chainlinkErrBp)}</td>
+    <td>${usd(r.dexRaw, 2)}${bp(r.dexErrBp)}</td>
+    <td class="mute">${r.px?.source ?? "—"}</td></tr>`).join("");
+}
+
+let sewa;
+const priceOfTick = (t, p) => Math.pow(1.0001, t) / 10 ** (p.dec1 - p.dec0);
+function renderPool(i) {
+  const p = sewa.pools[i], days = (p.to - p.from) / 864e5;
+  const tot = Object.values(p.bySession).reduce((a, b) => ({ f: a.f + b.feesUsd, l: a.l + b.lvrUsd, v: a.v + b.volUsd }), { f: 0, l: 0, v: 0 });
+  $("lpMeta").textContent = `${p.pool.id} · fee ${p.pool.feeRate * 1e4}bp · potongan ${p.pool.protocolCut * 100}% · ${p.positions} posisi · ${days.toFixed(1)} hari sampai ${new Date(p.to).toLocaleString()}`;
+  $("lpCards").innerHTML = [["Volume", usd(tot.v)], ["Fee LP", usd(tot.f)], ["LVR", usd(tot.l)], ["Bersih LP", sgn(tot.f - tot.l)]]
+    .map(([k, v]) => `<div class="card"><span>${k} (${days.toFixed(0)} hari)</span><b>${v}</b></div>`).join("");
+  $("lpRows").innerHTML = Object.entries(p.bySession).map(([s, b]) => {
+    const g = p.gate[s], pass = g.lo > 0;
+    return `<tr><td>${SESS_ID[s]}</td><td>${usd(b.volUsd)}</td><td>${usd(b.feesUsd)}</td><td>${usd(b.lvrUsd)}</td><td>${sgn(b.feesUsd - b.lvrUsd)}</td>
+      <td>${sgn(g.meanDaily)} <span class="mute">[${usd(g.lo)}, ${usd(g.hi)}]</span></td><td><span class="pill ${pass ? "go" : "warn"}">${pass ? "lolos" : "belum"}</span></td></tr>`;
+  }).join("");
+}
+const posRow = (r, p) => {
+  const [nft, lo, hi, inr, fee, lvr] = r;
+  return `<tr><td><a target="_blank" rel="noopener" href="https://solscan.io/token/${nft}">${nft.slice(0, 6)}…${nft.slice(-4)}</a></td><td class="mute">${p.pool.id.slice(0, 6)} (${p.pool.feeRate * 1e4}bp)</td>
+    <td>${usd(priceOfTick(lo, p.pool), 2)} – ${usd(priceOfTick(hi, p.pool), 2)}</td><td>${inr}%</td><td>${usd(fee, 2)}</td><td>${usd(lvr, 2)}</td><td>${sgn(fee - lvr)}</td></tr>`;
+};
+function showTop() {
+  const p = sewa.pools[$("poolPick").value];
+  $("posRows").innerHTML = p.pos.slice(0, 10).map((r) => posRow(r, p)).join("");
+}
+
+async function rpc(method, params) {
+  const r = await fetch("https://api.mainnet-beta.solana.com", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+  const j = await r.json(); if (j.error) throw new Error(j.error.message); return j.result;
+}
+async function lookup() {
+  const who = $("who").value.trim(); if (!who) return showTop();
+  $("whoMsg").textContent = "mencari…";
+  const byNft = new Map(sewa.pools.flatMap((p) => p.pos.map((r) => [r[0], [r, p]])));
+  let mints = [who];
+  if (!byNft.has(who)) {
+    mints = [];
+    for (const prog of ["TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"]) {
+      const res = await rpc("getTokenAccountsByOwner", [who, { programId: prog }, { encoding: "jsonParsed" }]);
+      for (const a of res.value) { const i = a.account.data.parsed.info; if (i.tokenAmount.amount === "1" && i.tokenAmount.decimals === 0) mints.push(i.mint); }
+    }
+  }
+  const hits = mints.filter((m) => byNft.has(m)).map((m) => byNft.get(m));
+  $("whoMsg").textContent = hits.length ? `${hits.length} posisi ditemukan` : "Tidak ada posisi SPYx/USDC aktif untuk alamat ini.";
+  $("posRows").innerHTML = hits.map(([r, p]) => posRow(r, p)).join("") || `<tr><td colspan="7" class="mute">—</td></tr>`;
+}
+
+async function loadSewa() {
+  sewa = await (await fetch("data/sewa.json")).json();
+  $("poolPick").innerHTML = sewa.pools.map((p, i) => `<option value="${i}">${p.pool.id.slice(0, 6)}… · fee ${p.pool.feeRate * 1e4}bp</option>`).join("");
+  $("poolPick").onchange = () => { renderPool($("poolPick").value); showTop(); };
+  renderPool(0); showTop();
+}
+$("go").onclick = () => lookup().catch((e) => ($("whoMsg").textContent = "error: " + e.message));
+loadFair().catch((e) => ($("fairMeta").textContent = "belum ada data: jalankan `npm run board` (" + e.message + ")"));
+loadSewa().catch((e) => ($("lpMeta").textContent = "belum ada data: jalankan `npm run audit` (" + e.message + ")"));
+</script>
+</body>
+</html>

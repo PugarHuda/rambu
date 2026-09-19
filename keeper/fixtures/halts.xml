@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:ndaq="http://www.nasdaqtrader.com/">
+  <channel>
+    <title>NASDAQTrader.com</title>
+    <link>http://www.nasdaqtrader.com</link>
+    <description>NASDAQ Trade Halts</description>
+    <copyright>Copyright 2026. All rights reserved.</copyright>
+    <pubDate>Tue, 15 Sep 2026 03:23:27 GMT</pubDate>
+    <ttl>1</ttl>
+    <ndaq:numItems>68</ndaq:numItems>
+    <item>
+      <title>IZM</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>IZM</ndaq:IssueSymbol>
+      <ndaq:IssueName>ICZOOM Group Inc.</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T1</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">IZM</td><td valign="top">ICZOOM Group Inc.</td><td valign="top">NASDAQ</td><td valign="top">T1</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>FTFT</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>14:44:20.666</ndaq:HaltTime>
+      <ndaq:IssueSymbol>FTFT</ndaq:IssueSymbol>
+      <ndaq:IssueName>Future FinTech Group Inc.</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>14:44:20</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>14:49:20</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">14:44:20.666</td><td valign="top">FTFT</td><td valign="top">Future FinTech Group Inc.</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">14:44:20                      </td><td valign="top">14:49:20                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RIBBU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>14:43:28.420</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RIBBU</ndaq:IssueSymbol>
+      <ndaq:IssueName>Ribbon Acq Corp Ut</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>14:43:28</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>14:48:28</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">14:43:28.420</td><td valign="top">RIBBU</td><td valign="top">Ribbon Acq Corp Ut</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">14:43:28                      </td><td valign="top">14:48:28                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HVIIU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>14:08:34.136</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HVIIU</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hennessy Cap Investment Unit</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>14:08:34</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>14:13:34</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">14:08:34.136</td><td valign="top">HVIIU</td><td valign="top">Hennessy Cap Investment Unit</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">14:08:34                      </td><td valign="top">14:13:34                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>XHLD</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>13:49:53.533</ndaq:HaltTime>
+      <ndaq:IssueSymbol>XHLD</ndaq:IssueSymbol>
+      <ndaq:IssueName>TEN Hldgs Cmn</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>13:49:53</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>13:54:53</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">13:49:53.533</td><td valign="top">XHLD</td><td valign="top">TEN Hldgs Cmn</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">13:49:53                      </td><td valign="top">13:54:53                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>GWAV</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>13:47:56.750</ndaq:HaltTime>
+      <ndaq:IssueSymbol>GWAV</ndaq:IssueSymbol>
+      <ndaq:IssueName>Greenwave Technology Sol Cm St</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>13:47:56</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>13:52:56</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">13:47:56.750</td><td valign="top">GWAV</td><td valign="top">Greenwave Technology Sol Cm St</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">13:47:56                      </td><td valign="top">13:52:56                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>XHLD</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>13:38:12.876</ndaq:HaltTime>
+      <ndaq:IssueSymbol>XHLD</ndaq:IssueSymbol>
+      <ndaq:IssueName>TEN Hldgs Cmn</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>13:38:12</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>13:48:12</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">13:38:12.876</td><td valign="top">XHLD</td><td valign="top">TEN Hldgs Cmn</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">13:38:12                      </td><td valign="top">13:48:12                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>XHLD</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>13:32:49.126</ndaq:HaltTime>
+      <ndaq:IssueSymbol>XHLD</ndaq:IssueSymbol>
+      <ndaq:IssueName>TEN Hldgs Cmn</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>13:32:49</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>13:37:49</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">13:32:49.126</td><td valign="top">XHLD</td><td valign="top">TEN Hldgs Cmn</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">13:32:49                      </td><td valign="top">13:37:49                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HVIIU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>12:43:03.336</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HVIIU</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hennessy Cap Investment Unit</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>12:43:03</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>12:48:03</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">12:43:03.336</td><td valign="top">HVIIU</td><td valign="top">Hennessy Cap Investment Unit</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">12:43:03                      </td><td valign="top">12:48:03                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NHICU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>12:27:17.090</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NHICU</ndaq:IssueSymbol>
+      <ndaq:IssueName>NewHold Invtmt III Ut</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>12:27:17</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>12:32:17</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">12:27:17.090</td><td valign="top">NHICU</td><td valign="top">NewHold Invtmt III Ut</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">12:27:17                      </td><td valign="top">12:32:17                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>VIAG</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>12:13:15.890</ndaq:HaltTime>
+      <ndaq:IssueSymbol>VIAG</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leverage Shares 2X Long VIAV Daily ETF</ndaq:IssueName>
+      <ndaq:Market>Non NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>M</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>12:18:15</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>12:18:15</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">12:13:15.890</td><td valign="top">VIAG</td><td valign="top">Leverage Shares 2X Long VIAV Daily ETF</td><td valign="top">Non NASDAQ</td><td valign="top">M</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">12:18:15                      </td><td valign="top">12:18:15                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NHICU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>12:07:48.366</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NHICU</ndaq:IssueSymbol>
+      <ndaq:IssueName>NewHold Invtmt III Ut</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>12:07:48</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>12:12:48</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">12:07:48.366</td><td valign="top">NHICU</td><td valign="top">NewHold Invtmt III Ut</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">12:07:48                      </td><td valign="top">12:12:48                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>SFWL</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:51:10.203</ndaq:HaltTime>
+      <ndaq:IssueSymbol>SFWL</ndaq:IssueSymbol>
+      <ndaq:IssueName>Shengfeng Development Os</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:51:10</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>12:01:10</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:51:10.203</td><td valign="top">SFWL</td><td valign="top">Shengfeng Development Os</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:51:10                      </td><td valign="top">12:01:10                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LSE</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:42:18.853</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LSE</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leishen Energy Hldgs Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:42:18</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:47:18</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:42:18.853</td><td valign="top">LSE</td><td valign="top">Leishen Energy Hldgs Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:42:18                      </td><td valign="top">11:47:18                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LSE</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:35:48.913</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LSE</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leishen Energy Hldgs Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:35:48</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:40:48</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:35:48.913</td><td valign="top">LSE</td><td valign="top">Leishen Energy Hldgs Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:35:48                      </td><td valign="top">11:40:48                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LSE</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:30:30.913</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LSE</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leishen Energy Hldgs Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:30:30</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:35:30</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:30:30.913</td><td valign="top">LSE</td><td valign="top">Leishen Energy Hldgs Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:30:30                      </td><td valign="top">11:35:30                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:19:39.900</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:19:39</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>16:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:19:39.900</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:19:39                      </td><td valign="top">16:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:14:24.900</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:14:24</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:19:24</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:14:24.900</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:14:24                      </td><td valign="top">11:19:24                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:09:09.900</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:09:09</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:14:09</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:09:09.900</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:09:09                      </td><td valign="top">11:14:09                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RFAI</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:05:32.533</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RFAI</ndaq:IssueSymbol>
+      <ndaq:IssueName>RF Acq Cp II Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:05:32</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:10:32</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:05:32.533</td><td valign="top">RFAI</td><td valign="top">RF Acq Cp II Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:05:32                      </td><td valign="top">11:10:32                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>11:03:54.900</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>11:03:54</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:08:54</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">11:03:54.900</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">11:03:54                      </td><td valign="top">11:08:54                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:58:39.900</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:58:39</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>11:03:39</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:58:39.900</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:58:39                      </td><td valign="top">11:03:39                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:53:07.636</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:53:07</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:58:07</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:53:07.636</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:53:07                      </td><td valign="top">10:58:07                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFEGP</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:41:59.136</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFEGP</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Frtrs Enrgy Sr A Md Cv Pfd</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:41:59</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:46:59</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:41:59.136</td><td valign="top">NFEGP</td><td valign="top">New Frtrs Enrgy Sr A Md Cv Pfd</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:41:59                      </td><td valign="top">10:46:59                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>BGMS</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:28:34.450</ndaq:HaltTime>
+      <ndaq:IssueSymbol>BGMS</ndaq:IssueSymbol>
+      <ndaq:IssueName>Bio Green Med Solution, Inc CS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:28:34</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:33:34</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:28:34.450</td><td valign="top">BGMS</td><td valign="top">Bio Green Med Solution, Inc CS</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:28:34                      </td><td valign="top">10:33:34                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>JXG</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:15:02.416</ndaq:HaltTime>
+      <ndaq:IssueSymbol>JXG</ndaq:IssueSymbol>
+      <ndaq:IssueName>JX Luxventure Group Inc Cmn</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:15:02</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:20:02</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:15:02.416</td><td valign="top">JXG</td><td valign="top">JX Luxventure Group Inc Cmn</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:15:02                      </td><td valign="top">10:20:02                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>AGMH</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:07:24.970</ndaq:HaltTime>
+      <ndaq:IssueSymbol>AGMH</ndaq:IssueSymbol>
+      <ndaq:IssueName>AGM Group Holdings Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:07:24</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:12:24</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:07:24.970</td><td valign="top">AGMH</td><td valign="top">AGM Group Holdings Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:07:24                      </td><td valign="top">10:12:24                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>QCLS</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:06:08.443</ndaq:HaltTime>
+      <ndaq:IssueSymbol>QCLS</ndaq:IssueSymbol>
+      <ndaq:IssueName>Q/C Tech Inc Cmn Stk</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:06:08</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:11:08</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:06:08.443</td><td valign="top">QCLS</td><td valign="top">Q/C Tech Inc Cmn Stk</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:06:08                      </td><td valign="top">10:11:08                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>CLLS</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:05:37.353</ndaq:HaltTime>
+      <ndaq:IssueSymbol>CLLS</ndaq:IssueSymbol>
+      <ndaq:IssueName>Cellectis S.A. ADS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:05:37</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:10:37</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:05:37.353</td><td valign="top">CLLS</td><td valign="top">Cellectis S.A. ADS</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:05:37                      </td><td valign="top">10:10:37                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RIBB</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:00:40.236</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RIBB</ndaq:IssueSymbol>
+      <ndaq:IssueName>Ribbon Acq Cp Ord A</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:00:40</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:10:40</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">10:00:40.236</td><td valign="top">RIBB</td><td valign="top">Ribbon Acq Cp Ord A</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:00:40                      </td><td valign="top">10:10:40                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>BMGL</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:59:18.420</ndaq:HaltTime>
+      <ndaq:IssueSymbol>BMGL</ndaq:IssueSymbol>
+      <ndaq:IssueName>Basel Medical Group Ltd Ord Sh</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:59:18</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:04:18</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:59:18.420</td><td valign="top">BMGL</td><td valign="top">Basel Medical Group Ltd Ord Sh</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:59:18                      </td><td valign="top">10:04:18                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>TERC</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:55:41.143</ndaq:HaltTime>
+      <ndaq:IssueSymbol>TERC</ndaq:IssueSymbol>
+      <ndaq:IssueName>Corgi TER 2x Daily ETF</ndaq:IssueName>
+      <ndaq:Market>Non NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>M</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>10:00:41</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:00:41</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:55:41.143</td><td valign="top">TERC</td><td valign="top">Corgi TER 2x Daily ETF</td><td valign="top">Non NASDAQ</td><td valign="top">M</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">10:00:41                      </td><td valign="top">10:00:41                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LSE</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:54:08.223</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LSE</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leishen Energy Hldgs Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:54:08</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>10:04:08</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:54:08.223</td><td valign="top">LSE</td><td valign="top">Leishen Energy Hldgs Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:54:08                      </td><td valign="top">10:04:08                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RIBB</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:48:55.643</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RIBB</ndaq:IssueSymbol>
+      <ndaq:IssueName>Ribbon Acq Cp Ord A</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:48:55</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:58:55</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:48:55.643</td><td valign="top">RIBB</td><td valign="top">Ribbon Acq Cp Ord A</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:48:55                      </td><td valign="top">09:58:55                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>CTNT</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:45:41.346</ndaq:HaltTime>
+      <ndaq:IssueSymbol>CTNT</ndaq:IssueSymbol>
+      <ndaq:IssueName>Cheetah Nt Spply Ch Svc</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:45:41</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:50:41</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:45:41.346</td><td valign="top">CTNT</td><td valign="top">Cheetah Nt Spply Ch Svc</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:45:41                      </td><td valign="top">09:50:41                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LSE</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:43:52.256</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LSE</ndaq:IssueSymbol>
+      <ndaq:IssueName>Leishen Energy Hldgs Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:43:52</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:53:52</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:43:52.256</td><td valign="top">LSE</td><td valign="top">Leishen Energy Hldgs Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:43:52                      </td><td valign="top">09:53:52                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>BMGL</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:41:23.043</ndaq:HaltTime>
+      <ndaq:IssueSymbol>BMGL</ndaq:IssueSymbol>
+      <ndaq:IssueName>Basel Medical Group Ltd Ord Sh</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:41:23</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:46:23</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:41:23.043</td><td valign="top">BMGL</td><td valign="top">Basel Medical Group Ltd Ord Sh</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:41:23                      </td><td valign="top">09:46:23                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>CTNT</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:37:53.896</ndaq:HaltTime>
+      <ndaq:IssueSymbol>CTNT</ndaq:IssueSymbol>
+      <ndaq:IssueName>Cheetah Nt Spply Ch Svc</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:37:53</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:42:53</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:37:53.896</td><td valign="top">CTNT</td><td valign="top">Cheetah Nt Spply Ch Svc</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:37:53                      </td><td valign="top">09:42:53                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RIBB</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:34:04.926</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RIBB</ndaq:IssueSymbol>
+      <ndaq:IssueName>Ribbon Acq Cp Ord A</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:34:04</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:44:05</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:34:04.926</td><td valign="top">RIBB</td><td valign="top">Ribbon Acq Cp Ord A</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:34:04                      </td><td valign="top">09:44:05                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HUBC</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:32:21.503</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HUBC</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hub Cyber Security Ltd. Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:32:21</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:37:21</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:32:21.503</td><td valign="top">HUBC</td><td valign="top">Hub Cyber Security Ltd. Ord</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:32:21                      </td><td valign="top">09:37:21                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>CTNT</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:32:16.086</ndaq:HaltTime>
+      <ndaq:IssueSymbol>CTNT</ndaq:IssueSymbol>
+      <ndaq:IssueName>Cheetah Nt Spply Ch Svc</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:32:16</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:37:16</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:32:16.086</td><td valign="top">CTNT</td><td valign="top">Cheetah Nt Spply Ch Svc</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:32:16                      </td><td valign="top">09:37:16                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>RFAIU</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:31:43.403</ndaq:HaltTime>
+      <ndaq:IssueSymbol>RFAIU</ndaq:IssueSymbol>
+      <ndaq:IssueName>RF Acquisition Corp II</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>LUDP</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:31:43</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:36:43</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:31:43.403</td><td valign="top">RFAIU</td><td valign="top">RF Acquisition Corp II</td><td valign="top">NASDAQ</td><td valign="top">LUDP</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:31:43                      </td><td valign="top">09:36:43                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>VRC</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>09:30:29.216</ndaq:HaltTime>
+      <ndaq:IssueSymbol>VRC</ndaq:IssueSymbol>
+      <ndaq:IssueName>Corgi VRT 2x Daily ETF</ndaq:IssueName>
+      <ndaq:Market>Non NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>M</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:35:29</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:35:29</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">09:30:29.216</td><td valign="top">VRC</td><td valign="top">Corgi VRT 2x Daily ETF</td><td valign="top">Non NASDAQ</td><td valign="top">M</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:35:29                      </td><td valign="top">09:35:29                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>BWIN</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>08:25:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>BWIN</ndaq:IssueSymbol>
+      <ndaq:IssueName>The Baldwin Insurance Cl A Cmn</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">08:25:00.000</td><td valign="top">BWIN</td><td valign="top">The Baldwin Insurance Cl A Cmn</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>DFTX</title>
+      <pubDate>Mon, 14 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/14/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>06:55:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>DFTX</ndaq:IssueSymbol>
+      <ndaq:IssueName>Definium Therapeutics, Inc. Cm</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>07:25:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>07:30:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/14/2026                    </td><td valign="top">06:55:00.000</td><td valign="top">DFTX</td><td valign="top">Definium Therapeutics, Inc. Cm</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">07:25:00                      </td><td valign="top">07:30:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>CPOP</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>CPOP</ndaq:IssueSymbol>
+      <ndaq:IssueName>Pop Culture Group Cl A Or Sh</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">CPOP</td><td valign="top">Pop Culture Group Cl A Or Sh</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HUBCZ</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HUBCZ</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hub Cyber Security Wt</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:00:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:05:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">HUBCZ</td><td valign="top">Hub Cyber Security Wt</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:00:00                      </td><td valign="top">09:05:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HUBCW</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HUBCW</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hub Cyber Security Ltd. Wt</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:00:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:05:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">HUBCW</td><td valign="top">Hub Cyber Security Ltd. Wt</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:00:00                      </td><td valign="top">09:05:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NRSNW</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NRSNW</ndaq:IssueSymbol>
+      <ndaq:IssueName>NeuroSense Thera Ltd Wt</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>09:00:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:05:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">NRSNW</td><td valign="top">NeuroSense Thera Ltd Wt</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">09:00:00                      </td><td valign="top">09:05:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HUBC</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HUBC</ndaq:IssueSymbol>
+      <ndaq:IssueName>Hub Cyber Security Ltd. Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">HUBC</td><td valign="top">Hub Cyber Security Ltd. Ord</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NRSN</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NRSN</ndaq:IssueSymbol>
+      <ndaq:IssueName>NeuroSense Thera Ltd Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">NRSN</td><td valign="top">NeuroSense Thera Ltd Ord</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NXXT</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NXXT</ndaq:IssueSymbol>
+      <ndaq:IssueName>NextNRG, Inc. Cmn Stk</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">NXXT</td><td valign="top">NextNRG, Inc. Cmn Stk</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>IPDN</title>
+      <pubDate>Fri, 11 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>IPDN</ndaq:IssueSymbol>
+      <ndaq:IssueName>Professional Diversity Ntwk Cm</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">IPDN</td><td valign="top">Professional Diversity Ntwk Cm</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>ATAI</title>
+      <pubDate>Thu, 10 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/10/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>ATAI</ndaq:IssueSymbol>
+      <ndaq:IssueName>AtaiBeckley Inc. Common Stock</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>D</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>00:00:01</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>00:00:01</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/10/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">ATAI</td><td valign="top">AtaiBeckley Inc. Common Stock</td><td valign="top">NASDAQ</td><td valign="top">D</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">00:00:01                      </td><td valign="top">00:00:01                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>NFE</title>
+      <pubDate>Thu, 10 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/10/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>NFE</ndaq:IssueSymbol>
+      <ndaq:IssueName>New Fortress Energy Inc Cm A</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T3</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate>09/14/2026</ndaq:ResumptionDate>
+      <ndaq:ResumptionQuoteTime>08:55:00</ndaq:ResumptionQuoteTime>
+      <ndaq:ResumptionTradeTime>09:00:00</ndaq:ResumptionTradeTime>
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/10/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">NFE</td><td valign="top">New Fortress Energy Inc Cm A</td><td valign="top">NASDAQ</td><td valign="top">T3</td><td valign="top"></td><td valign="top">09/14/2026                    </td><td valign="top">08:55:00                      </td><td valign="top">09:00:00                      </td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>ACHR.W</title>
+      <pubDate>Tue, 01 Sep 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/01/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>10:08:23.769</ndaq:HaltTime>
+      <ndaq:IssueSymbol>ACHR.W</ndaq:IssueSymbol>
+      <ndaq:IssueName>Archer Aviation Inc. Redeemable Warrants, each whole warrant exercisable for one Class A common stoc</ndaq:IssueName>
+      <ndaq:Market>NYSE</ndaq:Market>
+      <ndaq:ReasonCode>H11</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/01/2026                    </td><td valign="top">10:08:23.769</td><td valign="top">ACHR.W</td><td valign="top">Archer Aviation Inc. Redeemable Warrants, each whole warrant exercisable for one Class A common stoc</td><td valign="top">NYSE</td><td valign="top">H11</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>HCHL</title>
+      <pubDate>Thu, 11 Jun 2026 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>06/11/2026</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00.000</ndaq:HaltTime>
+      <ndaq:IssueSymbol>HCHL</ndaq:IssueSymbol>
+      <ndaq:IssueName>Happy City Holdings Limited</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">06/11/2026                    </td><td valign="top">19:50:00.000</td><td valign="top">HCHL</td><td valign="top">Happy City Holdings Limited</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>MAGH</title>
+      <pubDate>Thu, 04 Dec 2025 05:00:00 GMT</pubDate>
+      <ndaq:HaltDate>12/04/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>MAGH</ndaq:IssueSymbol>
+      <ndaq:IssueName>Magnitude International Ltd OS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">12/04/2025                    </td><td valign="top">19:50:00</td><td valign="top">MAGH</td><td valign="top">Magnitude International Ltd OS</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>MAMK</title>
+      <pubDate>Fri, 14 Nov 2025 05:00:00 GMT</pubDate>
+      <ndaq:HaltDate>11/14/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>MAMK</ndaq:IssueSymbol>
+      <ndaq:IssueName>MaxsMaking Inc.</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">11/14/2025                    </td><td valign="top">19:50:00</td><td valign="top">MAMK</td><td valign="top">MaxsMaking Inc.</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>MCTA</title>
+      <pubDate>Tue, 11 Nov 2025 05:00:00 GMT</pubDate>
+      <ndaq:HaltDate>11/11/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>MCTA</ndaq:IssueSymbol>
+      <ndaq:IssueName>Charming Medical Limit Cl A OS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">11/11/2025                    </td><td valign="top">19:50:00</td><td valign="top">MCTA</td><td valign="top">Charming Medical Limit Cl A OS</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>LAWR</title>
+      <pubDate>Wed, 22 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/22/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>LAWR</ndaq:IssueSymbol>
+      <ndaq:IssueName>Robot Consulting ADS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/22/2025                    </td><td valign="top">19:50:00</td><td valign="top">LAWR</td><td valign="top">Robot Consulting ADS</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>PC</title>
+      <pubDate>Thu, 16 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/16/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>PC</ndaq:IssueSymbol>
+      <ndaq:IssueName>Premium Catering Hold Ltd OS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/16/2025                    </td><td valign="top">19:50:00</td><td valign="top">PC</td><td valign="top">Premium Catering Hold Ltd OS</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>PLTS</title>
+      <pubDate>Fri, 03 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/03/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>PLTS</ndaq:IssueSymbol>
+      <ndaq:IssueName>Platinum Analytics Cymn Ord A</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/03/2025                    </td><td valign="top">19:50:00</td><td valign="top">PLTS</td><td valign="top">Platinum Analytics Cymn Ord A</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>EFTY</title>
+      <pubDate>Fri, 03 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/03/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>19:50:00</ndaq:HaltTime>
+      <ndaq:IssueSymbol>EFTY</ndaq:IssueSymbol>
+      <ndaq:IssueName>Etoiles Capital Group Cl A OS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/03/2025                    </td><td valign="top">19:50:00</td><td valign="top">EFTY</td><td valign="top">Etoiles Capital Group Cl A OS</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>UCFIW</title>
+      <pubDate>Wed, 01 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/01/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>11:28:10</ndaq:HaltTime>
+      <ndaq:IssueSymbol>UCFIW</ndaq:IssueSymbol>
+      <ndaq:IssueName>CN Healthy Food Tech Warrant</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/01/2025                    </td><td valign="top">11:28:10</td><td valign="top">UCFIW</td><td valign="top">CN Healthy Food Tech Warrant</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>UCFI</title>
+      <pubDate>Wed, 01 Oct 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>10/01/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>11:28:10</ndaq:HaltTime>
+      <ndaq:IssueSymbol>UCFI</ndaq:IssueSymbol>
+      <ndaq:IssueName>CN Healthy Food Tech Group CS</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">10/01/2025                    </td><td valign="top">11:28:10</td><td valign="top">UCFI</td><td valign="top">CN Healthy Food Tech Group CS </td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>OST</title>
+      <pubDate>Fri, 12 Sep 2025 04:00:00 GMT</pubDate>
+      <ndaq:HaltDate>09/12/2025</ndaq:HaltDate>
+      <ndaq:HaltTime>12:24:23</ndaq:HaltTime>
+      <ndaq:IssueSymbol>OST</ndaq:IssueSymbol>
+      <ndaq:IssueName>Ostin Tech Grp Co Ord Cl A Ord</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">09/12/2025                    </td><td valign="top">12:24:23</td><td valign="top">OST</td><td valign="top">Ostin Tech Grp Co Ord Cl A Ord</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+    <item>
+      <title>SVA</title>
+      <pubDate>Fri, 22 Feb 2019 05:00:00 GMT</pubDate>
+      <ndaq:HaltDate>02/22/2019</ndaq:HaltDate>
+      <ndaq:HaltTime>16:02:01</ndaq:HaltTime>
+      <ndaq:IssueSymbol>SVA</ndaq:IssueSymbol>
+      <ndaq:IssueName>Sinovac Biotech, Ltd Ord Shrs</ndaq:IssueName>
+      <ndaq:Market>NASDAQ</ndaq:Market>
+      <ndaq:ReasonCode>T12</ndaq:ReasonCode>
+      <ndaq:PauseThresholdPrice />
+      <ndaq:ResumptionDate />
+      <ndaq:ResumptionQuoteTime />
+      <ndaq:ResumptionTradeTime />
+      <description><![CDATA[<table width="100%" cellpadding="5"><tr><th align="left">Halt Date</th><th align="left">Halt Time</th><th align="left">Issue Symbol</th><th align="left">Issue Name</th><th align="left">Market</th><th align="left">Reason Code</th><th align="left">Pause Threshold Price</th><th align="left">Resumption Date</th><th align="left">Resumption Quote Time</th><th align="left">Resumption Trade Time</th></tr><tr><td valign="top">02/22/2019                    </td><td valign="top">16:02:01</td><td valign="top">SVA</td><td valign="top">Sinovac Biotech, Ltd Ord Shrs</td><td valign="top">NASDAQ</td><td valign="top">T12</td><td valign="top"></td><td valign="top"></td><td valign="top"></td><td valign="top"></td></tr></table>]]></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,5 @@
+target/
+node_modules/
+keys/
+.env
+web/data/ohlcv-*.json
