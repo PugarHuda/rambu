@@ -31,6 +31,7 @@ Two parts that share one price engine:
 ## Pyth usage
 
 - **Market sessions.** `market_session_schedule` (regular/pre/post/over_night, holidays, early closes) classifies every minute of pool activity.
+- **Pyth Pro is live for QQQ and TSLA.** Our key is entitled to those two equity feeds. FairPrice for QQQx from Pyth Pro (724.03) matches Chainlink exactly (0.0bp), and TSLAx is within 1.9bp. The other tickers fall back until equity access is granted.
 - **Underlying price.** Pyth Pro (`PYTH_PRO_TOKEN`) is first choice, then Solana push accounts (`pythWSnsw…`) with a staleness check. On 19 Sep the public push accounts for SPY, SPYX/USD and SPYX/SPY.RR were stale (last updates 26 Aug, 12 Sep and 21 Jul). The RR feed still equals the pre-dividend multiplier. FairPrice labels its fallback (`xstocks-mark`) and never passes it off as Pyth.
 
 ## Run
@@ -42,6 +43,8 @@ npm test          # schedule, dividend, fair-price math, LVR replay, splice/desp
 npm run board     # FairPrice snapshot -> web/data/fair.json
 npm run audit     # 30-day LP audit -> web/data/sewa.json (≈3 min, GeckoTerminal rate limit)
 npm run serve     # http://localhost:8080
+
+# automation (.github/workflows): keeper tick every 10 min on devnet, daily data snapshot -> Vercel redeploy
 
 # onchain (devnet): keeper/.env with RAMBU_PROGRAM_ID, VAULT_PROGRAM_ID, KEEPER_KEYPAIR, SEC_UA
 node --env-file=.env keeper.ts --init        # once
