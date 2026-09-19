@@ -1,0 +1,29 @@
+# Refresh the FairPrice board and the 30-day LP audit; the commit triggers a Vercel redeploy.
+name: snapshot
+on:
+  schedule: [{ cron: "30 1 * * *" }]
+  workflow_dispatch:
+permissions: { contents: write }
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults: { run: { working-directory: keeper } }
+    env:
+      SEC_UA: ${{ secrets.SEC_UA }}
+      PYTH_PRO_TOKEN: ${{ secrets.PYTH_PRO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: keeper/package-lock.json }
+      - run: npm ci
+      - run: npm test
+      - run: npm run board
+      - run: npm run audit
+      - name: commit data
+        working-directory: .
+        run: |
+          git config user.name "rambu-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/data/fair.json web/data/sewa.json
+          git diff --cached --quiet || (git commit -m "data: daily snapshot" && git push)

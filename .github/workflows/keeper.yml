@@ -1,0 +1,28 @@
+# Push FairPrice + status to the devnet rambu program so assert_tradable never reads a stale state.
+name: keeper
+on:
+  schedule: [{ cron: "*/10 * * * *" }]
+  workflow_dispatch:
+concurrency: { group: keeper, cancel-in-progress: false }
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults: { run: { working-directory: keeper } }
+    env:
+      RPC_URL: https://api.devnet.solana.com
+      RAMBU_PROGRAM_ID: 5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm
+      VAULT_PROGRAM_ID: EyqD7qbsbPfv3R42XxXgo61JP59ARZKxHLY8H6Suxsjz
+      KEEPER_KEYPAIR: /tmp/keeper.json
+      TRACK: SPY,QQQ,NVDA,AAPL,TSLA
+      MAX_AGE_S: "1800" # cron can slip; state stays valid across one missed run
+      SEC_UA: ${{ secrets.SEC_UA }}
+      PYTH_PRO_TOKEN: ${{ secrets.PYTH_PRO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: keeper/package-lock.json }
+      - run: npm ci
+      - run: printf '%s' "$KP" > /tmp/keeper.json
+        env: { KP: "${{ secrets.KEEPER_KEYPAIR_JSON }}" }
+      - run: node keeper.ts --once

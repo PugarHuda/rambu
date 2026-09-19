@@ -37,7 +37,7 @@
 <main>
   <h1>RAMBU<span>.</span></h1>
   <p class="sub">Fair prices for xStocks that know market sessions, halts, and dividends not yet folded into the multiplier, plus an LP profit-and-loss audit after LVR, split by Pyth market session.</p>
-  <nav><a href="#fair">FairPrice</a><a href="#lp">LP Audit</a><a href="#method">Method</a></nav>
+  <nav><a href="#fair">FairPrice</a><a href="#chain">Onchain</a><a href="#lp">LP Audit</a><a href="#method">Method</a></nav>
 
   <h2 id="fair">FairPrice</h2>
   <p class="sub">Price per raw token: <code>(stock price + net dividend already ex but not yet in the multiplier) × mint multiplier</code>. Compared with a naive oracle (stock × multiplier), Chainlink (Jupiter Lend oracle), and the DEX price (Jupiter).</p>
@@ -46,6 +46,19 @@
     <thead><tr><th>Token</th><th>Status</th><th>Session</th><th>Fair</th><th>Naive</th><th>Chainlink</th><th>DEX</th><th>Price source</th></tr></thead>
     <tbody id="fairRows"></tbody>
   </table></div>
+
+  <h2 id="chain">Onchain status (Solana devnet)</h2>
+  <p class="sub">The keeper writes FairPrice and status into the <code>rambu</code> program. Lenders and vaults CPI <code>assert_tradable(price)</code>: it fails if the state is stale, the stock is halted, or the price is outside the band around FairPrice. Read live from devnet.</p>
+  <div class="bar" id="chainMeta">loading…</div>
+  <div class="wrap"><table>
+    <thead><tr><th>Token</th><th>assert_tradable</th><th>Code</th><th>FairPrice ref</th><th>Band</th><th>Updated</th><th>Account</th></tr></thead>
+    <tbody id="chainRows"></tbody>
+  </table></div>
+  <div class="lookup">
+    <select id="cPick"></select><input id="cPrice" type="number" step="0.01" placeholder="liquidation price (USD per raw token)">
+    <button id="cGo">Would it pass?</button>
+  </div>
+  <div class="bar" id="cVerdict"></div>
 
   <h2 id="lp">LP Audit: SPYx/USDC (Raydium CLMM)</h2>
   <p class="sub">Fees earned by LPs (after the protocol cut) minus LVR, the value arbitrageurs take because the pool lags the fair price. Positive means LPs beat a portfolio rebalanced at the fair price.</p>
@@ -149,6 +162,49 @@ async function loadSewa() {
   $("poolPick").onchange = () => { renderPool($("poolPick").value); showTop(); };
   renderPool(0); showTop();
 }
+// ---- onchain (devnet): StockState accounts of the rambu program, decoded by hand (118 bytes) ----
+const PROGRAM = "5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm", DEVNET = "https://api.devnet.solana.com";
+const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+const b58 = (bytes) => { let n = 0n; for (const b of bytes) n = n * 256n + BigInt(b); let s = ""; while (n > 0n) { s = B58[Number(n % 58n)] + s; n /= 58n; } for (const b of bytes) { if (b) break; s = "1" + s; } return s; };
+const txt = (b) => new TextDecoder().decode(b).replace(/ +$/, "");
+const HALT = ["none", "hard halt", "volatility pause", "issuer halt"];
+function decodeState(bytes, key) {
+  const v = new DataView(bytes.buffer, bytes.byteOffset); let o = 8;
+  const take = (n) => bytes.subarray(o, (o += n));
+  const s = { key, mint: b58(take(32)), ticker: txt(take(12)), session: bytes[o++], halt: bytes[o++], code: txt(take(4)) };
+  s.haltedAt = Number(v.getBigInt64(o, true)); o += 8; s.resumeAt = Number(v.getBigInt64(o, true)); o += 8;
+  s.event = bytes[o++]; take(20);
+  s.ref = Number(v.getBigUint64(o, true)) / 1e6; o += 8; s.band = v.getUint16(o, true); o += 2; s.maxAge = v.getUint32(o, true); o += 4;
+  s.updatedAt = Number(v.getBigInt64(o, true));
+  return s;
+}
+// mirrors programs/rambu/src/lib.rs::check
+function check(s, now, price) {
+  if (now - s.updatedAt > s.maxAge) return ["Stale", "warn"];
+  if (s.halt === 1 || s.halt === 3) return ["Halted", "stop"];
+  if (s.halt === 2 && !(s.resumeAt && now >= s.resumeAt)) return ["Paused", "warn"];
+  if (s.event) return ["EventPending", "info"];
+  if (s.ref && price && Math.abs(price - s.ref) * 1e4 > s.ref * s.band) return ["OutsideBand", "warn"];
+  return ["Tradable", "go"];
+}
+let states = [];
+async function loadChain() {
+  const r = await fetch(DEVNET, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getProgramAccounts", params: [PROGRAM, { encoding: "base64", filters: [{ dataSize: 118 }] }] }) });
+  const res = (await r.json()).result ?? [];
+  states = res.map((a) => decodeState(Uint8Array.from(atob(a.account.data[0]), (c) => c.charCodeAt(0)), a.pubkey)).sort((a, b) => a.ticker.localeCompare(b.ticker));
+  const now = Date.now() / 1000, ago = (t) => { const d = now - t; return d < 5400 ? `${Math.round(d / 60)} min ago` : `${Math.round(d / 3600)} h ago`; };
+  $("chainMeta").innerHTML = `program <a target="_blank" rel="noopener" href="https://explorer.solana.com/address/${PROGRAM}?cluster=devnet">${PROGRAM.slice(0, 8)}…</a> · ${states.length} states · keeper refreshes every ~10 min`;
+  $("chainRows").innerHTML = states.map((s) => { const [l, c] = check(s, now, 0); return `<tr><td><b>${s.ticker}</b></td><td><span class="pill ${c}">${l}</span></td>
+    <td class="mute">${s.code || HALT[s.halt]}</td><td>${usd(s.ref, 2)}</td><td>±${s.band / 100}%</td><td class="mute">${ago(s.updatedAt)}</td>
+    <td><a target="_blank" rel="noopener" href="https://explorer.solana.com/address/${s.key}?cluster=devnet">${s.key.slice(0, 6)}…</a></td></tr>`; }).join("") || `<tr><td colspan="7" class="mute">No states yet.</td></tr>`;
+  $("cPick").innerHTML = states.map((s, i) => `<option value="${i}">${s.ticker}</option>`).join("");
+}
+$("cGo").onclick = () => {
+  const s = states[$("cPick").value]; if (!s) return;
+  const [l, c] = check(s, Date.now() / 1000, Number($("cPrice").value) || 0);
+  $("cVerdict").innerHTML = l === "Tradable" ? `<span class="pos">✓ assert_tradable passes: the liquidation would go through</span>` : `<span class="${c === "stop" ? "neg" : ""}">✗ assert_tradable fails with <b>${l}</b></span>`;
+};
+loadChain().catch((e) => ($("chainMeta").textContent = "devnet read failed: " + e.message));
 $("go").onclick = () => lookup().catch((e) => ($("whoMsg").textContent = "error: " + e.message));
 loadFair().catch((e) => ($("fairMeta").textContent = "no data yet: run `npm run board` (" + e.message + ")"));
 loadSewa().catch((e) => ($("lpMeta").textContent = "no data yet: run `npm run audit` (" + e.message + ")"));
