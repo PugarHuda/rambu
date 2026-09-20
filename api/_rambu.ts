@@ -2,8 +2,7 @@
 // the check() mirror, a one-instruction legacy transaction for simulateTransaction, and JSON-RPC.
 // Offsets mirror programs/rambu/src/lib.rs (and web/index.html decodeState).
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 export const PROGRAM = process.env.RAMBU_PROGRAM_ID ?? "5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm";
 export const DEVNET = process.env.DEVNET_RPC ?? "https://api.devnet.solana.com";
@@ -230,9 +229,11 @@ export async function keeperPubkey(): Promise<string> {
 
 // ---- web/data snapshots (bundled via vercel.json includeFiles) ----
 export function readData(name: string): any | undefined {
-  // cwd is the project root on Vercel; the module-relative path keeps local runs working from any directory
-  for (const p of [join(process.cwd(), "web/data", name), fileURLToPath(new URL(`../web/data/${name}`, import.meta.url))]) {
-    try { return JSON.parse(readFileSync(p, "utf8")); } catch {}
+  // cwd is the project root on Vercel; walking up also serves local runs started from keeper/ or qa/.
+  // ponytail: no import.meta here — Vercel compiles these functions to CommonJS, where it is a syntax error.
+  let dir = process.cwd();
+  for (let up = 0; up < 4; up++, dir = dirname(dir)) {
+    try { return JSON.parse(readFileSync(join(dir, "web/data", name), "utf8")); } catch {}
   }
 }
 
