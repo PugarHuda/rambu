@@ -1,4 +1,4 @@
-// GET /api/fair[?symbol=SPYx|?mint=] -> the published FairPrice snapshot row(s) joined with the live devnet state
+// GET /api/fair[?symbol=SPYx|?ticker=SPYx|?mint=] -> the published FairPrice snapshot row(s) joined with the live devnet state
 // and the lender-oracle comparison rows (web/data/lenders.json) when that snapshot exists.
 // ponytail: no recomputation here; fairPrice() takes ~18s of upstream calls, the snapshot job owns that.
 import { cache, clusterTime, CORS, fetchStates, json, readData, withVerdict } from "./_rambu.ts";
@@ -12,7 +12,7 @@ export default {
     const q = new URL(req.url).searchParams;
     const fair = readData("fair.json"), lenders = readData("lenders.json");
     if (!fair) return json({ error: "fair.json snapshot missing from the deployment" }, 500);
-    const want = q.get("symbol")?.toLowerCase(), wantMint = q.get("mint");
+    const want = (q.get("symbol") ?? q.get("ticker"))?.toLowerCase(), wantMint = q.get("mint"); // ticker: alias, so a wrong name never silently returns everything
     const rows = rowsOf(fair).filter((r) => (!want || r.symbol.toLowerCase() === want) && (!wantMint || r.mint === wantMint));
     if ((want || wantMint) && !rows.length) return json({ error: `no FairPrice row for ${want ?? wantMint}`, symbols: rowsOf(fair).map((r) => r.symbol) }, 404, cache(30));
 
