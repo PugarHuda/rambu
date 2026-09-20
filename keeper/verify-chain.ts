@@ -3,7 +3,7 @@
 // The rule cases (b) run on the QQQx devnet mirror with the live FairPrice ref but a fixed rule-test status (open,
 // regular session), so they can run any day. The run ends by writing the mirror's live status back.
 import { generateKeyPairSigner, type Address } from "@solana/kit";
-import { AccountRole, RAMBU, SYSTEM, VAULT, disc, pubkeyBytes, statePda } from "./chain.ts";
+import { AccountRole, RAMBU, SYSTEM, VAULT, disc, loadSigner, pubkeyBytes, statePda } from "./chain.ts";
 import {
   IX_SYSVAR, PYTH_LAZER, PYTH_STORAGE, REQUIRE_REGULAR_SESSION, SESSION, admin, argBytes, ed25519Ix, errName, eventDisc,
   feedPda, lazerMessage, liveMirrorState, mirror, pythAccounts, readRegistry, readState, sendIxs, simulateIxs, upsertIx, vecU8, type Ix, type Upsert,
@@ -12,6 +12,8 @@ import {
 if (!VAULT) throw new Error("VAULT_PROGRAM_ID missing");
 const { u16, u32, u64 } = argBytes;
 const payer = await admin();
+// upsert is keeper-gated while the registry admin ops need the authority key (they differ after a rotation)
+const keeper = process.env.KEEPER_KEYPAIR ? await loadSigner(process.env.KEEPER_KEYPAIR) : payer;
 const results: [string, boolean, string][] = [];
 const pass = (name: string, ok: boolean, detail: string) => { results.push([name, ok, detail]); console.log(`${ok ? "PASS" : "FAIL"}  ${name}  ${detail}`); };
 const expectErr = async (name: string, want: string, f: () => Promise<string>) => {
@@ -26,14 +28,15 @@ const expectOk = async (name: string, f: () => Promise<string>) => {
 const events = (logs: string[]) => logs.filter((l) => l.startsWith("Program data: ")).map((l) => Buffer.from(l.slice(14), "base64").subarray(0, 8).toString("hex"));
 
 const reg = await readRegistry();
-if (reg?.keeper !== payer.address) throw new Error(`signer ${payer.address} is not the registry keeper (${reg?.keeper})`);
+if (reg?.keeper !== keeper.address) throw new Error(`KEEPER_KEYPAIR ${keeper.address} is not the registry keeper (${reg?.keeper})`);
+if (reg?.authority !== payer.address) throw new Error(`ADMIN_KEYPAIR ${payer.address} is not the registry authority (${reg?.authority})`);
 
 const q = await mirror(payer, "QQQx");
 const t = await mirror(payer, "TSLAx");
 const live = await liveMirrorState("QQQx", q.x);
 console.log(`QQQx mirror ${q.mint}: multiplier ${q.multiplier}, live FairPrice ref ${Number(live.refPriceE6) / 1e6}, live status halt=${live.halt}:${live.haltCode || "-"} session=${live.session}`);
 if (!live.refPriceE6) throw new Error("no live FairPrice for QQQx: cannot set a reference");
-const upsert = async (mint: Address, s: Upsert) => sendIxs(payer, [await upsertIx(payer, mint, s)]);
+const upsert = async (mint: Address, s: Upsert) => sendIxs(payer, [await upsertIx(keeper, mint, s)]);
 const fixture: Upsert = { ...live, ticker: "QQQx-dev", session: SESSION.regular, halt: 0, haltCode: "" };
 
 // The cases below write the open fixture to a state the web board reads, so a run that dies partway would leave the
@@ -56,7 +59,7 @@ await expectErr("(a) upsert signed by a non-keeper is rejected", "ConstraintHasO
 await expectErr("(a) upsert with band 5000bps is rejected", "BadParam", () => upsert(q.mint, { ...fixture, bandBps: 5000 }));
 
 // events: a status change emits StateChanged, an identical rewrite only a Heartbeat (logs via simulation of the same tx)
-const evName = async (s: Upsert) => { const ev = events((await simulateIxs(payer, [await upsertIx(payer, q.mint, s)])).logs);
+const evName = async (s: Upsert) => { const ev = events((await simulateIxs(payer, [await upsertIx(keeper, q.mint, s)])).logs);
   return ev.includes(eventDisc("StateChanged").toString("hex")) ? "StateChanged" : ev.includes(eventDisc("Heartbeat").toString("hex")) ? "Heartbeat" : "none"; };
 await upsert(q.mint, fixture);
 const [same, moved] = [await evName(fixture), await evName({ ...fixture, refPriceE6: fixture.refPriceE6 + 1n })];

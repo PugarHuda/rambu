@@ -45,9 +45,13 @@
 - **`rambu`:** [`5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm`](https://explorer.solana.com/address/5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm?cluster=devnet), with `assert_tradable`, `assert_tradable_v2`, `get_price` and `assert_tradable_verified`. Pyth Pro feed links are set for QQQ (1363) and TSLA (1435).
 - **`vault_demo`:** [`EyqD7qbsbPfv3R42XxXgo61JP59ARZKxHLY8H6Suxsjz`](https://explorer.solana.com/address/EyqD7qbsbPfv3R42XxXgo61JP59ARZKxHLY8H6Suxsjz?cluster=devnet), a lender that liquidates only through `assert_tradable_v2` (300 s, 200bp, regular session) or the verified path.
 - **SPYx liquidation at FairPrice, passes:** [tx](https://explorer.solana.com/tx/4i7Y6BEdhtCbFXgL4PCBZJNKAnZHAjK7a54Lp3ZGFuHZtYZQdBjoYhTZHeyreA8Jh3N8nJhjXGJdM6hrBE8nbx3W?cluster=devnet)
+- **Pyth-verified path, lands onchain:** [`assert_tradable_verified` on QQQx](https://explorer.solana.com/tx/pY1LSbMuvFDn9m97UGSCWzVssNBfxooj22S86BqdtJDzaEXNXDRs9JAcnNCuxaXbDkEavtXp93ykgzpgdDgQg7g?cluster=devnet) — a signed Pyth Pro payload (feed 1363) verified by Pyth's Lazer program as a CPI, 31,703 CU, price 724.561184 matching the keeper's reference. A TSLA payload passed for QQQx gives `FeedMismatch`; flipping one byte after signing is rejected by the Ed25519 program.
+- **`get_price` returns the reference as return data:** [tx](https://explorer.solana.com/tx/2qv8SUpqXvaCyM7bZN7uTQJHPBktHJdpzkWmoBughVd4HW5U4cceqBaUtjS858aF4kZCuo9tRW4Tc2nfagL5faTr?cluster=devnet) (`ref_e6=724561184, expo=-6`)
+- **Liquidation 0.5% off FairPrice passes, 3% off is `OutsideBand`:** [tx](https://explorer.solana.com/tx/3kJkiCj7gtLChrEDAaD6K9cHFrU2rmospsYkzLcdHppjb7iBt7HY9B6ZFXqw2uJtvhC5fdezS4ZKETsUCHg4fdkv?cluster=devnet)
+- **`verify-chain.ts`** replays all of these against the deployed programs: 19 cases, all passing.
 - **Keeper history:** `https://rambu-kappa.vercel.app/api/history?format=atom`
 
 ## Status and limits
 - **Pyth Pro entitlement.** The free key covers the QQQ and TSLA equity feeds. Other tickers use a labeled fallback (stale push accounts, then the xStocks mark).
 - **LP Audit.** The position set is today's; positions closed during the 30-day window are not replayed.
-- **Keeper trust.** One keeper key writes state. The program bounds its parameters, and lenders can tighten them per call.
+- **Keeper trust.** One keeper key writes state (`GUAsypz1MQLzqgkagt4EQi6CkaULzhae9Q946h13voT8`, separate from the upgrade authority since the 20 Sep rotation). The program bounds its parameters, and lenders can tighten them per call.

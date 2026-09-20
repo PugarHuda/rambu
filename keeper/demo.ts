@@ -3,7 +3,7 @@
 // usage: node --env-file=.env demo.ts SPYx [price]   price defaults to the onchain FairPrice ref, never 0
 //        node --env-file=.env demo.ts QQQx --verified liquidate at a Pyth Pro price verified in the tx (QQQx, TSLAx)
 import { generateKeyPairSigner, type Address } from "@solana/kit";
-import { AccountRole, RAMBU, SYSTEM, VAULT, address, disc, pubkeyBytes, statePda } from "./chain.ts";
+import { AccountRole, RAMBU, SYSTEM, VAULT, address, disc, loadSigner, pubkeyBytes, statePda } from "./chain.ts";
 import {
   IX_SYSVAR, PYTH_LAZER, PYTH_STORAGE, admin, ed25519Ix, errName, feedPda, lazerMessage, liveMirrorState, mirror,
   pythAccounts, readState, sendIxs, upsertIx, vecU8, argBytes,
@@ -14,6 +14,8 @@ const args = process.argv.slice(2);
 const verified = args.includes("--verified");
 const [symbol = "NVDAx", priceArg] = args.filter((a) => !a.startsWith("--"));
 const payer = await admin();
+// upsert is keeper-gated, set_feed/mirror are authority-gated: after a key rotation those are two different keys
+const keeper = process.env.KEEPER_KEYPAIR ? await loadSigner(process.env.KEEPER_KEYPAIR) : payer;
 if (!VAULT) throw new Error("VAULT_PROGRAM_ID missing");
 const ok = (sig: string) => console.log(`✓ liquidation executed: https://explorer.solana.com/tx/${sig}?cluster=devnet`);
 const blocked = (e: unknown) => console.log(`✗ liquidation blocked by Rambu → ${errName(e)}`);
@@ -34,7 +36,7 @@ if (verified) {
   const m = await mirror(payer, symbol);
   // the keeper tracks mainnet mints; refresh the mirror's state from live FairPrice so the check runs on today's status
   const st = await liveMirrorState(symbol, m.x);
-  await sendIxs(payer, [await upsertIx(payer, m.mint, st)]);
+  await sendIxs(payer, [await upsertIx(keeper, m.mint, st)]);
   console.log(`${symbol} mirror ${m.mint}: FairPrice ref ${Number(st.refPriceE6) / 1e6}, halt=${st.halt}:${st.haltCode || "-"}, session=${st.session}`);
   const position = await openPosition(m.mint);
   const msg = await lazerMessage(m.feedId);
