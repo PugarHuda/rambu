@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Rambu">
+  <rect width="256" height="256" rx="48" fill="#0f1115"/>
+  <path d="M128 36 L220 196 H36 Z" fill="none" stroke="#f5b83d" stroke-width="18" stroke-linejoin="round"/>
+  <path d="M84 168 L112 136 L134 152 L172 106" fill="none" stroke="#3ddc97" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="172" cy="106" r="10" fill="#3ddc97"/>
+</svg>

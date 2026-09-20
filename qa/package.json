@@ -1,0 +1,12 @@
+{
+  "name": "rambu-qa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "serve": "node server.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0"
+  }
+}

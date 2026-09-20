@@ -1,0 +1,7 @@
+{
+  "rules": [
+    { "pathPattern": "/check/**", "apiPath": "/api/actions/tradable/**" },
+    { "pathPattern": "/lp", "apiPath": "/api/actions/lp" },
+    { "pathPattern": "/api/actions/**", "apiPath": "/api/actions/**" }
+  ]
+}

@@ -1,5 +1,106 @@
 {
   "buildCommand": "",
   "installCommand": "",
-  "outputDirectory": "web"
+  "outputDirectory": "web",
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 60,
+      "includeFiles": "web/data/{fair,sewa,lenders}.json"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/actions/tradable/:ticker",
+      "destination": "/api/actions/tradable?ticker=:ticker"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/check/:ticker",
+      "destination": "https://dial.to/?action=solana-action:https://rambu-kappa.vercel.app/api/actions/tradable/:ticker&cluster=devnet",
+      "permanent": false
+    },
+    {
+      "source": "/lp",
+      "destination": "https://dial.to/?action=solana-action:https://rambu-kappa.vercel.app/api/actions/lp",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.devnet.solana.com https://api.mainnet-beta.solana.com https://solana-rpc.publicnode.com; img-src 'self' data:; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        }
+      ]
+    },
+    {
+      "source": "/actions.json",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,PUT,OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization, Content-Encoding, Accept-Encoding, X-Action-Version, X-Blockchain-Ids"
+        },
+        {
+          "key": "Access-Control-Expose-Headers",
+          "value": "X-Action-Version, X-Blockchain-Ids"
+        },
+        {
+          "key": "X-Action-Version",
+          "value": "2.4"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,PUT,OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization, Content-Encoding, Accept-Encoding, X-Action-Version, X-Blockchain-Ids"
+        },
+        {
+          "key": "Access-Control-Expose-Headers",
+          "value": "X-Action-Version, X-Blockchain-Ids"
+        }
+      ]
+    }
+  ]
 }

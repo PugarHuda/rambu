@@ -7,15 +7,19 @@ const PUSH_ORACLE = address("pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT");
 
 export type Sess = "regular" | "pre" | "post" | "overnight" | "closed";
 export type Schedule = Record<Exclude<Sess, "closed">, string>;
-export type Feed = { lazerId: number; symbol: string; schedule: Schedule };
+export type Feed = { lazerId: number; symbol: string; schedule: Schedule; hermesId?: string };
+
+// Pyth and Yahoo spell share classes with a dash (BRK.B -> BRK-B).
+export const pythTicker = (t: string) => t.replace(".", "-");
+
+const fmts = new Map<string, Intl.DateTimeFormat>(); // lastClose calls inSchedule thousands of times
 
 // "America/New_York;0930-1600,...x7 (Mon..Sun);MMDD/C,MMDD/0930-1300" -> is `t` inside the window?
 export function inSchedule(spec: string, t: number): boolean {
   if (!spec) return false;
   const [tz, week, holidays = ""] = spec.split(";");
-  const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", {
-    timeZone: tz, weekday: "short", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
-  }).formatToParts(new Date(t)).map((x) => [x.type, x.value]));
+  if (!fmts.has(tz)) fmts.set(tz, new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }));
+  const p = Object.fromEntries(fmts.get(tz)!.formatToParts(new Date(t)).map((x) => [x.type, x.value]));
   const hhmm = Number(p.hour) * 100 + Number(p.minute);
   const day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(p.weekday);
   const override = holidays.split(",").find((h) => h.startsWith(`${p.month}${p.day}/`));
@@ -34,24 +38,36 @@ export function sessionAt(s: Schedule, t: number): Sess {
   return "closed";
 }
 
+// When did the current closed stretch start? Walks back minute by minute, at most `max` (4 days covers any long weekend).
+// Returns t itself while the calendar says open.
+export function lastClose(s: Schedule, t: number, max = 4 * 864e5): number {
+  if (sessionAt(s, t) !== "closed") return t;
+  let m = Math.floor(t / 60e3) * 60e3;
+  for (const stop = t - max; m > stop && sessionAt(s, m - 60e3) === "closed"; ) m -= 60e3;
+  return m;
+}
+
 const feedCache = new Map<string, Feed>();
 export async function feedOf(ticker: string): Promise<Feed> {
-  const symbol = `Equity.US.${ticker}/USD`;
+  const t = pythTicker(ticker), symbol = `Equity.US.${t}/USD`;
   if (feedCache.has(symbol)) return feedCache.get(symbol)!;
-  const list: any[] = await (await fetch(`https://pyth.dourolabs.app/v1/symbols?query=${ticker}`)).json();
+  const r = await fetch(`https://pyth.dourolabs.app/v1/symbols?query=${encodeURIComponent(t)}`);
+  if (!r.ok) throw new Error(`pyth symbols ${r.status}`);
+  const list: any[] = await r.json();
   const f = list.find((x) => x.symbol === symbol);
   if (!f) throw new Error(`no Pyth feed ${symbol}`);
   const m = f.market_session_schedule ?? {};
-  const feed = { lazerId: f.pyth_lazer_id, symbol, schedule: { regular: m.regular ?? f.schedule, pre: m.pre_market ?? "", post: m.post_market ?? "", overnight: m.over_night ?? "" } };
+  const feed = { lazerId: f.pyth_lazer_id, symbol, schedule: { regular: m.regular ?? f.schedule, pre: m.pre_market ?? "", post: m.post_market ?? "", overnight: m.over_night ?? "" }, hermesId: f.hermes_id ?? undefined };
   feedCache.set(symbol, feed);
   return feed;
 }
 
-export type Px = { price: number; conf: number; publishTime: number; source: string };
+// publishers/session/bid/ask come only from Pyth Pro; push and the issuer mark leave them undefined.
+export type Px = { price: number; conf: number; publishTime: number; source: string; publishers?: number; session?: Sess; bid?: number; ask?: number };
 
 // Hermes feed id (hex) for the pull/push oracle; metadata is public even though prices need a key.
 export async function hermesId(symbol: string): Promise<string | undefined> {
-  const q = symbol.split(".").pop()!.split("/")[0];
+  const q = symbol.slice("Equity.US.".length).split("/")[0];
   const list: any[] = await (await fetch(`https://hermes.pyth.network/v2/price_feeds?query=${encodeURIComponent(q)}`)).json();
   return list.find((x) => x.attributes?.symbol === symbol)?.id;
 }
@@ -72,18 +88,30 @@ export function decodePriceUpdate(b: Buffer): Px {
   return { price: Number(price) * 10 ** expo, conf: Number(conf) * 10 ** expo, publishTime: Number(b.readBigInt64LE(o + 20)) * 1000, source: "pyth-push" };
 }
 
-// ponytail: untested without a token; Pyth Pro REST per docs.pyth.network/price-feeds/pro. WS + onchain-verified payloads come later.
+// Pyth Pro marketSession (pyth-lazer-protocol MarketSession, camelCase) -> our session names.
+export const PRO_SESSION: Record<string, Sess> = { regular: "regular", preMarket: "pre", postMarket: "post", overNight: "overnight", closed: "closed" };
+
+// ponytail: REST polling of latest_price once per keeper tick; ceiling is one request per asset per tick, not the 200ms stream.
+// The WS stream + signed payloads verified onchain is the upgrade when the program must check the price itself.
 export async function proPrice(lazerId: number): Promise<Px | undefined> {
   const token = process.env.PYTH_PRO_TOKEN;
   if (!token) return;
   const r = await fetch("https://pyth-lazer.dourolabs.app/v1/latest_price", {
     method: "POST",
     headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-    body: JSON.stringify({ priceFeedIds: [lazerId], properties: ["price", "confidence", "exponent", "feedUpdateTimestamp"], formats: [], channel: "fixed_rate@200ms", parsed: true }),
+    body: JSON.stringify({ priceFeedIds: [lazerId], properties: ["price", "confidence", "exponent", "feedUpdateTimestamp", "publisherCount", "marketSession", "bestBidPrice", "bestAskPrice"], formats: [], channel: "fixed_rate@200ms", parsed: true }),
   });
   if (!r.ok) throw new Error(`pyth pro ${r.status}: ${await r.text()}`);
   const f = (await r.json()).parsed?.priceFeeds?.[0];
-  if (!f?.price) return;
-  const e = 10 ** Number(f.exponent);
-  return { price: Number(f.price) * e, conf: Number(f.confidence ?? 0) * e, publishTime: Math.floor(Number(f.feedUpdateTimestamp) / 1000), source: "pyth-pro" };
+  return f?.price ? proPx(f) : undefined;
+}
+
+// Parsed latest_price feed -> Px. feedUpdateTimestamp is in microseconds.
+export function proPx(f: any): Px {
+  const d = 10 ** -Number(f.exponent); // divide, don't multiply by 1e-5: 72206567 / 1e5 is exactly 722.06567
+  const n = (x: any) => (x == null ? undefined : Number(x) / d);
+  return {
+    price: Number(f.price) / d, conf: Number(f.confidence ?? 0) / d, publishTime: Math.floor(Number(f.feedUpdateTimestamp) / 1000), source: "pyth-pro",
+    publishers: f.publisherCount == null ? undefined : Number(f.publisherCount), session: PRO_SESSION[f.marketSession], bid: n(f.bestBidPrice), ask: n(f.bestAskPrice),
+  };
 }

@@ -52,15 +52,26 @@ export function activeHalts(halts: ExchangeHalt[], now = Date.now()): Map<string
   return out;
 }
 
+// Fail closed: an error page or a truncated body must throw, never read as "no halts".
+export function parseHaltsFeed(xml: string): ExchangeHalt[] {
+  if (!/<rss[\s>]/.test(xml) || !xml.includes("NASDAQ Trade Halts")) throw new Error("halts feed: not the Nasdaq halts RSS");
+  const halts = parseHalts(xml);
+  const n = xml.match(/<ndaq:numItems>(\d+)<\/ndaq:numItems>/)?.[1];
+  if (n !== undefined && Number(n) !== halts.length) throw new Error(`halts feed: numItems ${n} but parsed ${halts.length}`);
+  return halts;
+}
+
 export async function fetchHalts(): Promise<ExchangeHalt[]> {
-  const r = await fetch("https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts", { headers: { "user-agent": UA } });
-  return parseHalts(await r.text());
+  const r = await fetch("https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts", { headers: { "user-agent": UA }, signal: AbortSignal.timeout(15e3) });
+  if (!r.ok) throw new Error(`halts feed: HTTP ${r.status}`);
+  return parseHaltsFeed(await r.text());
 }
 
 export async function fetchXStocks(): Promise<XStock[]> {
   const seen = new Map<string, XStock>();
   for (let page = 0; page < 20; page++) {
     const r = await fetch(`https://api.xstocks.fi/api/v2/public/assets?network=Solana&page=${page}`, { headers: { "user-agent": UA } });
+    if (!r.ok) throw new Error(`xStocks API: HTTP ${r.status}`);
     const j: any = await r.json();
     for (const n of j.nodes ?? []) {
       const mint = n.deployments?.find((d: any) => d.network === "Solana")?.address;
@@ -84,37 +95,62 @@ export function sessionOf(period: string, now = Date.now()): Session {
   return Session.Unknown;
 }
 
-// SEC forms / 8-K items that mean "the security itself is about to change".
+// SEC forms / 8-K items that mean "the security itself is about to change". Target side only: S-4, SC TO-I
+// (issuer buyback) and 8-K 2.01 (acquisition completed) are filed by acquirers whose stock keeps trading.
 export function eventOf(form: string, items: string): Event {
-  if (/^SC TO-[TI]|^SC 14D9/.test(form)) return Event.Tender;
-  if (/^(DEFM14A|PREM14A|S-4)$/.test(form)) return Event.Merger;
-  if (/^(25|25-NSE|15-12B|15-12G)$/.test(form)) return Event.Delisting;
+  if (/^SC TO-T|^SC 14D9/.test(form)) return Event.Tender;
+  if (/^(DEFM14A|PREM14A)$/.test(form)) return Event.Merger;
+  if (/^(25|25-NSE|15-12B|15-12G|N-8F)$/.test(form)) return Event.Delisting; // N-8F: fund deregistering (ETF wind-down)
   if (form === "8-K") {
     const it = items.split(",");
     if (it.includes("1.03")) return Event.Bankruptcy;
     if (it.includes("3.01")) return Event.Delisting;
-    if (it.includes("2.01")) return Event.Merger;
     if (it.includes("5.01")) return Event.ControlChange;
   }
   return Event.None;
 }
 
+// SEC writes class shares with a dash (BRK-B); xStocks/Pyth use a dot (BRK.B).
+export const secTicker = (t: string) => t.toUpperCase().replace(/[./]/g, "-");
+
+// Operating companies + funds (QQQ, IWM are only in the mutual-fund file). The main file wins on overlap.
+// ponytail: STRC (preferred) maps to Strategy's CIK, so MSTR's filings flag STRC too; they share an issuer, which is the risk.
+export async function secCiks(): Promise<Map<string, { cik: number; fund: boolean }>> {
+  const get = async (u: string) => { const r = await fetch(u, { headers: { "user-agent": UA } }); if (!r.ok) throw new Error(`${u}: HTTP ${r.status}`); return r.json() as any; };
+  const [co, mf] = await Promise.all([get("https://www.sec.gov/files/company_tickers.json"), get("https://www.sec.gov/files/company_tickers_mf.json")]);
+  const out = new Map<string, { cik: number; fund: boolean }>(mf.data.map((r: any[]) => [r[3], { cik: r[0], fund: true }]));
+  for (const c of Object.values(co) as any[]) out.set(c.ticker, { cik: c.cik_str, fund: false });
+  return out;
+}
+
+// A fund CIK is a trust with many series (iShares Trust = hundreds of ETFs): a 25-NSE there usually delists a sibling.
+// Keep the event only when the filing names this ticker. ponytail: a trust-wide N-8F that lists no tickers is dropped too.
+export const namesTicker = (doc: string, ticker: string) => new RegExp(`\\(${ticker}\\)|Ticker:\\s*${ticker}\\b`).test(doc);
+
+const warned = new Set<string>();
+const sec = async (u: string) => { const r = await fetch(u, { headers: { "user-agent": UA } }); if (!r.ok) throw new Error(`SEC ${u}: HTTP ${r.status}`); return r; };
+const pause = () => new Promise((s) => setTimeout(s, 120)); // SEC fair-access: <10 req/s
+
 export async function fetchEvents(tickers: string[], sinceDays = 30): Promise<PendingEvent[]> {
-  const map: any = await (await fetch("https://www.sec.gov/files/company_tickers.json", { headers: { "user-agent": UA } })).json();
-  const cik = new Map<string, number>(Object.values(map).map((c: any) => [c.ticker, c.cik_str]));
+  const ciks = await secCiks();
   const since = Date.now() - sinceDays * 864e5, out: PendingEvent[] = [];
   for (const t of tickers) {
-    const c = cik.get(t);
-    if (!c) continue;
-    const j: any = await (await fetch(`https://data.sec.gov/submissions/CIK${String(c).padStart(10, "0")}.json`, { headers: { "user-agent": UA } })).json();
-    const r = j.filings.recent;
+    const id = ciks.get(secTicker(t));
+    if (!id) { if (!warned.has(t)) console.warn(`SEC: no CIK for ${t}, corporate events unchecked`); warned.add(t); continue; }
+    const r = ((await (await sec(`https://data.sec.gov/submissions/CIK${String(id.cik).padStart(10, "0")}.json`)).json()) as any).filings.recent;
+    await pause();
     for (let i = 0; i < r.form.length; i++) {
       const filedAt = Date.parse(r.acceptanceDateTime[i]);
       if (filedAt < since) break; // recent[] is newest-first
       const kind = eventOf(r.form[i], r.items[i] ?? "");
-      if (kind) out.push({ ticker: t, kind, form: r.form[i], accession: r.accessionNumber[i], filedAt });
+      if (!kind) continue;
+      if (id.fund) {
+        const doc = await (await sec(`https://www.sec.gov/Archives/edgar/data/${id.cik}/${r.accessionNumber[i].replace(/-/g, "")}/${r.primaryDocument[i]}`)).text();
+        await pause();
+        if (!namesTicker(doc, secTicker(t))) continue;
+      }
+      out.push({ ticker: t, kind, form: r.form[i], accession: r.accessionNumber[i], filedAt });
     }
-    await new Promise((s) => setTimeout(s, 120)); // SEC fair-access: <10 req/s
   }
   return out;
 }

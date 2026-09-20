@@ -3,3 +3,7 @@ node_modules/
 keys/
 .env
 web/data/ohlcv-*.json
+.vercel
+qa/test-results/
+qa/playwright-report/
+qa/results.json

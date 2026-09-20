@@ -1,0 +1,1037 @@
+{
+  "address": "5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm",
+  "metadata": {
+    "name": "rambu",
+    "version": "0.1.0",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "assert_tradable",
+      "docs": [
+        "v1, kept for existing integrations: state-only limits. Lenders must pass a price (price 0 fails PriceRequired);",
+        "ignore_events=true is the swap path, where price 0 skips the band."
+      ],
+      "discriminator": [
+        22,
+        215,
+        220,
+        136,
+        197,
+        236,
+        145,
+        179
+      ],
+      "accounts": [
+        {
+          "name": "state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  109,
+                  98,
+                  117
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "state.mint",
+                "account": "StockState"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "price_e6",
+          "type": "u64"
+        },
+        {
+          "name": "ignore_events",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "assert_tradable_v2",
+      "docs": [
+        "v2: the caller names the mint (state PDA is derived from it) and can only tighten age/band; 0 = state value."
+      ],
+      "discriminator": [
+        46,
+        11,
+        76,
+        239,
+        155,
+        253,
+        22,
+        184
+      ],
+      "accounts": [
+        {
+          "name": "state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  109,
+                  98,
+                  117
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "mint"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "_mint",
+          "type": "pubkey"
+        },
+        {
+          "name": "price_e6",
+          "type": "u64"
+        },
+        {
+          "name": "flags",
+          "type": "u8"
+        },
+        {
+          "name": "max_age_s",
+          "type": "u32"
+        },
+        {
+          "name": "max_band_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "assert_tradable_verified",
+      "docs": [
+        "Price comes from a Pyth Pro payload verified in this transaction (Ed25519 ix + Pyth Lazer CPI), not from the caller.",
+        "`message` must stay the first arg: the Ed25519 ix points at it at offset 12 of the top-level ix data."
+      ],
+      "discriminator": [
+        128,
+        204,
+        81,
+        4,
+        171,
+        173,
+        23,
+        209
+      ],
+      "accounts": [
+        {
+          "name": "state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  109,
+                  98,
+                  117
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "feed",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "pyth_program",
+          "address": "pytd2yyk641x7ak7mkaasSJVXh6YYZnC7wTmtgAyxPt"
+        },
+        {
+          "name": "pyth_storage",
+          "address": "3rdJbqfnagQ4yx9HXJViD4zc4xpiSqmFsKpPuSCQVyQL"
+        },
+        {
+          "name": "pyth_treasury",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "message",
+          "type": "bytes"
+        },
+        {
+          "name": "ed25519_ix_index",
+          "type": "u16"
+        },
+        {
+          "name": "flags",
+          "type": "u8"
+        },
+        {
+          "name": "max_age_s",
+          "type": "u32"
+        },
+        {
+          "name": "max_band_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "get_price",
+      "docs": [
+        "Same rules as a lender check, but returns (ref_price_e6: u64, expo: i32 = -6, updated_at: i64) as return data."
+      ],
+      "discriminator": [
+        238,
+        38,
+        193,
+        106,
+        228,
+        32,
+        210,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  109,
+                  98,
+                  117
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "mint"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "_mint",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "init_registry",
+      "docs": [
+        "Only the program's upgrade authority can create the registry (no front-running the init)."
+      ],
+      "discriminator": [
+        131,
+        22,
+        4,
+        103,
+        24,
+        94,
+        163,
+        239
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "program",
+          "address": "5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm"
+        },
+        {
+          "name": "program_data"
+        }
+      ],
+      "args": [
+        {
+          "name": "keeper",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "set_authority",
+      "discriminator": [
+        133,
+        250,
+        37,
+        21,
+        110,
+        163,
+        26,
+        121
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "registry"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "set_feed",
+      "docs": [
+        "Binds a mint to its Pyth Pro feed id, so a verified payload for another stock can't be passed off."
+      ],
+      "discriminator": [
+        79,
+        150,
+        2,
+        207,
+        41,
+        104,
+        77,
+        41
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "registry"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "mint",
+          "type": "pubkey"
+        },
+        {
+          "name": "feed_id",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "set_keeper",
+      "discriminator": [
+        102,
+        94,
+        23,
+        78,
+        157,
+        222,
+        243,
+        214
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "registry"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "keeper",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "upsert",
+      "discriminator": [
+        174,
+        55,
+        164,
+        168,
+        242,
+        93,
+        194,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  109,
+                  98,
+                  117
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "keeper",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "registry"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "a",
+          "type": {
+            "defined": {
+              "name": "UpsertArgs"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FeedLink",
+      "discriminator": [
+        231,
+        168,
+        72,
+        104,
+        63,
+        95,
+        33,
+        201
+      ]
+    },
+    {
+      "name": "Registry",
+      "discriminator": [
+        47,
+        174,
+        110,
+        246,
+        184,
+        182,
+        252,
+        218
+      ]
+    },
+    {
+      "name": "StockState",
+      "discriminator": [
+        210,
+        60,
+        5,
+        138,
+        193,
+        237,
+        185,
+        243
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Heartbeat",
+      "discriminator": [
+        175,
+        213,
+        169,
+        34,
+        101,
+        236,
+        127,
+        22
+      ]
+    },
+    {
+      "name": "StateChanged",
+      "discriminator": [
+        0,
+        150,
+        55,
+        224,
+        43,
+        26,
+        214,
+        192
+      ]
+    },
+    {
+      "name": "VerifiedPrice",
+      "discriminator": [
+        170,
+        208,
+        235,
+        135,
+        6,
+        73,
+        127,
+        170
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Stale",
+      "msg": "Rambu state is stale"
+    },
+    {
+      "code": 6001,
+      "name": "Halted",
+      "msg": "Trading halted"
+    },
+    {
+      "code": 6002,
+      "name": "Paused",
+      "msg": "Volatility pause in effect"
+    },
+    {
+      "code": 6003,
+      "name": "EventPending",
+      "msg": "Corporate event pending"
+    },
+    {
+      "code": 6004,
+      "name": "OutsideBand",
+      "msg": "Price outside band"
+    },
+    {
+      "code": 6005,
+      "name": "BadParam",
+      "msg": "Upsert parameter out of range"
+    },
+    {
+      "code": 6006,
+      "name": "PriceRequired",
+      "msg": "Lender check needs a nonzero price"
+    },
+    {
+      "code": 6007,
+      "name": "NoReference",
+      "msg": "No reference price onchain"
+    },
+    {
+      "code": 6008,
+      "name": "SessionClosed",
+      "msg": "Not in the regular trading session"
+    },
+    {
+      "code": 6009,
+      "name": "BadPayload",
+      "msg": "Malformed Pyth Lazer payload"
+    },
+    {
+      "code": 6010,
+      "name": "FeedMismatch",
+      "msg": "Payload does not carry the feed linked to this mint"
+    },
+    {
+      "code": 6011,
+      "name": "BadMint",
+      "msg": "Mint account is not a readable Token-2022 mint"
+    }
+  ],
+  "types": [
+    {
+      "name": "FeedLink",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "feed_id",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Heartbeat",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "updated_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Registry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StateChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "halt",
+            "type": "u8"
+          },
+          {
+            "name": "event",
+            "type": "u8"
+          },
+          {
+            "name": "session",
+            "type": "u8"
+          },
+          {
+            "name": "ref_price_e6",
+            "type": "u64"
+          },
+          {
+            "name": "prev_ref_e6",
+            "type": "u64"
+          },
+          {
+            "name": "band_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_age_s",
+            "type": "u32"
+          },
+          {
+            "name": "halt_code",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          },
+          {
+            "name": "event_ref",
+            "type": {
+              "array": [
+                "u8",
+                20
+              ]
+            }
+          },
+          {
+            "name": "updated_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StockState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "ticker",
+            "type": {
+              "array": [
+                "u8",
+                12
+              ]
+            }
+          },
+          {
+            "name": "session",
+            "type": "u8"
+          },
+          {
+            "name": "halt",
+            "type": "u8"
+          },
+          {
+            "name": "halt_code",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          },
+          {
+            "name": "halted_at",
+            "type": "i64"
+          },
+          {
+            "name": "resume_at",
+            "type": "i64"
+          },
+          {
+            "name": "event",
+            "type": "u8"
+          },
+          {
+            "name": "event_ref",
+            "type": {
+              "array": [
+                "u8",
+                20
+              ]
+            }
+          },
+          {
+            "name": "ref_price_e6",
+            "type": "u64"
+          },
+          {
+            "name": "band_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_age_s",
+            "type": "u32"
+          },
+          {
+            "name": "updated_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpsertArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "ticker",
+            "type": {
+              "array": [
+                "u8",
+                12
+              ]
+            }
+          },
+          {
+            "name": "session",
+            "type": "u8"
+          },
+          {
+            "name": "halt",
+            "type": "u8"
+          },
+          {
+            "name": "halt_code",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          },
+          {
+            "name": "halted_at",
+            "type": "i64"
+          },
+          {
+            "name": "resume_at",
+            "type": "i64"
+          },
+          {
+            "name": "event",
+            "type": "u8"
+          },
+          {
+            "name": "event_ref",
+            "type": {
+              "array": [
+                "u8",
+                20
+              ]
+            }
+          },
+          {
+            "name": "ref_price_e6",
+            "type": "u64"
+          },
+          {
+            "name": "band_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_age_s",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VerifiedPrice",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "feed_id",
+            "type": "u32"
+          },
+          {
+            "name": "price_e6",
+            "type": "u64"
+          },
+          {
+            "name": "publish_us",
+            "type": "u64"
+          },
+          {
+            "name": "market_session",
+            "type": "i16"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,13 +1,16 @@
 # Push FairPrice + status to the devnet rambu program so assert_tradable never reads a stale state.
+# One long run per ~6h polling every 60s: cron can slip by an hour, a live loop cannot. The hourly cron only
+# queues the next run behind the current one (cancel-in-progress false), so there is always one loop alive.
 name: keeper
 on:
-  schedule: [{ cron: "*/10 * * * *" }]
+  schedule: [{ cron: "7 * * * *" }]
   workflow_dispatch:
 concurrency: { group: keeper, cancel-in-progress: false }
+permissions: { contents: read, issues: write }
 jobs:
-  tick:
+  loop:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 350
     defaults: { run: { working-directory: keeper } }
     env:
       RPC_URL: https://api.devnet.solana.com
@@ -15,14 +18,29 @@ jobs:
       VAULT_PROGRAM_ID: EyqD7qbsbPfv3R42XxXgo61JP59ARZKxHLY8H6Suxsjz
       KEEPER_KEYPAIR: /tmp/keeper.json
       TRACK: SPY,QQQ,NVDA,AAPL,TSLA
-      MAX_AGE_S: "1800" # cron can slip; state stays valid across one missed run
+      INTERVAL_S: "60"
+      MAX_AGE_S: "1800" # covers the gap between one run ending and the queued one starting
       SEC_UA: ${{ secrets.SEC_UA }}
       PYTH_PRO_TOKEN: ${{ secrets.PYTH_PRO_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 24, cache: npm, cache-dependency-path: keeper/package-lock.json }
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version-file: keeper/.nvmrc, cache: npm, cache-dependency-path: keeper/package-lock.json }
       - run: npm ci
       - run: printf '%s' "$KP" > /tmp/keeper.json
         env: { KP: "${{ secrets.KEEPER_KEYPAIR_JSON }}" }
-      - run: node keeper.ts --once
+      - name: keeper loop (340 min, timeout exit 124 is the normal end)
+        run: timeout 340m node keeper.ts || [ $? = 124 ]
+      - name: states fresh and keeper funded
+        if: ${{ !cancelled() }}
+        run: node keeper.ts --check
+      - name: open an issue (once) when the keeper fails
+        if: failure()
+        working-directory: .
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          open=$(gh issue list --search 'keeper failing in:title state:open' --json number --jq length)
+          [ "$open" != 0 ] || gh issue create --title "keeper failing" \
+            --body "Keeper run failed: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Onchain states go Stale after MAX_AGE_S; assert_tradable fails closed until the keeper is back."

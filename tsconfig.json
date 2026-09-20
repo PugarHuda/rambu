@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "noCheck": true
+  },
+  "include": ["api/**/*.ts"]
+}

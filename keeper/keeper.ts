@@ -1,16 +1,19 @@
 // Polls halts / issuer status / SEC events and pushes changed Rambu states to Solana.
+// node keeper.ts [--once] [--check] [--replay fixtures/replay.json]. Registry admin lives in admin.ts.
 import { readFileSync } from "node:fs";
-import { AccountRole, RAMBU, SYSTEM, address, disc, loadSigner, pda, pubkeyBytes, sendIx, statePda } from "./chain.ts";
+import { AccountRole, RAMBU, SYSTEM, address, disc, getAddressDecoder, loadSigner, pda, pushReasons, readStates, rpc, sendIx, statePda, type OnchainState } from "./chain.ts";
 import { fairPrice, type Fair } from "./fairprice.ts";
-import { activeHalts, fetchEvents, fetchHalts, fetchXStocks, haltKind, sessionOf, Halt, type Event as Ev } from "./sources.ts";
+import { activeHalts, fetchEvents, fetchHalts, fetchXStocks, haltKind, sessionOf, Halt, type Event as Ev, type ExchangeHalt } from "./sources.ts";
 
 const env = process.env;
 const TRACK = (env.TRACK ?? "NVDA,AAPL,TSLA,SPY,QQQ,META,MSTR,COIN,HOOD,STRC,IWM").split(",");
 const BAND_BPS = Number(env.BAND_BPS ?? 1000);
 const MAX_AGE = Number(env.MAX_AGE_S ?? 900);
 const INTERVAL = Number(env.INTERVAL_S ?? 60);
+const MIN_SOL = 0.05;
 const flag = (f: string) => process.argv.indexOf(f);
-const keeper = await loadSigner(env.KEEPER_KEYPAIR!);
+// --check runs without a key (snapshot job): it reads the keeper pubkey from the registry instead
+const keeper = flag("--check") >= 0 && !env.KEEPER_KEYPAIR ? undefined! : await loadSigner(env.KEEPER_KEYPAIR!);
 
 type State = { ticker: string; session: number; halt: number; haltCode: string; haltedAt: number; resumeAt: number; event: Ev; eventRef: string; refPriceE6: bigint };
 
@@ -40,14 +43,44 @@ const upsert = async (mint: string, s: State) =>
     { address: SYSTEM, role: AccountRole.READONLY },
   ]);
 
-if (flag("--init") >= 0) {
-  const sig = await sendIx(keeper, RAMBU, Buffer.concat([disc("init_registry"), pubkeyBytes(keeper.address)]), [
-    { address: await pda(RAMBU, "registry"), role: AccountRole.WRITABLE },
-    { address: keeper.address, role: AccountRole.WRITABLE_SIGNER },
-    { address: SYSTEM, role: AccountRole.READONLY },
-  ]);
-  console.log("registry initialized", sig);
-  process.exit(0);
+// Alerts go to Telegram when TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID are set; otherwise the log line is the alert.
+async function notify(msg: string) {
+  console.log(new Date().toISOString(), "ALERT", msg);
+  const { TELEGRAM_BOT_TOKEN: tok, TELEGRAM_CHAT_ID: chat } = env;
+  if (!tok || !chat) return;
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${tok}/sendMessage`, {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ chat_id: chat, text: `rambu keeper: ${msg}`, disable_web_page_preview: true }), signal: AbortSignal.timeout(10e3),
+    });
+    if (!r.ok) console.error("telegram: HTTP", r.status, (await r.text()).slice(0, 200));
+  } catch (e: any) { console.error("telegram:", e.message); }
+}
+
+const tracked = async () => (await fetchXStocks()).filter((x) => TRACK.includes(x.underlying));
+const nowS = () => Math.floor(Date.now() / 1000);
+
+// --check: exit 1 when a tracked state is past its max_age (assert_tradable already says Stale) or the keeper runs dry
+if (flag("--check") >= 0) {
+  const xs = await tracked();
+  const states = await readStates(xs.map((x) => address(x.mint)));
+  // Registry = disc 8 | authority 32 | keeper 32 | bump
+  const reg = (await rpc.getAccountInfo(await pda(RAMBU, "registry"), { encoding: "base64" }).send()).value;
+  if (!reg) throw new Error("registry not initialized");
+  const regKeeper = getAddressDecoder().decode(Buffer.from(reg.data[0], "base64").subarray(40, 72));
+  const lamports = Number((await rpc.getBalance(regKeeper).send()).value);
+  const bad: string[] = [];
+  xs.forEach((x, i) => {
+    const s = states[i], age = s ? nowS() - s.updatedAt : Infinity;
+    console.log(x.symbol.padEnd(7), s ? `age=${age}s max_age=${s.maxAgeS}s halt=${s.halt}:${s.haltCode || "-"} event=${s.event} ref=${(Number(s.refPriceE6) / 1e6).toFixed(2)}` : "no state");
+    if (!s || age > s.maxAgeS) bad.push(`${x.symbol} ${s ? `stale ${age}s` : "missing"}`);
+  });
+  for (const t of TRACK) if (!xs.some((x) => x.underlying === t)) console.warn(`${t}: not an xStock on Solana, skipped`);
+  console.log(`keeper ${regKeeper} balance ${(lamports / 1e9).toFixed(4)} SOL`);
+  if (keeper && keeper.address !== regKeeper) bad.push(`KEEPER_KEYPAIR ${keeper.address} is not the registry keeper ${regKeeper}`);
+  if (lamports < MIN_SOL * 1e9) bad.push(`balance ${(lamports / 1e9).toFixed(4)} SOL < ${MIN_SOL}`);
+  if (bad.length) await notify(`check failed (${env.RPC_URL ?? "devnet"}): ${bad.join(", ")}`);
+  process.exit(bad.length ? 1 : 0);
 }
 
 // --replay file: { "NVDA": { "haltCode": "T1", "minutes": 10 } } replays a recorded halt onto a tracked stock for demos
@@ -60,48 +93,78 @@ async function fair(x: { symbol: string; underlying: string; mint: string; issue
   try { return await fairPrice(x); } catch (e: any) { console.error(x.symbol, "fairPrice failed:", e.message); }
 }
 
-const pushed = new Map<string, { key: string; at: number }>();
-let events: Awaited<ReturnType<typeof fetchEvents>> = [];
-let eventsAt = 0;
+// Last good source reads. Halts are trusted for MAX_AGE/2, then pushes stop so the onchain state goes Stale (fail closed).
+let halts: ExchangeHalt[] = [], haltsAt = 0, haltsDown = false;
+let events: Awaited<ReturnType<typeof fetchEvents>> | undefined, eventsAt = 0;
 
-for (;;) {
-  try {
-    const [halts, xs] = await Promise.all([fetchHalts(), fetchXStocks()]);
-    if (Date.now() - eventsAt > 10 * 60e3) { events = await fetchEvents(TRACK, 30); eventsAt = Date.now(); }
-    const active = activeHalts(halts);
-    const tracked = xs.filter((x) => TRACK.includes(x.underlying));
+async function tick(): Promise<number> {
+  let failed = 0;
+  try { halts = await fetchHalts(); haltsAt = Date.now(); } catch (e: any) { failed++; console.error("halts feed failed:", e.message); }
+  const haltsAge = (Date.now() - haltsAt) / 1000;
+  if (haltsAge > MAX_AGE / 2) {
+    if (!haltsDown) await notify(`halts feed unavailable for ${haltsAt ? `${Math.round(haltsAge)}s` : "the whole run"}; pushes paused, states will go Stale`);
+    haltsDown = true;
+    return failed || 1;
+  }
+  if (haltsDown) await notify("halts feed back, pushes resumed");
+  haltsDown = false;
 
-    for (const x of tracked) {
+  if (Date.now() - eventsAt > 10 * 60e3) {
+    try { events = await fetchEvents(TRACK, 30); eventsAt = Date.now(); }
+    catch (e: any) { failed++; console.error("SEC events failed, keeping", events ? "last read" : "onchain events", e.message); }
+  }
+  const active = activeHalts(halts);
+  const xs = await tracked();
+  const chain = await readStates(xs.map((x) => address(x.mint)));
+  let sent = 0;
+
+  for (const [i, x] of xs.entries()) {
+    try {
+      const prev: OnchainState | undefined = chain[i];
       const h = active.get(x.underlying);
       const r = replay[x.underlying] && Date.now() < replayStart + replay[x.underlying].minutes * 60e3 ? replay[x.underlying] : undefined;
-      const ev = events.find((e) => e.ticker === x.underlying);
+      // SEC never read in this process: carry the onchain event instead of clearing it
+      const ev = events ? events.find((e) => e.ticker === x.underlying) : prev && { kind: prev.event as Ev, accession: prev.eventRef };
       const f = await fair(x);
       // fail closed: no fresh underlying price means no reference, so the stock is treated as halted
       const stale = !f || f.status === "Stale";
+      const halted = x.issuerHalted || f?.status === "Halted";
       const s: State = {
         ticker: x.symbol,
         session: sessionOf(x.period),
-        halt: r ? haltKind(r.haltCode) : h ? haltKind(h.code) : x.issuerHalted || f?.status === "Halted" || stale ? Halt.Issuer : Halt.None,
+        halt: r ? haltKind(r.haltCode) : h ? haltKind(h.code) : halted || stale ? Halt.Issuer : Halt.None,
         // "DIV" is informational: dividend ex but not in the multiplier yet; the fair reference already includes it
-        haltCode: r?.haltCode ?? h?.code ?? (x.issuerHalted || f?.status === "Halted" ? "ISSR" : stale ? "STAL" : f?.status === "CorpActionPending" ? "DIV" : ""),
+        haltCode: r?.haltCode ?? h?.code ?? (halted ? "ISSR" : stale ? "STAL" : f?.status === "CorpActionPending" ? "DIV" : ""),
         haltedAt: r ? replayStart : h?.haltAt ?? 0,
         resumeAt: r ? replayStart + r.minutes * 60e3 : h?.resumeAt ?? 0,
         event: ev?.kind ?? 0,
         eventRef: ev?.accession ?? "",
         refPriceE6: BigInt(Math.round((f?.fairRaw ?? 0) * 1e6)),
       };
-      // push on status change, or refresh before the onchain state goes stale
-      // ref bucket: re-push when the fair price moves more than a quarter of the band
-      const key = JSON.stringify({ t: s.ticker, se: s.session, h: s.halt, c: s.haltCode, e: s.event, r: s.eventRef, p: Math.round(Math.log(Number(s.refPriceE6) || 1) * 40_000 / BAND_BPS) });
-      const last = pushed.get(x.mint);
-      if (last && last.key === key && Date.now() - last.at < (MAX_AGE * 1000) / 2) continue;
+      // a pause with no resumption time yet blocks like a hard halt (and upsert rejects Soft with resume_at 0)
+      if (s.halt === Halt.Soft && !s.resumeAt) s.halt = Halt.Hard;
+      const why = pushReasons(prev, { ...s, haltedAtS: Math.floor(s.haltedAt / 1000), resumeAtS: Math.floor(s.resumeAt / 1000) }, { bandBps: BAND_BPS, maxAgeS: MAX_AGE }, nowS());
+      const line = `${x.symbol.padEnd(7)} halt=${s.halt}:${s.haltCode || "-"} event=${s.event} session=${s.session} fair=${f?.fairRaw?.toFixed(2) ?? "-"} (${f?.px?.source ?? "no px"})`;
+      if (prev && why.some((w) => ["missed", "halt", "event", "ref"].includes(w))) {
+        const was = `halt=${prev.halt}:${prev.haltCode || "-"} event=${prev.event} ref=${(Number(prev.refPriceE6) / 1e6).toFixed(2)}`;
+        await notify(`${line} [${why.join(",")}] was ${was}${why.includes("missed") ? `, onchain was ${nowS() - prev.updatedAt}s old` : ""}`);
+      }
+      if (!why.length) { console.log(new Date().toISOString(), line, "fresh, skip"); continue; }
       const sig = await upsert(x.mint, s);
-      pushed.set(x.mint, { key, at: Date.now() });
-      console.log(new Date().toISOString(), x.symbol.padEnd(7), `halt=${s.halt}:${s.haltCode || "-"} event=${s.event} session=${s.session} fair=${f?.fairRaw?.toFixed(2) ?? "-"} (${f?.px?.source ?? "no px"})`, sig);
+      sent++;
+      console.log(new Date().toISOString(), line, `[${why.join(",")}]`, sig);
+    } catch (e: any) {
+      failed++;
+      console.error(new Date().toISOString(), x.symbol, "failed:", e.message ?? e);
     }
-  } catch (e) {
-    console.error(new Date().toISOString(), "tick failed:", e);
   }
-  if (flag("--once") >= 0) process.exit(0);
+  console.log(new Date().toISOString(), `tick: ${xs.length} stocks, ${sent} tx, ${failed} failed`);
+  return failed;
+}
+
+for (;;) {
+  let failed: number;
+  try { failed = await tick(); } catch (e: any) { failed = 1; console.error(new Date().toISOString(), "tick failed:", e.message ?? e); }
+  if (flag("--once") >= 0) process.exit(failed ? 1 : 0);
   await new Promise((s) => setTimeout(s, INTERVAL * 1000));
 }

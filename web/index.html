@@ -4,210 +4,554 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rambu: xStock fair price & LP audit</title>
+<meta name="description" content="Session-aware fair prices for Solana xStocks, a devnet program lenders CPI before liquidating, lender oracle exposure, and a Raydium CLMM LP audit of fees versus LVR.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
 <style>
-  :root { --bg:#0b0d10; --panel:#12161b; --line:#232a33; --text:#e8edf2; --mute:#8a96a3; --go:#3ddc97; --stop:#ff5d5d; --warn:#ffb547; --info:#6cb6ff; }
-  @media (prefers-color-scheme: light) { :root { --bg:#f6f7f9; --panel:#fff; --line:#e3e7ec; --text:#101418; --mute:#5d6975; --go:#0f8a55; --stop:#c62f2f; --warn:#a86200; --info:#1f6fc5; } }
+  :root { --bg:#0b0d10; --panel:#12161b; --line:#232a33; --text:#e8edf2; --mute:#8a96a3; --go:#3ddc97; --stop:#ff5d5d; --warn:#ffb547; --info:#6cb6ff; color-scheme:dark }
+  @media (prefers-color-scheme: light) { :root { --bg:#f6f7f9; --panel:#fff; --line:#e3e7ec; --text:#101418; --mute:#5d6975; --go:#0b7a4b; --stop:#c62f2f; --warn:#8f5300; --info:#1f6fc5; color-scheme:light } }
   * { box-sizing:border-box }
   body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; padding:32px 16px }
   main { max-width:1120px; margin:0 auto }
   h1 { font-size:28px; margin:0 0 4px; letter-spacing:-.02em } h1 span { color:var(--warn) }
-  h2 { font-size:18px; margin:40px 0 4px }
+  h2 { font-size:18px; margin:40px 0 4px } h3 { font-size:15px; margin:24px 0 4px }
   p.sub { color:var(--mute); margin:0 0 16px; max-width:760px }
-  nav { display:flex; gap:8px; margin:16px 0 8px } nav a { text-decoration:none; padding:6px 12px; border:1px solid var(--line); border-radius:999px; color:var(--text) }
-  .bar { display:flex; gap:12px; flex-wrap:wrap; color:var(--mute); font-size:13px; margin-bottom:12px }
+  nav { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 8px } nav a { text-decoration:none; padding:6px 12px; border:1px solid var(--line); border-radius:999px; color:var(--text) }
+  .bar { display:flex; gap:6px 12px; flex-wrap:wrap; align-items:center; color:var(--mute); font-size:13px; margin-bottom:12px }
   .wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel) }
   table { width:100%; border-collapse:collapse; min-width:760px }
   th, td { text-align:right; padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap; font-variant-numeric:tabular-nums }
-  th:first-child, td:first-child { text-align:left }
+  th:first-child, td:first-child { text-align:left; position:sticky; left:0; background:var(--panel); z-index:1 }
+  td.l, th.l { text-align:left; white-space:normal }
+  td.err { position:static; max-width:none !important; white-space:normal }
   th { color:var(--mute); font-weight:500; font-size:12px; text-transform:uppercase; letter-spacing:.05em }
   tr:last-child td { border-bottom:0 }
   .pill { display:inline-block; padding:2px 10px; border-radius:999px; font-weight:600; font-size:12px }
   .go { background:#3ddc9722; color:var(--go) } .stop { background:#ff5d5d22; color:var(--stop) } .warn { background:#ffb54722; color:var(--warn) } .info { background:#6cb6ff22; color:var(--info) }
   .pos { color:var(--go) } .neg { color:var(--stop) } .mute { color:var(--mute) } a { color:var(--info) }
-  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:12px 0 }
+  td a, .bar a, li a, .legend a { display:inline-block; min-height:24px; line-height:24px }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:12px 0 }
   .card { border:1px solid var(--line); border-radius:12px; background:var(--panel); padding:14px 16px }
-  .card b { display:block; font-size:22px; font-variant-numeric:tabular-nums } .card span { color:var(--mute); font-size:12px }
-  .lookup { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 8px }
-  input, select, button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit }
-  input { flex:1; min-width:260px } button { cursor:pointer; background:var(--text); color:var(--bg); font-weight:600; border:0 }
+  .card b { display:block; font-size:22px; font-variant-numeric:tabular-nums } .card > span { color:var(--mute); font-size:12px }
+  .card svg { display:block; width:100%; height:40px; color:var(--info) }
+  .lookup { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:16px 0 8px }
+  input, select, button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; min-height:36px }
+  input[type=text], input[type=number] { flex:1; min-width:0; width:100%; max-width:420px } button { cursor:pointer; background:var(--text); color:var(--bg); font-weight:600; border:0 }
+  button.small { padding:2px 10px; min-height:28px; font-size:12px }
+  label.chk { display:inline-flex; gap:6px; align-items:center; color:var(--mute); font-size:13px; min-height:36px }
+  .banner { border:1px solid var(--stop); color:var(--stop); background:#ff5d5d18; border-radius:12px; padding:10px 14px; margin:0 0 12px }
+  .verdict { display:block; margin:0 0 12px } .verdict code { display:block; white-space:pre-wrap; word-break:break-word; color:var(--mute); font-size:12px; margin-top:4px }
+  .legend { color:var(--mute); font-size:12px; margin:8px 0 0 } .legend b { color:var(--text) }
+  ul.tl { list-style:none; padding:0; margin:8px 0 0; border:1px solid var(--line); border-radius:12px; background:var(--panel) }
+  ul.tl li { padding:8px 12px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:4px 12px; align-items:center } ul.tl li:last-child { border-bottom:0 }
   details { margin-top:16px; color:var(--mute) } details li { margin:4px 0 }
+  @media (max-width:600px) { .hs { display:none } table { min-width:0 } body { padding:24px 16px } th:first-child, td:first-child { white-space:normal; max-width:120px; box-shadow:1px 0 0 var(--line) } .cards { grid-template-columns:repeat(2,minmax(0,1fr)) } .card b { font-size:18px } }
 </style>
 </head>
 <body>
 <main>
   <h1>RAMBU<span>.</span></h1>
   <p class="sub">Fair prices for xStocks that know market sessions, halts, and dividends not yet folded into the multiplier, plus an LP profit-and-loss audit after LVR, split by Pyth market session.</p>
-  <nav><a href="#fair">FairPrice</a><a href="#chain">Onchain</a><a href="#lp">LP Audit</a><a href="#method">Method</a></nav>
+  <nav aria-label="Sections"><a href="#fair">FairPrice</a><a href="#lenders">Lenders</a><a href="#chain">Onchain</a><a href="#history">History</a><a href="#lp">LP Audit</a><a href="#method">Method</a></nav>
 
   <h2 id="fair">FairPrice</h2>
-  <p class="sub">Price per raw token: <code>(stock price + net dividend already ex but not yet in the multiplier) × mint multiplier</code>. Compared with a naive oracle (stock × multiplier), Chainlink (Jupiter Lend oracle), and the DEX price (Jupiter).</p>
-  <div class="bar" id="fairMeta">loading…</div>
+  <p class="sub">Price per raw token: <code>(stock price + net dividend already ex but not yet in the multiplier) × mint multiplier</code>. Compared with a naive oracle (stock × multiplier), Chainlink (Jupiter Lend oracle), Kamino's oracle, and the DEX price (Jupiter). Basis points are versus Fair.</p>
+  <div class="bar" id="fairMeta" role="status" aria-live="polite">loading…</div>
   <div class="wrap"><table>
-    <thead><tr><th>Token</th><th>Status</th><th>Session</th><th>Fair</th><th>Naive</th><th>Chainlink</th><th>DEX</th><th>Price source</th></tr></thead>
+    <thead><tr><th>Token</th><th>Status</th><th>Session</th><th>Fair</th><th class="hs">Naive</th><th>Chainlink</th><th>Kamino</th><th>DEX</th><th>Pyth quote</th><th class="hs">Price source</th></tr></thead>
     <tbody id="fairRows"></tbody>
   </table></div>
 
-  <h2 id="chain">Onchain status (Solana devnet)</h2>
-  <p class="sub">The keeper writes FairPrice and status into the <code>rambu</code> program. Lenders and vaults CPI <code>assert_tradable(price)</code>: it fails if the state is stale, the stock is halted, or the price is outside the band around FairPrice. Read live from devnet.</p>
-  <div class="bar" id="chainMeta">loading…</div>
+  <h3 id="lenders">Lender exposure</h3>
+  <p class="sub">What each lender's own oracle says the collateral is worth, versus Fair. <b>$ misvaluation</b> = |oracle − fair| / oracle × collateral: the dollars a liquidation engine would mis-price right now.</p>
+  <div class="bar" id="lendMeta"></div>
   <div class="wrap"><table>
-    <thead><tr><th>Token</th><th>assert_tradable</th><th>Code</th><th>FairPrice ref</th><th>Band</th><th>Updated</th><th>Account</th></tr></thead>
+    <thead><tr><th>Token</th><th>Lender</th><th class="hs">Oracle leg</th><th>Oracle price</th><th>vs Fair</th><th>Collateral</th><th>Borrowed</th><th>$ misvaluation</th><th>Suspended</th><th class="l">Flags</th></tr></thead>
+    <tbody id="lendRows"></tbody>
+  </table></div>
+
+  <h3>Same ticker, different wrapper</h3>
+  <p class="sub">xStocks and Ondo both wrap the same stock and fold dividends into a mint multiplier. <b>Lag</b> = days between the last ex-dividend date and the multiplier step (still counting while unstepped).</p>
+  <div class="wrap"><table>
+    <thead><tr><th>Ticker</th><th>Issuer</th><th>Multiplier</th><th>Last step</th><th>Last ex-date</th><th>Lag</th><th>Fair</th><th>DEX vs Fair</th><th>DEX liquidity</th></tr></thead>
+    <tbody id="wrapRows"></tbody>
+  </table></div>
+
+  <h2 id="chain">Onchain status (Solana devnet)</h2>
+  <p class="sub">The keeper writes FairPrice and status into the <code>rambu</code> program. Lenders and vaults CPI <code>assert_tradable(price)</code>: it fails if the state is stale, the stock is halted, a corporate event is pending, or the price is outside the band around FairPrice. Read live from devnet; ages use the cluster clock.</p>
+  <div class="bar" id="chainMeta" role="status" aria-live="polite">loading…</div>
+  <div id="chainBanner"></div>
+  <div class="wrap"><table>
+    <thead><tr><th>Token</th><th>At ref</th><th>Session</th><th>Code</th><th>Event</th><th>FairPrice ref</th><th>Band</th><th>Updated</th><th class="hs">Account</th></tr></thead>
     <tbody id="chainRows"></tbody>
   </table></div>
-  <div class="lookup">
-    <select id="cPick"></select><input id="cPrice" type="number" step="0.01" placeholder="liquidation price (USD per raw token)">
-    <button id="cGo">Would it pass?</button>
-  </div>
-  <div class="bar" id="cVerdict"></div>
+  <p class="legend">Codes: <b>DIV</b> dividend ex but not in the multiplier yet (informational, the ref already includes it) · <b>ISSR</b> issuer halt (xStocks paused the token) · <b>STAL</b> no fresh or trustworthy underlying price · <b>SPLT</b> split pending, multiplier not stepped · other codes are exchange halt codes (e.g. T1, LUDP). "At ref" is the JS mirror of <code>check()</code> at price = ref; the form below asks the program itself.</p>
+  <form class="lookup" id="cForm" novalidate>
+    <select id="cPick" aria-label="xStock to check"></select>
+    <input id="cPrice" type="number" step="any" min="0" inputmode="decimal" aria-label="Liquidation price in USD per raw token" placeholder="liquidation price (USD per raw token)">
+    <label class="chk"><input type="checkbox" id="cIgnore"> ignore_events (swap path)</label>
+    <button id="cGo" type="submit">Would it pass?</button>
+  </form>
+  <div class="verdict" id="cVerdict" role="status" aria-live="polite"></div>
 
-  <h2 id="lp">LP Audit: SPYx/USDC (Raydium CLMM)</h2>
+  <h2 id="history">Onchain history</h2>
+  <p class="sub">Every keeper <code>upsert</code> on devnet, decoded from the transactions themselves: the ref price per ticker and each status change, with the transaction that made it.</p>
+  <div class="bar" id="histMeta" role="status" aria-live="polite">loading…</div>
+  <div class="cards" id="histCards"></div>
+  <ul class="tl" id="histList"></ul>
+
+  <h2 id="lp">LP Audit: <span id="lpTitle">Raydium CLMM</span></h2>
   <p class="sub">Fees earned by LPs (after the protocol cut) minus LVR, the value arbitrageurs take because the pool lags the fair price. Positive means LPs beat a portfolio rebalanced at the fair price.</p>
+  <div class="lookup">
+    <select id="assetPick" aria-label="Asset"></select><select id="poolPick" aria-label="Pool"></select>
+  </div>
   <div class="bar" id="lpMeta"></div>
-  <select id="poolPick"></select>
   <div class="cards" id="lpCards"></div>
   <div class="wrap"><table>
-    <thead><tr><th>Session</th><th>Volume</th><th>LP fees</th><th>LVR</th><th>Net</th><th>Net/day (95% CI)</th><th>Gate</th></tr></thead>
+    <thead><tr><th>Session</th><th>Volume</th><th>LP fees</th><th>Toxic share</th><th>LVR</th><th>LVR bounds</th><th>Net</th><th>Net/day (95% CI)</th><th>Gate</th></tr></thead>
     <tbody id="lpRows"></tbody>
   </table></div>
 
-  <div class="lookup">
-    <input id="who" placeholder="Wallet address or Raydium position NFT mint">
-    <button id="go">Audit my position</button>
-  </div>
-  <div class="bar" id="whoMsg"></div>
+  <form class="lookup" id="whoForm" novalidate>
+    <input id="who" type="text" autocomplete="off" spellcheck="false" aria-label="Wallet address or Raydium position NFT mint" placeholder="Wallet address or Raydium position NFT mint">
+    <button id="go" type="submit">Audit my position</button>
+  </form>
+  <div class="bar" id="whoMsg" role="status" aria-live="polite"></div>
   <div class="wrap"><table>
-    <thead><tr><th>Position (NFT)</th><th>Pool</th><th>Price range</th><th>In range</th><th>Fees</th><th>LVR</th><th>Net</th></tr></thead>
-    <tbody id="posRows"><tr><td colspan="7" class="mute">Enter a wallet, or see the 10 largest positions below.</td></tr></tbody>
+    <thead><tr><th>Position (NFT)</th><th>Pool</th><th>Price range</th><th>In range</th><th>Fees (replay)</th><th>Uncollected (onchain, exact)</th><th>LVR</th><th>Net</th></tr></thead>
+    <tbody id="posRows"><tr><td colspan="8" class="mute">loading…</td></tr></tbody>
   </table></div>
 
   <details id="method"><summary>Method & limits</summary><ul>
     <li><b>Fee</b>: per-minute volume (GeckoTerminal) × pool fee rate × (1 − protocol + fund cut from AmmConfig), split pro-rata across in-range positions.</li>
     <li><b>LVR</b>: at every fair-price step, r² × L × √P / 4 (Milionis et al., CLMM in-range form). L is the summed liquidity of positions in range at that price; at the current tick it matches the pool's L exactly.</li>
-    <li><b>Historical fair price</b>: SPY 5-minute prints (regular + pre/post), overnight gaps filled with ES futures returns, bad prints that revert immediately dropped, × multiplier, + pending dividend. This source (Yahoo) is unofficial; Pyth Pro history replaces it once a key is set.</li>
+    <li><b>Historical fair price</b>: the reference path named by each pool's badge (e.g. SPY 5-minute prints with overnight gaps filled by ES futures, bad prints that revert immediately dropped) × multiplier + pending dividend.</li>
     <li><b>Sessions</b>: Pyth's session calendar (<code>market_session_schedule</code>), including holidays and early closes.</li>
-    <li><b>Gate</b>: passes when the lower bound of the 95% bootstrap CI of daily net is above zero.</li>
-    <li><b>Limits</b>: the position set is today's snapshot (no open/close history). LVR is not fee-adjusted (an upper bound). The pool's own minute prices are not used because they are noisy (±25/±50bp jumps).</li>
+    <li><b>Gate</b>: <i>pass</i> only when the lower bound of the 95% bootstrap CI of daily net is above zero <i>and</i> stays above zero with the single best day removed.</li>
+    <li><b>Uncollected fees</b>: read live from mainnet (PersonalPositionState + PoolState + both TickArrays, Uniswap-v3 fee-growth-inside), valued at the pool price with USDC at $1.</li>
+    <li><b>Would it pass?</b>: builds the real <code>assert_tradable</code> instruction and runs <code>simulateTransaction</code> on devnet with the keeper as fee payer (nothing is signed). The verdict, compute units and log line come from the program.</li>
+    <li><b>Limits</b>: the position set is today's snapshot (no open/close history). The pool's own minute prices are not used because they are noisy (±25/±50bp jumps).</li>
   </ul></details>
 </main>
 <script type="module">
 const $ = (id) => document.getElementById(id);
-const usd = (n, d = 0) => n == null ? "—" : (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const esc = (s) => String(s ?? "").replace(/[<>&"']/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&#39;" })[c]);
+const usd = (n, d = 0) => n == null || !Number.isFinite(n) ? "—" : (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 const sgn = (n) => `<span class="${n >= 0 ? "pos" : "neg"}">${usd(n)}</span>`;
-const bp = (x) => x == null ? "" : ` <span class="mute">${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)}bp</span>`;
+const bpTxt = (x) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)}bp`;
+const bp = (x) => x == null ? "" : ` <span class="mute">${bpTxt(x)}</span>`;
+const ago = (s) => s < 90 ? `${Math.round(s)} s ago` : s < 5400 ? `${Math.round(s / 60)} min ago` : s < 172800 ? `${Math.round(s / 3600)} h ago` : `${Math.round(s / 86400)} d ago`;
+const utc = (ms) => new Date(ms).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+const link = (href, text, label) => `<a target="_blank" rel="noopener" href="${esc(href)}"${label ? ` aria-label="${esc(label)}"` : ""}>${text}</a>`;
+const short = (k) => `${k.slice(0, 6)}…${k.slice(-4)}`;
+const errRow = (cols, msg, retry) => `<tr><td colspan="${cols}" class="l err"><span class="neg">${esc(msg)}</span>${retry ? ` <button type="button" class="small" data-retry="${retry}">Retry</button>` : ""}</td></tr>`;
 const STATUS = { Open: "go", Closed: "info", CorpActionPending: "warn", Halted: "stop", Stale: "warn" };
-const SESS_ID = { regular: "regular", pre: "pre-market", post: "post-market", overnight: "overnight", closed: "closed/weekend" };
+const SESS_ID = { regular: "regular", pre: "pre-market", post: "post-market", overnight: "overnight", closed: "closed/weekend", reopen: "reopen (first step after a gap)", unknown: "unknown" };
 
-async function loadFair() {
-  const { at, rows } = await (await fetch("data/fair.json")).json();
-  $("fairMeta").textContent = `${rows.length} tokens · snapshot ${new Date(at).toLocaleString("en-US")}`;
-  $("fairRows").innerHTML = rows.map((r) => `<tr>
-    <td><b>${r.symbol}</b><div class="mute">${r.reasons.join(", ") || "&nbsp;"}</div></td>
-    <td><span class="pill ${STATUS[r.status]}">${r.status}</span></td>
-    <td class="mute">${SESS_ID[r.session]}</td>
-    <td><b>${usd(r.fairRaw, 2)}</b>${r.pendingDiv ? `<div class="mute">+net div ${usd(r.pendingDiv.net, 4)}</div>` : ""}</td>
-    <td>${usd(r.naiveRaw, 2)}${bp(r.naiveErrBp)}</td>
-    <td>${usd(r.chainlinkRaw, 2)}${bp(r.chainlinkErrBp)}</td>
-    <td>${usd(r.dexRaw, 2)}${bp(r.dexErrBp)}</td>
-    <td class="mute">${r.px?.source ?? "—"}</td></tr>`).join("");
+// fetch JSON; non-2xx and JSON-RPC {error} both throw, with the HTTP status kept on the error
+async function getJSON(url, opt) {
+  const r = await fetch(url, opt);
+  const after = Number(r.headers.get("retry-after")) || 0; // public devnet sends Retry-After: 10 with a 429
+  let j; try { j = await r.json(); } catch { const e = new Error(`HTTP ${r.status}`); e.status = r.status; e.retryAfter = after; throw e; }
+  const bad = !r.ok ? (j?.error?.message ?? j?.error ?? j?.message ?? `HTTP ${r.status}`) : j?.error ? (j.error.message ?? String(j.error)) : null;
+  if (bad) { const e = new Error(`${bad}${r.ok ? "" : ` (HTTP ${r.status})`}`); e.status = r.ok ? j.error?.code : r.status; e.retryAfter = after; throw e; }
+  return j;
 }
-
-let sewa;
-const priceOfTick = (t, p) => Math.pow(1.0001, t) / 10 ** (p.dec1 - p.dec0);
-function renderPool(i) {
-  const p = sewa.pools[i], days = (p.to - p.from) / 864e5;
-  const tot = Object.values(p.bySession).reduce((a, b) => ({ f: a.f + b.feesUsd, l: a.l + b.lvrUsd, v: a.v + b.volUsd }), { f: 0, l: 0, v: 0 });
-  $("lpMeta").textContent = `${p.pool.id} · fee ${p.pool.feeRate * 1e4}bp · protocol cut ${p.pool.protocolCut * 100}% · ${p.positions} positions · ${days.toFixed(1)} days to ${new Date(p.to).toLocaleString("en-US")}`;
-  $("lpCards").innerHTML = [["Volume", usd(tot.v)], ["LP fees", usd(tot.f)], ["LVR", usd(tot.l)], ["LP net", sgn(tot.f - tot.l)]]
-    .map(([k, v]) => `<div class="card"><span>${k} (${days.toFixed(0)} days)</span><b>${v}</b></div>`).join("");
-  $("lpRows").innerHTML = Object.entries(p.bySession).map(([s, b]) => {
-    const g = p.gate[s], pass = g.lo > 0;
-    return `<tr><td>${SESS_ID[s]}</td><td>${usd(b.volUsd)}</td><td>${usd(b.feesUsd)}</td><td>${usd(b.lvrUsd)}</td><td>${sgn(b.feesUsd - b.lvrUsd)}</td>
-      <td>${sgn(g.meanDaily)} <span class="mute">[${usd(g.lo)}, ${usd(g.hi)}]</span></td><td><span class="pill ${pass ? "go" : "warn"}">${pass ? "pass" : "not yet"}</span></td></tr>`;
-  }).join("");
-}
-const posRow = (r, p) => {
-  const [nft, lo, hi, inr, fee, lvr] = r;
-  return `<tr><td><a target="_blank" rel="noopener" href="https://solscan.io/token/${nft}">${nft.slice(0, 6)}…${nft.slice(-4)}</a></td><td class="mute">${p.pool.id.slice(0, 6)} (${p.pool.feeRate * 1e4}bp)</td>
-    <td>${usd(priceOfTick(lo, p.pool), 2)} – ${usd(priceOfTick(hi, p.pool), 2)}</td><td>${inr}%</td><td>${usd(fee, 2)}</td><td>${usd(lvr, 2)}</td><td>${sgn(fee - lvr)}</td></tr>`;
-};
-function showTop() {
-  const p = sewa.pools[$("poolPick").value];
-  $("posRows").innerHTML = p.pos.slice(0, 10).map((r) => posRow(r, p)).join("");
-}
-
-async function rpc(method, params) {
-  const r = await fetch("https://api.mainnet-beta.solana.com", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
-  const j = await r.json(); if (j.error) throw new Error(j.error.message); return j.result;
-}
-async function lookup() {
-  const who = $("who").value.trim(); if (!who) return showTop();
-  $("whoMsg").textContent = "searching…";
-  const byNft = new Map(sewa.pools.flatMap((p) => p.pos.map((r) => [r[0], [r, p]])));
-  let mints = [who];
-  if (!byNft.has(who)) {
-    mints = [];
-    for (const prog of ["TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"]) {
-      const res = await rpc("getTokenAccountsByOwner", [who, { programId: prog }, { encoding: "jsonParsed" }]);
-      for (const a of res.value) { const i = a.account.data.parsed.info; if (i.tokenAmount.amount === "1" && i.tokenAmount.decimals === 0) mints.push(i.mint); }
+async function rpc(url, method, params) {
+  for (let i = 0; ; i++) {
+    try { return (await getJSON(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) })).result; }
+    catch (e) {
+      // ponytail: public RPCs rate-limit with Retry-After (10s on devnet), so wait that out; 1/2/4s never cleared it.
+      // Capped at 12s, 3 retries; a keyed RPC is the real fix.
+      if ((e.status === 429 || /too many|rate limit/i.test(e.message)) && i < 3) { await new Promise((s) => setTimeout(s, Math.min(12000, e.retryAfter ? e.retryAfter * 1000 + 500 : 1000 * 2 ** i))); continue; }
+      throw e;
     }
   }
-  const hits = mints.filter((m) => byNft.has(m)).map((m) => byNft.get(m));
-  $("whoMsg").textContent = hits.length ? `${hits.length} position(s) found` : "No active SPYx/USDC positions for this address.";
-  $("posRows").innerHTML = hits.map(([r, p]) => posRow(r, p)).join("") || `<tr><td colspan="7" class="mute">—</td></tr>`;
+}
+document.addEventListener("click", (e) => { const b = e.target.closest?.("[data-retry]"); if (b) RETRY[b.dataset.retry]?.(); });
+
+// ---------------- FairPrice board + lenders + wrappers ----------------
+let lend = null;
+async function loadLenders() { try { lend = await getJSON("data/lenders.json"); } catch (e) { lend = { error: e.message }; } return lend; }
+function kaminoOf(mint) {
+  const k = (lend?.lenders ?? []).filter((l) => l.protocol === "kamino" && l.mint === mint).sort((a, b) => b.collateralUsd - a.collateralUsd);
+  return k[0];
+}
+async function loadFair() {
+  let f;
+  try { f = await getJSON("data/fair.json"); }
+  catch (e) { $("fairMeta").textContent = `Snapshot unavailable (${e.message})`; $("fairRows").innerHTML = errRow(10, `Snapshot unavailable: data/fair.json (${e.message})`); return; }
+  await lendersP;
+  const ageH = (Date.now() - f.at) / 36e5;
+  $("fairMeta").innerHTML = `${f.rows.length} tokens · snapshot ${utc(f.at)} (${ago(ageH * 3600)})${ageH > 26 ? ` <span class="pill warn">snapshot older than 26 h</span>` : ""}${f.refresh ? ` · ${esc(f.refresh)}` : ""}`;
+  $("fairRows").innerHTML = f.rows.map((r) => {
+    const px = r.px, k = kaminoOf(r.mint);
+    const conf = px?.price && px.conf ? (px.conf / px.price) * 1e4 : null;
+    const q = px ? [conf != null ? `conf ${conf.toFixed(1)}bp` : null, px.publishers != null ? `${px.publishers} publishers` : null, px.session ? `pyth ${SESS_ID[px.session] ?? px.session}` : null].filter(Boolean).join(" · ") : "";
+    const why = [...(r.reasons ?? []), r.haltCode ? `onchain code ${r.haltCode}` : ""].filter(Boolean).join("; ") || "no issue";
+    return `<tr>
+    <td><b>${esc(r.symbol)}</b><div class="mute">${esc((r.reasons ?? []).join(", ")) || "&nbsp;"}</div></td>
+    <td><span class="pill ${STATUS[r.status] ?? "info"}" title="${esc(why)}" aria-label="${esc(`${r.status}: ${why}`)}">${esc(r.status)}</span></td>
+    <td class="mute">${esc(SESS_ID[r.session] ?? r.session)}</td>
+    <td><b>${usd(r.fairRaw, 2)}</b>${r.pendingDiv ? `<div class="mute">+net div ${usd(r.pendingDiv.net, 4)}</div>` : ""}</td>
+    <td class="hs">${usd(r.naiveRaw, 2)}${bp(r.naiveErrBp)}</td>
+    <td>${usd(r.chainlinkRaw, 2)}${bp(r.chainlinkErrBp)}</td>
+    <td>${k ? `${usd(k.priceRaw, 2)}${bp(k.errBp)}` : `<span class="mute">not listed</span>`}</td>
+    <td>${usd(r.dexRaw, 2)}${bp(r.dexErrBp)}</td>
+    <td class="mute">${px ? `${usd(px.price, 2)}<div>${esc(q) || "&nbsp;"}</div>` : "—"}</td>
+    <td class="mute hs">${esc(px?.source ?? "—")}</td></tr>`;
+  }).join("");
+}
+async function renderLenders() {
+  const l = await lendersP;
+  if (l.error) { $("lendMeta").textContent = `Snapshot unavailable (${l.error})`; $("lendRows").innerHTML = errRow(10, `Snapshot unavailable: data/lenders.json (${l.error})`); $("wrapRows").innerHTML = errRow(9, "Snapshot unavailable"); return; }
+  const rows = [...new Map(l.lenders.map((x) => [x.account, x])).values()]; // the snapshot lists a few reserves twice
+  const mis = rows.reduce((a, x) => a + (x.misvalUsd ?? 0), 0), coll = rows.reduce((a, x) => a + x.collateralUsd, 0);
+  $("lendMeta").innerHTML = `${rows.length} reserves · ${usd(coll)} xStock collateral · ${usd(mis)} mis-valued vs Fair · snapshot ${utc(l.at)} · flag band ±${l.bandBp}bp`;
+  rows.sort((a, b) => (b.misvalUsd ?? -1) - (a.misvalUsd ?? -1) || b.collateralUsd - a.collateralUsd);
+  $("lendRows").innerHTML = rows.map((x) => {
+    const where = x.protocol === "kamino" ? `Kamino ${short(x.market)}` : `Jupiter Lend ${x.market}`;
+    const errCls = x.errBp == null ? "mute" : Math.abs(x.errBp) > l.bandBp ? "neg" : "mute";
+    return `<tr><td><b>${esc(x.ticker)}</b></td><td class="l">${link(`https://solscan.io/account/${x.account}`, esc(where), `${where} reserve on Solscan`)}</td>
+      <td class="mute hs">${esc(x.leg)}</td><td>${usd(x.priceRaw, 2)}</td>
+      <td class="${errCls}">${x.errBp == null ? "no fair" : bpTxt(x.errBp)}</td><td>${usd(x.collateralUsd)}</td><td>${usd(x.borrowUsd)}</td>
+      <td>${x.misvalUsd == null ? "—" : usd(x.misvalUsd)}</td>
+      <td>${x.suspended == null ? "—" : `<span class="pill ${x.suspended ? "stop" : "info"}">${x.suspended ? "yes" : "no"}</span>`}</td>
+      <td class="l">${x.flags.map((g) => `<span class="pill warn">${esc(g)}</span>`).join(" ") || `<span class="mute">none</span>`}</td></tr>`;
+  }).join("") || errRow(10, "No lender reserves in the snapshot.");
+  const d = (t) => t ? new Date(t).toISOString().slice(0, 10) : "—";
+  $("wrapRows").innerHTML = (l.wrappers ?? []).map((w) => `<tr><td><b>${esc(w.ticker)}</b></td>
+    <td>${link(`https://solscan.io/token/${w.mint}`, w.issuer === "ondo" ? "Ondo" : "xStocks", `${w.issuer} ${w.ticker} mint on Solscan`)}${w.paused ? ` <span class="pill stop">paused</span>` : ""}</td>
+    <td>${w.multiplier.toFixed(6)}</td><td>${d(w.stepAt)}</td><td>${d(w.lastExAt)}</td>
+    <td>${w.lagDays == null ? `<span class="mute">—</span>` : `<span class="pill ${w.lagDays > 0 ? "warn" : "go"}">${w.lagDays} d</span>`}</td>
+    <td>${usd(w.fairRaw, 2)}</td><td>${w.dexBp == null ? "—" : bpTxt(w.dexBp)}</td><td>${usd(w.liquidityUsd)}</td></tr>`).join("") || errRow(9, "No wrapper data in the snapshot.");
 }
 
-async function loadSewa() {
-  sewa = await (await fetch("data/sewa.json")).json();
-  $("poolPick").innerHTML = sewa.pools.map((p, i) => `<option value="${i}">${p.pool.id.slice(0, 6)}… · fee ${p.pool.feeRate * 1e4}bp</option>`).join("");
-  $("poolPick").onchange = () => { renderPool($("poolPick").value); showTop(); };
-  renderPool(0); showTop();
-}
-// ---- onchain (devnet): StockState accounts of the rambu program, decoded by hand (118 bytes) ----
+// ---------------- onchain (devnet) ----------------
 const PROGRAM = "5REh2DxuEB5j8baJ4Sz2ZFP1WXwnPict8UuYwqPtVUdm", DEVNET = "https://api.devnet.solana.com";
+// api.mainnet-beta answers 403 to any request with a browser Origin; publicnode serves account reads to browsers.
+// ponytail: first endpoint that answers wins; a keyed RPC is the upgrade path for wallet scans.
+const MAINNETS = ["https://solana-rpc.publicnode.com", "https://api.mainnet-beta.solana.com"];
+const refused = (e) => e.status === 403 || /403|forbidden|blocked/i.test(e.message);
+async function mainnet(method, params) {
+  let last;
+  for (const u of MAINNETS) { try { return await rpc(u, method, params); } catch (e) { last = e; } }
+  throw last;
+}
 const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 const b58 = (bytes) => { let n = 0n; for (const b of bytes) n = n * 256n + BigInt(b); let s = ""; while (n > 0n) { s = B58[Number(n % 58n)] + s; n /= 58n; } for (const b of bytes) { if (b) break; s = "1" + s; } return s; };
-const txt = (b) => new TextDecoder().decode(b).replace(/ +$/, "");
+function unb58(s) {
+  let n = 0n;
+  for (const c of s) { const i = B58.indexOf(c); if (i < 0) throw new Error("invalid base58"); n = n * 58n + BigInt(i); }
+  const out = []; while (n > 0n) { out.unshift(Number(n & 255n)); n >>= 8n; }
+  for (const c of s) { if (c !== "1") break; out.unshift(0); }
+  return Uint8Array.from(out);
+}
+const isAddress = (s) => { try { return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(s) && unb58(s).length === 32; } catch { return false; } };
+const fromB64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const toB64 = (b) => btoa(String.fromCharCode(...b));
+const cat = (...p) => { const o = new Uint8Array(p.reduce((a, x) => a + x.length, 0)); let i = 0; for (const x of p) { o.set(x, i); i += x.length; } return o; };
+const utf8 = (s) => new TextEncoder().encode(s);
+const sha256 = async (...p) => new Uint8Array(await crypto.subtle.digest("SHA-256", cat(...p)));
+// ed25519 point test, same answer as curve25519-dalek decompress().is_some() (what find_program_address uses)
+const P = 2n ** 255n - 19n;
+const pw = (b, e) => { let r = 1n; b %= P; while (e > 0n) { if (e & 1n) r = r * b % P; b = b * b % P; e >>= 1n; } return r; };
+const Dd = (P - (121665n * pw(121666n, P - 2n)) % P) % P;
+function onCurve(k) {
+  let y = 0n; for (let i = 31; i >= 0; i--) y = (y << 8n) | BigInt(k[i]);
+  y = (y & ((1n << 255n) - 1n)) % P;
+  const y2 = y * y % P, x2 = ((y2 - 1n + P) % P) * pw((Dd * y2 + 1n) % P, P - 2n) % P;
+  return x2 === 0n || pw(x2, (P - 1n) / 2n) === 1n;
+}
+async function findPda(seeds, program) {
+  const s = seeds.map((x) => typeof x === "string" ? utf8(x) : x), prog = unb58(program);
+  for (let bump = 255; bump >= 0; bump--) { const h = await sha256(...s, Uint8Array.of(bump), prog, utf8("ProgramDerivedAddress")); if (!onCurve(h)) return b58(h); }
+  throw new Error("no PDA");
+}
+
+const txt = (b) => new TextDecoder().decode(b).replace(/[\0 ]+$/, "");
 const HALT = ["none", "hard halt", "volatility pause", "issuer halt"];
+const SESSION = ["unknown", "pre", "regular", "post", "overnight", "closed"];
+const EVENT = ["none", "merger", "tender offer", "delisting", "bankruptcy", "control change"];
+// StockState, 118 bytes; offsets as programs/rambu/src/lib.rs (and api/_rambu.ts decodeState)
 function decodeState(bytes, key) {
-  const v = new DataView(bytes.buffer, bytes.byteOffset); let o = 8;
-  const take = (n) => bytes.subarray(o, (o += n));
-  const s = { key, mint: b58(take(32)), ticker: txt(take(12)), session: bytes[o++], halt: bytes[o++], code: txt(take(4)) };
-  s.haltedAt = Number(v.getBigInt64(o, true)); o += 8; s.resumeAt = Number(v.getBigInt64(o, true)); o += 8;
-  s.event = bytes[o++]; take(20);
-  s.ref = Number(v.getBigUint64(o, true)) / 1e6; o += 8; s.band = v.getUint16(o, true); o += 2; s.maxAge = v.getUint32(o, true); o += 4;
-  s.updatedAt = Number(v.getBigInt64(o, true));
-  return s;
+  const v = new DataView(bytes.buffer, bytes.byteOffset, bytes.length), i64 = (o) => Number(v.getBigInt64(o, true));
+  const refE6 = Number(v.getBigUint64(95, true));
+  return { key, mint: b58(bytes.subarray(8, 40)), ticker: txt(bytes.subarray(40, 52)), session: bytes[52], halt: bytes[53], code: txt(bytes.subarray(54, 58)),
+    haltedAt: i64(58), resumeAt: i64(66), event: bytes[74], eventRef: txt(bytes.subarray(75, 95)), refE6, ref: refE6 / 1e6,
+    band: v.getUint16(103, true), maxAge: v.getUint32(105, true), updatedAt: i64(109) };
 }
-// mirrors programs/rambu/src/lib.rs::check
-function check(s, now, price) {
-  if (now - s.updatedAt > s.maxAge) return ["Stale", "warn"];
-  if (s.halt === 1 || s.halt === 3) return ["Halted", "stop"];
-  if (s.halt === 2 && !(s.resumeAt && now >= s.resumeAt)) return ["Paused", "warn"];
-  if (s.event) return ["EventPending", "info"];
-  if (s.ref && price && Math.abs(price - s.ref) * 1e4 > s.ref * s.band) return ["OutsideBand", "warn"];
-  return ["Tradable", "go"];
+// JS mirror of lib.rs::check (P3 semantics), only for the table pills; the form asks the program itself.
+function check(s, now, priceE6, ignoreEvents = false) {
+  if (now - s.updatedAt > s.maxAge) return "Stale";
+  if (s.halt === 2) { if (!(s.resumeAt !== 0 && now >= s.resumeAt)) return "Paused"; }
+  else if (s.halt !== 0) return "Halted";
+  if (!ignoreEvents && s.event !== 0) return "EventPending";
+  if (!priceE6) return ignoreEvents ? "Tradable" : "PriceRequired";
+  if (!s.refE6) return "NoReference";
+  if (Math.abs(priceE6 - s.refE6) * 1e4 > s.refE6 * s.band) return "OutsideBand";
+  return "Tradable";
 }
-let states = [];
-async function loadChain() {
-  const r = await fetch(DEVNET, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getProgramAccounts", params: [PROGRAM, { encoding: "base64", filters: [{ dataSize: 118 }] }] }) });
-  const res = (await r.json()).result ?? [];
-  states = res.map((a) => decodeState(Uint8Array.from(atob(a.account.data[0]), (c) => c.charCodeAt(0)), a.pubkey)).sort((a, b) => a.ticker.localeCompare(b.ticker));
-  const now = Date.now() / 1000, ago = (t) => { const d = now - t; return d < 5400 ? `${Math.round(d / 60)} min ago` : `${Math.round(d / 3600)} h ago`; };
-  $("chainMeta").innerHTML = `program <a target="_blank" rel="noopener" href="https://explorer.solana.com/address/${PROGRAM}?cluster=devnet">${PROGRAM.slice(0, 8)}…</a> · ${states.length} states · keeper refreshes every ~10 min`;
-  $("chainRows").innerHTML = states.map((s) => { const [l, c] = check(s, now, 0); return `<tr><td><b>${s.ticker}</b></td><td><span class="pill ${c}">${l}</span></td>
-    <td class="mute">${s.code || HALT[s.halt]}</td><td>${usd(s.ref, 2)}</td><td>±${s.band / 100}%</td><td class="mute">${ago(s.updatedAt)}</td>
-    <td><a target="_blank" rel="noopener" href="https://explorer.solana.com/address/${s.key}?cluster=devnet">${s.key.slice(0, 6)}…</a></td></tr>`; }).join("") || `<tr><td colspan="7" class="mute">No states yet.</td></tr>`;
-  $("cPick").innerHTML = states.map((s, i) => `<option value="${i}">${s.ticker}</option>`).join("");
-}
-$("cGo").onclick = () => {
-  const s = states[$("cPick").value]; if (!s) return;
-  const [l, c] = check(s, Date.now() / 1000, Number($("cPrice").value) || 0);
-  $("cVerdict").innerHTML = l === "Tradable" ? `<span class="pos">✓ assert_tradable passes: the liquidation would go through</span>` : `<span class="${c === "stop" ? "neg" : ""}">✗ assert_tradable fails with <b>${l}</b></span>`;
+const PILL = { Tradable: "go", Stale: "warn", Halted: "stop", Paused: "warn", EventPending: "info", OutsideBand: "warn", NoReference: "warn", PriceRequired: "info" };
+const ERR = ["Stale", "Halted", "Paused", "EventPending", "OutsideBand", "BadParam", "PriceRequired", "NoReference", "SessionClosed", "BadPayload", "FeedMismatch", "BadMint"];
+const errName = (err, logs) => {
+  if (!err) return null;
+  const c = err?.InstructionError?.[1]?.Custom;
+  if (c != null && ERR[c - 6000]) return `${ERR[c - 6000]} (${c})`;
+  return logs.map((l) => /Error Code: (\w+)/.exec(l)?.[1]).find(Boolean) ?? (c != null ? `Custom(${c})` : JSON.stringify(err));
 };
-loadChain().catch((e) => ($("chainMeta").textContent = "devnet read failed: " + e.message));
-$("go").onclick = () => lookup().catch((e) => ($("whoMsg").textContent = "error: " + e.message));
-loadFair().catch((e) => ($("fairMeta").textContent = "no data yet: run `npm run board` (" + e.message + ")"));
-loadSewa().catch((e) => ($("lpMeta").textContent = "no data yet: run `npm run audit` (" + e.message + ")"));
+const edgar = (s) => `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${encodeURIComponent(s.ticker.replace(/x$/, ""))}&type=&dateb=&owner=include&count=40`;
+
+async function clusterTime() { return (await rpc(DEVNET, "getBlockTime", [await rpc(DEVNET, "getSlot", [{ commitment: "confirmed" }])])) ?? Math.floor(Date.now() / 1000); }
+let states = [], chainNow = 0;
+async function loadChain() {
+  $("chainMeta").textContent = "reading devnet…"; $("chainBanner").innerHTML = "";
+  $("chainRows").innerHTML = `<tr><td colspan="9" class="mute">reading devnet…</td></tr>`;
+  try {
+    const [res, now] = await Promise.all([rpc(DEVNET, "getProgramAccounts", [PROGRAM, { encoding: "base64", commitment: "confirmed", filters: [{ dataSize: 118 }] }]), clusterTime()]);
+    states = res.map((a) => decodeState(fromB64(a.account.data[0]), a.pubkey)).sort((a, b) => a.ticker.localeCompare(b.ticker));
+    chainNow = now;
+  } catch (e) {
+    $("chainMeta").textContent = `devnet read failed: ${e.message}`;
+    $("chainRows").innerHTML = errRow(9, `Could not read devnet (${e.message}).`, "chain");
+    $("cPick").innerHTML = ""; return;
+  }
+  const now = chainNow, newest = Math.max(...states.map((s) => s.updatedAt));
+  $("chainMeta").innerHTML = `program ${link(`https://explorer.solana.com/address/${PROGRAM}?cluster=devnet`, `${PROGRAM.slice(0, 8)}…`, "rambu program on Solana Explorer")} · ${states.length} states · newest update ${states.length ? ago(now - newest) : "never"} (cluster time ${utc(now * 1000)})`;
+  if (states.length && states.every((s) => now - s.updatedAt > s.maxAge))
+    $("chainBanner").innerHTML = `<div class="banner" role="alert">Every onchain state is older than its max_age (newest ${ago(now - newest)}): the keeper is not pushing, so every <code>assert_tradable</code> fails with Stale.</div>`;
+  $("chainRows").innerHTML = states.map((s) => {
+    const v = check(s, now, s.refE6);
+    const ev = s.event ? `${esc(EVENT[s.event] ?? s.event)}${s.eventRef ? `<div>${link(edgar(s), esc(s.eventRef), `SEC EDGAR filings for ${s.ticker}, accession ${s.eventRef}`)}</div>` : ""}` : `<span class="mute">none</span>`;
+    return `<tr><td><b>${esc(s.ticker)}</b></td><td><span class="pill ${PILL[v] ?? "warn"}">${v}</span></td>
+    <td class="mute">${esc(SESS_ID[SESSION[s.session]] ?? SESSION[s.session] ?? s.session)}</td>
+    <td class="mute" title="${esc(HALT[s.halt] ?? s.halt)}">${esc(s.code || HALT[s.halt] || s.halt)}</td><td>${ev}</td>
+    <td>${usd(s.ref, 2)}</td><td>±${s.band / 100}%</td><td class="mute">${ago(now - s.updatedAt)} <span class="hs">(max ${s.maxAge / 60} min)</span></td>
+    <td class="hs">${link(`https://explorer.solana.com/address/${s.key}?cluster=devnet`, short(s.key), `${s.ticker} state account on Solana Explorer`)}</td></tr>`;
+  }).join("") || errRow(9, "No states onchain yet.");
+  const keep = $("cPick").value;
+  $("cPick").innerHTML = states.map((s, i) => `<option value="${i}">${esc(s.ticker)}</option>`).join("");
+  const i = states.findIndex((s) => s.ticker === keep); if (i >= 0) $("cPick").value = i;
+  prefill();
+}
+function prefill() { const s = states[$("cPick").value]; if (s) $("cPrice").value = s.ref ? String(s.ref) : ""; }
+$("cPick").onchange = prefill;
+
+// one-instruction legacy tx, same bytes as api/_rambu.ts legacyTx(payer, PROGRAM, [state ro], assert_tradable data)
+const shortvec = (n) => { const o = []; for (;;) { const b = n & 0x7f; n >>= 7; if (!n) { o.push(b); return Uint8Array.from(o); } o.push(b | 0x80); } };
+async function assertTradableTx(payer, state, priceE6, ignore) {
+  const data = cat((await sha256(utf8("global:assert_tradable"))).subarray(0, 8), (() => { const b = new Uint8Array(8); new DataView(b.buffer).setBigUint64(0, priceE6, true); return b; })(), Uint8Array.of(ignore ? 1 : 0));
+  // accounts: payer (signer, writable), state (readonly), program (readonly)
+  const msg = cat(Uint8Array.of(1, 0, 2), shortvec(3), unb58(payer), unb58(state), unb58(PROGRAM), new Uint8Array(32),
+    shortvec(1), Uint8Array.of(2), shortvec(1), Uint8Array.of(1), shortvec(data.length), data);
+  return cat(shortvec(1), new Uint8Array(64), msg);
+}
+let keeperKey;
+async function keeperPubkey() { // Registry { authority, keeper, bump }: keeper at 40..72
+  if (keeperKey) return keeperKey;
+  const a = await rpc(DEVNET, "getAccountInfo", [await findPda(["registry"], PROGRAM), { encoding: "base64" }]);
+  if (!a.value) throw new Error("rambu registry not initialized");
+  return (keeperKey = b58(fromB64(a.value.data[0]).subarray(40, 72)));
+}
+async function simulate() {
+  const out = $("cVerdict"), s = states[$("cPick").value], raw = $("cPrice").value.trim(), price = Number(raw);
+  if (!s) { out.innerHTML = `<span class="neg">No onchain state loaded. Retry the devnet read above.</span>`; return; }
+  if (!raw || !Number.isFinite(price) || price <= 0) { out.innerHTML = `<span class="neg">Enter a price > 0 (lender checks need a price; the program rejects 0 with PriceRequired).</span>`; return; }
+  const ignore = $("cIgnore").checked, priceE6 = BigInt(Math.round(price * 1e6));
+  out.textContent = `simulating assert_tradable(${s.ticker}, $${price}) on devnet…`;
+  try {
+    const payer = await keeperPubkey();
+    const tx = await assertTradableTx(payer, s.key, priceE6, ignore);
+    const sim = (await rpc(DEVNET, "simulateTransaction", [toB64(tx), { encoding: "base64", sigVerify: false, replaceRecentBlockhash: true, commitment: "confirmed" }])).value;
+    const logs = sim.logs ?? [], name = errName(sim.err, logs), cu = sim.unitsConsumed ?? 0;
+    const line = logs.find((l) => /Error Code:/.test(l)) ?? logs.find((l) => /consumed \d+ of/.test(l)) ?? "";
+    const mirror = check(s, chainNow || Math.floor(Date.now() / 1000), Number(priceE6), ignore);
+    const at = `${s.ticker} at ${usd(price, 2)}${ignore ? " (ignore_events)" : ""}`;
+    out.innerHTML = (name
+      ? `<span class="${/Halted|Stale/.test(name) ? "neg" : ""}">✗ ${esc(at)}: assert_tradable fails with <b>${esc(name)}</b>, the liquidation would revert · ${cu.toLocaleString("en-US")} compute units</span>`
+      : `<span class="pos">✓ ${esc(at)}: assert_tradable passes, the liquidation would go through · ${cu.toLocaleString("en-US")} compute units</span>`)
+      + ` <span class="mute">(simulated on devnet, fee payer = keeper ${short(payer)}${mirror !== (name?.split(" ")[0] ?? "Tradable") ? `; JS mirror says ${mirror}, the program is authoritative` : ""})</span>`
+      + (line ? `<code>${esc(line)}</code>` : "");
+  } catch (e) { out.innerHTML = `<span class="neg">Simulation failed: ${esc(e.message)}</span> <button type="button" class="small" data-retry="sim">Retry</button>`; }
+}
+$("cForm").onsubmit = (e) => { e.preventDefault(); simulate(); };
+
+// ---------------- onchain history (/api/history) ----------------
+function spark(pts) {
+  const W = 200, H = 40, xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const X = (x) => x1 === x0 ? W / 2 : 2 + (x - x0) / (x1 - x0) * (W - 4), Y = (y) => y1 === y0 ? H / 2 : H - 3 - (y - y0) / (y1 - y0) * (H - 6);
+  const path = pts.map((p, i) => `${i ? "L" : "M"}${X(p[0]).toFixed(1)} ${Y(p[1]).toFixed(1)}`).join("");
+  const last = pts.at(-1);
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="ref price from ${usd(ys[0], 2)} to ${usd(last[1], 2)}, ${pts.length} pushes"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/><circle cx="${X(last[0])}" cy="${Y(last[1])}" r="2.5" fill="currentColor"/></svg>`;
+}
+const runStatus = (r) => r.halt !== "none" ? [`${r.halt}${r.haltCode ? ` ${r.haltCode}` : ""}`, "stop"] : r.event !== "none" ? [`event: ${r.event}`, "info"] : r.haltCode === "DIV" ? ["dividend pending (DIV)", "warn"] : r.haltCode ? [r.haltCode, "warn"] : ["tradable", "go"];
+async function loadHistory() {
+  $("histMeta").textContent = "decoding keeper transactions from devnet…"; $("histCards").innerHTML = ""; $("histList").innerHTML = "";
+  let h;
+  try { h = await getJSON("/api/history?limit=150"); }
+  catch (e) { $("histMeta").innerHTML = `<span class="neg">History unavailable: /api/history (${esc(e.message)})</span> <button type="button" class="small" data-retry="hist">Retry</button>`; return; }
+  $("histMeta").innerHTML = `${h.pushes} keeper pushes decoded from the last ${h.scanned} program transactions${h.unreadable ? ` (${h.unreadable} unreadable)` : ""}${h.from ? ` · ${utc(h.from * 1000)} → ${utc(h.to * 1000)}` : ""} · ${link("/api/history?format=atom", "Atom feed", "Atom feed of status changes")}${h.unreadable ? ` <span class="pill warn">devnet RPC rate-limited ${h.unreadable} reads</span> <button type="button" class="small" data-retry="hist">Retry</button>` : ""}`;
+  $("histCards").innerHTML = Object.entries(h.prices ?? {}).sort().map(([t, pts]) =>
+    `<div class="card"><span>${esc(t)} ref · ${pts.length} pushes</span><b>${usd(pts.at(-1)[1], 2)}</b>${spark(pts)}<span>${usd(Math.min(...pts.map((p) => p[1])), 2)} – ${usd(Math.max(...pts.map((p) => p[1])), 2)}</span></div>`).join("");
+  const runs = Object.values(h.series ?? {}).flat().sort((a, b) => b.t - a.t).slice(0, 30);
+  $("histList").innerHTML = runs.map((r) => { const [st, c] = runStatus(r); return `<li><span class="mute">${utc(r.t * 1000)}</span><b>${esc(r.ticker)}</b><span class="pill ${c}">${esc(st)}</span>
+    <span class="mute">${esc(SESS_ID[r.session] ?? r.session)} · ${r.pushes} push${r.pushes > 1 ? "es" : ""} · ref ${usd(r.refFirst, 2)}${r.refLast !== r.refFirst ? ` → ${usd(r.refLast, 2)}` : ""}</span>
+    ${link(`https://explorer.solana.com/tx/${r.sig}?cluster=devnet`, `tx ${r.sig.slice(0, 8)}…`, `${r.ticker} status transaction on Solana Explorer`)}</li>`; }).join("") || `<li class="mute">No keeper pushes in the scanned window.</li>`;
+}
+
+// ---------------- LP audit ----------------
+let sewa;
+const priceOfTick = (t, p) => Math.pow(1.0001, t) / 10 ** (p.dec1 - p.dec0);
+const xsymOf = (p) => p.xsym ?? p.xsymbol ?? sewa.xsymbol ?? "xStock";
+// sewa.json pos rows (keeper/audit.ts): [nft, lower, upper, inRangePct, feesUsd, lvrUsd, owner, openedAt, owedUsd, replayFeesLifetime]
+const norm = (r) => Array.isArray(r)
+  ? { nft: r[0], lower: r[1], upper: r[2], inRangePct: r[3], feesUsd: r[4], lvrUsd: r[5], owner: r[6] ?? undefined, openedAt: r[7] ?? undefined, owedUsd: r[8] ?? undefined, lifetimeUsd: r[9] ?? undefined }
+  : { nft: r.nft, lower: r.lower, upper: r.upper, inRangePct: r.inRangePct ?? r.inRange, feesUsd: r.feesUsd ?? r.fees, lvrUsd: r.lvrUsd ?? r.lvr, owner: r.owner, owedUsd: r.owedUsd };
+// PASS only when the CI lower bound is > 0 and still > 0 without the best day (loExBest); unknown robustness never passes
+function gateOf(g) {
+  if (!g || !g.days) return ["no data", "info"];
+  if (g.lo > 0 && g.loExBest > 0 && g.robust !== false) return ["pass", "go"];
+  if (g.lo > 0 && g.loExBest > 0) return ["under 2 weeks of data", "warn"];
+  if (g.lo > 0) return g.loExBest == null ? ["CI > 0, best-day check missing", "warn"] : ["fails without best day", "warn"];
+  return ["not yet", "warn"];
+}
+// LVR bounds (audit.ts): lower = only positions open at each step (lvrGated), upper = today's positions and L all window (lvrUsd)
+const lvrBounds = (b) => b.lvrGated == null ? null : [Math.min(b.lvrGated, b.lvrUsd), Math.max(b.lvrGated, b.lvrUsd)];
+const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", WSOL = "So11111111111111111111111111111111111111112";
+const quoteOf = (p) => p.pool.mint1 === USDC ? "USDC" : p.pool.mint1 === WSOL ? "SOL" : short(p.pool.mint1);
+const px = (x, p) => quoteOf(p) === "USDC" ? usd(x, 2) : `${x.toFixed(4)} ${quoteOf(p)}`;
+const poolLinks = (id) => `${link(`https://solscan.io/account/${id}`, short(id), `pool ${id} on Solscan`)} ${link(`https://raydium.io/clmm/create-position/?pool_id=${id}`, "Raydium", `pool ${id} on Raydium`)}`;
+function renderPool(i) {
+  const p = sewa.pools[i], days = (p.to - p.from) / 864e5;
+  $("lpTitle").textContent = `${xsymOf(p)}/${quoteOf(p)} (Raydium CLMM)`;
+  const tot = Object.values(p.bySession).reduce((a, b) => ({ f: a.f + b.feesUsd, l: a.l + b.lvrUsd, v: a.v + b.volUsd, x: b.arbFees == null || a.x == null ? null : a.x + b.arbFees }), { f: 0, l: 0, v: 0, x: 0 });
+  const bd = p.bounds, cal = p.calib;
+  $("lpMeta").innerHTML = `${poolLinks(p.pool.id)} · fee ${+(p.pool.feeRate * 1e4).toFixed(2)}bp · protocol cut ${+(p.pool.protocolCut * 100).toFixed(1)}% · ${p.positions} positions · ${days.toFixed(1)} days to ${utc(p.to)}`
+    + (p.refSource ? ` · <span class="pill info" title="reference path used for LVR${p.refVsPoolBp != null ? `; median |fair − pool candle| ${p.refVsPoolBp}bp` : ""}">ref: ${esc(p.refSource)}${p.refVsPoolBp != null ? ` · ${p.refVsPoolBp}bp vs pool` : ""}</span>` : "")
+    + (p.history ? ` · position tx history ${p.history.ok}/${p.history.ok + p.history.broken}` : "")
+    + (cal?.n ? ` · calibration: onchain uncollected ${usd(cal.owedUsd)} vs replay ${usd(cal.replayUsd)} on ${cal.n} positions opened in window (${cal.ratio}×)` : "")
+    + (sewa.dropped?.length ? ` · dropped: ${sewa.dropped.map((d) => `${short(d.id)} (${esc(d.reason)})`).join(", ")}` : "");
+  $("lpCards").innerHTML = [["Volume", usd(tot.v)], ["LP fees", usd(tot.f)], ["LVR", usd(tot.l)], ["LP net", sgn(tot.f - tot.l)],
+    ...(bd ? [["LVR bounds", `${usd(Math.min(bd.lvrOpenGated, bd.lvrTodayL))} – ${usd(Math.max(bd.lvrOpenGated, bd.lvrTodayL))}`]] : []),
+    ...(tot.x != null && tot.f ? [["Toxic share of fees", `${(tot.x / tot.f * 100).toFixed(0)}%`]] : [])]
+    .map(([k, v]) => `<div class="card"><span>${k} (${days.toFixed(0)} days)</span><b>${v}</b></div>`).join("");
+  $("lpRows").innerHTML = Object.entries(p.bySession).map(([s, b]) => {
+    const g = p.gate?.[s], [gl, gc] = gateOf(g), lb = lvrBounds(b);
+    return `<tr><td>${SESS_ID[s] ?? esc(s)}</td><td>${usd(b.volUsd)}</td><td>${usd(b.feesUsd)}</td>
+      <td title="fees paid by arbitrage flow (arbFees) / all LP fees">${b.arbFees == null || !b.feesUsd ? `<span class="mute">—</span>` : `${Math.min(100, b.arbFees / b.feesUsd * 100).toFixed(0)}%`}</td>
+      <td>${usd(b.lvrUsd)}</td><td>${lb ? `[${usd(lb[0])}, ${usd(lb[1])}]` : `<span class="mute">—</span>`}</td><td>${sgn(b.feesUsd - b.lvrUsd)}</td>
+      <td>${g ? `${sgn(g.meanDaily)} <span class="mute">[${usd(g.lo)}, ${usd(g.hi)}]</span>` : "—"}</td><td><span class="pill ${gc}" title="${g?.loExBest != null ? `CI low without best day ${usd(g.loExBest)}` : ""}">${gl}</span></td></tr>`;
+  }).join("");
+}
+const posRow = (r, p, owed) => {
+  const inSnap = r.feesUsd != null;
+  const ow = owed?.usd != null ? `<b>${usd(owed.usd, 2)}</b><div class="mute">${esc(owed.txt)}</div>` : owed?.txt ? `<span class="mute">${esc(owed.txt)}</span>` : r.owedUsd != null ? `${usd(r.owedUsd, 2)}<div class="mute">at snapshot</div>` : `<span class="mute">—</span>`;
+  return `<tr><td>${link(`https://solscan.io/token/${r.nft}`, short(r.nft), `position NFT ${r.nft} on Solscan`)}${owed?.now ? `<div class="mute">${owed.now}</div>` : ""}</td>
+    <td class="mute">${poolLinks(p.pool.id)} <span>(${+(p.pool.feeRate * 1e4).toFixed(2)}bp)</span></td>
+    <td>${px(priceOfTick(r.lower, p.pool), p)} – ${px(priceOfTick(r.upper, p.pool), p)}</td>
+    <td>${inSnap ? `${r.inRangePct}%` : "—"}</td><td>${inSnap ? usd(r.feesUsd, 2) : `<span class="mute">opened after snapshot</span>`}</td><td>${ow}</td>
+    <td>${inSnap ? usd(r.lvrUsd, 2) : "—"}</td><td>${inSnap ? sgn(r.feesUsd - r.lvrUsd) : "—"}</td></tr>`;
+};
+const curPools = () => sewa.pools.map((p, i) => [p, i]).filter(([p]) => xsymOf(p) === $("assetPick").value);
+function showTop() {
+  if (!sewa) return;
+  const p = sewa.pools[$("poolPick").value];
+  $("posRows").innerHTML = p.pos.slice(0, 10).map((r) => posRow(norm(r), p)).join("");
+}
+
+// ---- Raydium CLMM live read (mainnet): uncollected fees, u128 wrapping Q64.64 fee growth ----
+const CLMM = "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK";
+const U128 = 1n << 128n, wrap = (x) => ((x % U128) + U128) % U128;
+const u128 = (b, o) => { let x = 0n; for (let i = 15; i >= 0; i--) x = (x << 8n) | BigInt(b[o + i]); return x; };
+const u64 = (b, o) => new DataView(b.buffer, b.byteOffset).getBigUint64(o, true);
+const i32 = (b, o) => new DataView(b.buffer, b.byteOffset).getInt32(o, true);
+function feeGrowthInside(cur, lower, upper, global, outLower, outUpper) {
+  const below = cur >= lower ? outLower : wrap(global - outLower), above = cur < upper ? outUpper : wrap(global - outUpper);
+  return wrap(global - below - above);
+}
+const owedDelta = (inside, last, L) => (wrap(inside - last) * L) >> 64n;
+const beI32 = (n) => { const b = new Uint8Array(4); new DataView(b.buffer).setInt32(0, n, false); return b; };
+async function multi(keys) {
+  const out = [];
+  for (let i = 0; i < keys.length; i += 100) out.push(...(await mainnet("getMultipleAccounts", [keys.slice(i, i + 100), { encoding: "base64" }])).value.map((a) => a ? fromB64(a.data[0]) : null));
+  return out;
+}
+// PersonalPositionState ["position", nft]: pool 41, lower 73, upper 77, L 81, feeGrowthInsideLast0/1 97/113, owed0/1 129/137
+async function livePositions(nfts) {
+  const ids = new Set(sewa.pools.map((p) => p.pool.id));
+  const pdas = await Promise.all(nfts.map((m) => findPda(["position", unb58(m)], CLMM)));
+  const acc = await multi(pdas);
+  const live = acc.map((b, i) => b && b.length === 281 && ids.has(b58(b.subarray(41, 73)))
+    ? { nft: nfts[i], pool: b58(b.subarray(41, 73)), lower: i32(b, 73), upper: i32(b, 77), L: u128(b, 81), last0: u128(b, 97), last1: u128(b, 113), owed0: u64(b, 129), owed1: u64(b, 137) } : null).filter(Boolean);
+  if (!live.length) return [];
+  const poolIds = [...new Set(live.map((x) => x.pool))], pb = new Map();
+  (await multi(poolIds)).forEach((b, i) => pb.set(poolIds[i], b));
+  const start = (t, sp) => Math.floor(t / (60 * sp)) * 60 * sp;
+  const plan = await Promise.all(live.map(async (x) => {
+    const sp = new DataView(pb.get(x.pool).buffer, pb.get(x.pool).byteOffset).getUint16(235, true);
+    return { sp, lo: await findPda(["tick_array", unb58(x.pool), beI32(start(x.lower, sp))], CLMM), hi: await findPda(["tick_array", unb58(x.pool), beI32(start(x.upper, sp))], CLMM) };
+  }));
+  const taKeys = [...new Set(plan.flatMap((q) => [q.lo, q.hi]))], ta = new Map();
+  (await multi(taKeys)).forEach((b, i) => ta.set(taKeys[i], b));
+  // TickArrayState: start 40, ticks[60] from 44, 168 bytes each; fee_growth_outside_0/1 at +36/+52
+  const outside = (a, tick, sp) => { if (!a) throw new Error("tick array missing"); const o = 44 + ((tick - i32(a, 40)) / sp) * 168; if (i32(a, o) !== tick) throw new Error(`tick ${tick} not initialized`); return [u128(a, o + 36), u128(a, o + 52)]; };
+  return live.map((x, k) => {
+    const b = pb.get(x.pool), p = sewa.pools.find((q) => q.pool.id === x.pool), cur = i32(b, 269), sq = Number(u128(b, 253)) / 2 ** 64;
+    const px0 = sq * sq * 10 ** (p.pool.dec0 - p.pool.dec1), now = cur >= x.lower && cur < x.upper ? "in range now" : "out of range now";
+    try {
+      const { sp, lo, hi } = plan[k], [ol0, ol1] = outside(ta.get(lo), x.lower, sp), [ou0, ou1] = outside(ta.get(hi), x.upper, sp);
+      const o0 = x.owed0 + owedDelta(feeGrowthInside(cur, x.lower, x.upper, u128(b, 277), ol0, ou0), x.last0, x.L);
+      const o1 = x.owed1 + owedDelta(feeGrowthInside(cur, x.lower, x.upper, u128(b, 293), ol1, ou1), x.last1, x.L);
+      const a0 = Number(o0) / 10 ** p.pool.dec0, a1 = Number(o1) / 10 ** p.pool.dec1;
+      return { ...x, p, now, usd: quoteOf(p) === "USDC" ? a0 * px0 + a1 : null, txt: `${a0.toFixed(4)} ${xsymOf(p)} + ${a1.toFixed(quoteOf(p) === "USDC" ? 2 : 4)} ${quoteOf(p)}` }; // ponytail: USDC valued at $1
+    } catch (e) { return { ...x, p, now, usd: null, txt: `uncollected unavailable: ${e.message}` }; }
+  });
+}
+const RPC_403 = "Public RPC refuses large wallets. Paste the position NFT mint instead.";
+async function lookup() {
+  const who = $("who").value.trim(), msg = $("whoMsg");
+  if (!who) { msg.textContent = ""; return showTop(); }
+  if (!isAddress(who)) { msg.innerHTML = `<span class="neg">Not a valid Solana address (base58, 32 bytes).</span>`; return showTop(); }
+  $("posRows").innerHTML = `<tr><td colspan="8" class="mute">searching mainnet…</td></tr>`;
+  msg.textContent = "searching…";
+  const snap = new Map(sewa.pools.flatMap((p) => p.pos.map((r) => { const n = norm(r); return [n.nft, [n, p]]; })));
+  const nfts = new Set([who, ...[...snap.values()].filter(([r]) => r.owner === who).map(([r]) => r.nft)]);
+  let note = "";
+  if (!snap.has(who)) {
+    try {
+      for (const prog of ["TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"]) {
+        const res = await mainnet("getTokenAccountsByOwner", [who, { programId: prog }, { encoding: "jsonParsed" }]);
+        for (const a of res.value) { const i = a.account.data.parsed.info; if (i.tokenAmount.amount === "1" && i.tokenAmount.decimals === 0) nfts.add(i.mint); }
+      }
+    } catch (e) {
+      if (refused(e)) note = RPC_403; // still check `who` itself as a position NFT and any snapshot owner match
+      else throw e;
+    }
+  }
+  const live = await livePositions([...nfts]);
+  const rows = new Map(live.map((x) => [x.nft, posRow(snap.get(x.nft)?.[0] ?? { nft: x.nft, lower: x.lower, upper: x.upper }, x.p, x)]));
+  for (const n of nfts) if (!rows.has(n) && snap.has(n)) { const [r, p] = snap.get(n); rows.set(n, posRow(r, p, { txt: "closed or moved since the snapshot" })); }
+  if (!rows.size && note) msg.innerHTML = `<span class="neg">${note}</span>`;
+  else msg.textContent = (rows.size ? `${rows.size} position(s) in the audited pools · uncollected fees read live from mainnet` : "No positions in the audited pools for this address.")
+    + (note ? " · matched by the snapshot's owner index; the public RPC refused the live wallet scan, so positions opened since are not listed" : "");
+  $("posRows").innerHTML = [...rows.values()].join("") || `<tr><td colspan="8" class="mute">—</td></tr>`;
+}
+$("whoForm").onsubmit = (e) => { e.preventDefault(); lookup().catch((err) => { $("whoMsg").innerHTML = `<span class="neg">Lookup failed: ${esc(err.message)}</span>`; $("posRows").innerHTML = `<tr><td colspan="8" class="mute">—</td></tr>`; }); };
+
+async function loadSewa() {
+  try { sewa = await getJSON("data/sewa.json"); }
+  catch (e) { $("lpMeta").textContent = `Snapshot unavailable (${e.message})`; $("lpRows").innerHTML = errRow(9, `Snapshot unavailable: data/sewa.json (${e.message})`); $("posRows").innerHTML = errRow(8, "Snapshot unavailable"); return; }
+  const assets = [...new Set(sewa.pools.map(xsymOf))];
+  $("assetPick").innerHTML = assets.map((a) => `<option>${esc(a)}</option>`).join("");
+  const pools = () => { $("poolPick").innerHTML = curPools().map(([p, i]) => `<option value="${i}">${p.pool.id.slice(0, 6)}… · fee ${+(p.pool.feeRate * 1e4).toFixed(2)}bp</option>`).join(""); };
+  $("assetPick").onchange = () => { pools(); renderPool($("poolPick").value); showTop(); };
+  $("poolPick").onchange = () => { renderPool($("poolPick").value); showTop(); };
+  pools(); renderPool($("poolPick").value); showTop();
+}
+
+const RETRY = { chain: loadChain, hist: loadHistory, sim: simulate };
+const lendersP = loadLenders();
+loadFair(); renderLenders(); loadChain(); loadHistory(); loadSewa();
 </script>
 </body>
 </html>
