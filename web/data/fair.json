@@ -1,5 +1,5 @@
 {
- "at": 1790404256231,
+ "at": 1790492305527,
  "refresh": "daily snapshot; onchain devnet every ~1-10 min",
  "rows": [
   {
@@ -15,7 +15,7 @@
    "px": {
     "price": 158.9155,
     "conf": 0,
-    "publishTime": 1790404068964,
+    "publishTime": 1790491996937,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": false
    },
@@ -24,10 +24,10 @@
    "fairRaw": 158.9155,
    "naiveRaw": 158.9155,
    "chainlinkRaw": null,
-   "dexRaw": 157.7935006014672,
+   "dexRaw": 160.68314537673572,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -70.60352190521368
+   "dexErrBp": 111.23177894766245
   },
   {
    "symbol": "CRCLx",
@@ -42,7 +42,7 @@
    "px": {
     "price": 87.37,
     "conf": 0,
-    "publishTime": 1790404067165,
+    "publishTime": 1790491991629,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": false
    },
@@ -51,10 +51,10 @@
    "fairRaw": 87.37,
    "naiveRaw": 87.37,
    "chainlinkRaw": null,
-   "dexRaw": 87.48206766387008,
+   "dexRaw": 89.84144409258089,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 12.826789958804152
+   "dexErrBp": 282.871018951687
   },
   {
    "symbol": "QQQx",
@@ -82,10 +82,10 @@
    "fairRaw": 747.9008997678105,
    "naiveRaw": 747.9008997678105,
    "chainlinkRaw": 747.8203222449159,
-   "dexRaw": 745.8774936329852,
+   "dexRaw": 746.9849999557256,
    "naiveErrBp": 0,
    "chainlinkErrBp": -1.0773823499832247,
-   "dexErrBp": -27.054468519205344
+   "dexErrBp": -12.246272365353805
   },
   {
    "symbol": "SPYx",
@@ -102,7 +102,7 @@
    "px": {
     "price": 771.35,
     "conf": 0,
-    "publishTime": 1790403967023,
+    "publishTime": 1790492060733,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": false
    },
@@ -116,10 +116,10 @@
    "fairRaw": 777.0877824398686,
    "naiveRaw": 775.757926076802,
    "chainlinkRaw": 776.4385434054757,
-   "dexRaw": 773.4803882661607,
+   "dexRaw": 773.4754549410828,
    "naiveErrBp": -17.113335109852912,
    "chainlinkErrBp": -8.354770838816528,
-   "dexErrBp": -46.42196486967731
+   "dexErrBp": -46.485449654657394
   },
   {
    "symbol": "HOODx",
@@ -134,7 +134,7 @@
    "px": {
     "price": 118.9983,
     "conf": 0,
-    "publishTime": 1790404075164,
+    "publishTime": 1790492030234,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": false
    },
@@ -143,10 +143,10 @@
    "fairRaw": 118.9983,
    "naiveRaw": 118.9983,
    "chainlinkRaw": null,
-   "dexRaw": 117.63361496433156,
+   "dexRaw": 118.99486212822849,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -114.68105306281173
+   "dexErrBp": -0.2889009146778143
   },
   {
    "symbol": "TSLAx",
@@ -174,10 +174,10 @@
    "fairRaw": 372.50999,
    "naiveRaw": 372.50999,
    "chainlinkRaw": 372.51,
-   "dexRaw": 371.4918608563863,
+   "dexRaw": 371.53900347540747,
    "naiveErrBp": 0,
    "chainlinkErrBp": 0.00026844917622170783,
-   "dexErrBp": -27.331593002746235
+   "dexErrBp": -26.066053277995493
   },
   {
    "symbol": "GOOGLx",
@@ -192,7 +192,7 @@
    "px": {
     "price": 344.0085,
     "conf": 0,
-    "publishTime": 1790404058964,
+    "publishTime": 1790492048830,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": false
    },
@@ -201,10 +201,10 @@
    "fairRaw": 344.8262942273855,
    "naiveRaw": 344.8262942273855,
    "chainlinkRaw": null,
-   "dexRaw": 344.9634345971317,
+   "dexRaw": 343.86864539497606,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 3.977085623747545
+   "dexErrBp": -27.771920194055166
   },
   {
    "symbol": "METAx",
@@ -219,7 +219,7 @@
    "px": {
     "price": 747.82,
     "conf": 0,
-    "publishTime": 1790404075565,
+    "publishTime": 1790492270559,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": false
    },
@@ -228,10 +228,10 @@
    "fairRaw": 749.9524411310139,
    "naiveRaw": 749.9524411310139,
    "chainlinkRaw": null,
-   "dexRaw": 746.2517591098613,
+   "dexRaw": 750.7048767913756,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -49.345556040480965
+   "dexErrBp": 10.033111689415897
   },
   {
    "symbol": "NVDAx",
@@ -246,7 +246,7 @@
    "px": {
     "price": 224.9975,
     "conf": 0,
-    "publishTime": 1790404078565,
+    "publishTime": 1790492229558,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": false
    },
@@ -255,10 +255,10 @@
    "fairRaw": 225.38026502724966,
    "naiveRaw": 225.38026502724966,
    "chainlinkRaw": 225.35772675032163,
-   "dexRaw": 225.19074479385299,
+   "dexRaw": 225.10977017611037,
    "naiveErrBp": 0,
    "chainlinkErrBp": -1.000011111235155,
-   "dexErrBp": -8.408909865013081
+   "dexErrBp": -12.00170969302028
   },
   {
    "symbol": "AAPLx",
@@ -273,7 +273,7 @@
    "px": {
     "price": 341.4603,
     "conf": 0,
-    "publishTime": 1790403969422,
+    "publishTime": 1790492184521,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": false
    },
@@ -282,10 +282,10 @@
    "fairRaw": 342.57653800255025,
    "naiveRaw": 342.57653800255025,
    "chainlinkRaw": null,
-   "dexRaw": 341.41687212319295,
+   "dexRaw": 341.11187319150207,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -33.85129308968282
+   "dexErrBp": -42.754381826267675
   }
  ]
 }
