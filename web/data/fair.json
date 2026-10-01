@@ -1,5 +1,5 @@
 {
- "at": 1790752380420,
+ "at": 1790840241084,
  "refresh": "daily snapshot; onchain devnet every ~1-10 min",
  "rows": [
   {
@@ -8,28 +8,26 @@
    "mint": "XsP7xzNPvEHS1m6qfanPUGjNmdnmsLKEoNAnHjdxxyZ",
    "session": "overnight",
    "issuerPeriod": "overnight",
-   "status": "Stale",
-   "reasons": [
-    "no fresh underlying price"
-   ],
-   "haltCode": "STAL",
+   "status": "Open",
+   "reasons": [],
+   "haltCode": "",
    "mOnchain": 1,
    "px": {
-    "price": 155.84,
+    "price": 153.2,
     "conf": 0,
-    "publishTime": 1790752151184,
+    "publishTime": 1790840128445,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
-    "stale": true
+    "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 155.84,
-   "fairRaw": 155.84,
-   "naiveRaw": 155.84,
+   "fairUi": 153.2,
+   "fairRaw": 153.2,
+   "naiveRaw": 153.2,
    "chainlinkRaw": null,
-   "dexRaw": 153.94202868077403,
+   "dexRaw": 153.5853236718248,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -121.78974071008541
+   "dexErrBp": 25.151675706580612
   },
   {
    "symbol": "CRCLx",
@@ -44,21 +42,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 83.95,
+    "price": 81.78,
     "conf": 0,
-    "publishTime": 1790752188302,
+    "publishTime": 1790840046805,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 83.95,
-   "fairRaw": 83.95,
-   "naiveRaw": 83.95,
+   "fairUi": 81.78,
+   "fairRaw": 81.78,
+   "naiveRaw": 81.78,
    "chainlinkRaw": null,
-   "dexRaw": 83.67514854682277,
+   "dexRaw": 82.42404734432336,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -32.73989912772279
+   "dexErrBp": 78.7536493425467
   },
   {
    "symbol": "QQQx",
@@ -71,25 +69,25 @@
    "haltCode": "",
    "mOnchain": 1.0034560758968376,
    "px": {
-    "price": 738.15,
-    "conf": 0.04,
-    "publishTime": 1790752378200,
+    "price": 743.825,
+    "conf": 0.075,
+    "publishTime": 1790840238400,
     "source": "pyth-pro",
     "publishers": 6,
     "session": "overnight",
-    "bid": 738.11,
-    "ask": 738.17,
+    "bid": 743.79,
+    "ask": 743.89,
     "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 738.15,
-   "fairRaw": 740.7011024232506,
-   "naiveRaw": 740.7011024232506,
-   "chainlinkRaw": 740.7863961897019,
-   "dexRaw": 741.0188372978178,
+   "fairUi": 743.825,
+   "fairRaw": 746.3957156539652,
+   "naiveRaw": 746.3957156539652,
+   "chainlinkRaw": 746.8121499254624,
+   "dexRaw": 748.4317528642076,
    "naiveErrBp": 0,
-   "chainlinkErrBp": 1.1515274673179476,
-   "dexErrBp": 4.289650353261898
+   "chainlinkErrBp": 5.579269317379509,
+   "dexErrBp": 27.278254249603062
   },
   {
    "symbol": "SPYx",
@@ -97,18 +95,18 @@
    "mint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
    "session": "overnight",
    "issuerPeriod": "overnight",
-   "status": "Stale",
+   "status": "CorpActionPending",
    "reasons": [
-    "no fresh underlying price"
+    "dividend ex, multiplier not stepped"
    ],
-   "haltCode": "STAL",
+   "haltCode": "DIV",
    "mOnchain": 1.005714560286254,
    "px": {
-    "price": 764.2,
+    "price": 762.63,
     "conf": 0,
-    "publishTime": 1790752138684,
+    "publishTime": 1790840137256,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
-    "stale": true
+    "stale": false
    },
    "pendingDiv": {
     "exDate": 1789689600000,
@@ -116,14 +114,14 @@
     "wht": 0.3,
     "net": 1.3223
    },
-   "fairUi": 765.5223000000001,
-   "fairRaw": 769.896923333822,
-   "naiveRaw": 768.5670669707554,
-   "chainlinkRaw": 770.1359816848019,
-   "dexRaw": 768.8670116298451,
-   "naiveErrBp": -17.27317414528695,
-   "chainlinkErrBp": 3.1050695714540666,
-   "dexErrBp": -13.377267433634099
+   "fairUi": 763.9523,
+   "fairRaw": 768.3179514741724,
+   "naiveRaw": 766.988095111106,
+   "chainlinkRaw": 767.8127810505407,
+   "dexRaw": 768.0799863754124,
+   "naiveErrBp": -17.308672282286828,
+   "chainlinkErrBp": -6.575017838155173,
+   "dexErrBp": -3.0972216424651755
   },
   {
    "symbol": "HOODx",
@@ -138,21 +136,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 117.5,
+    "price": 113.0099,
     "conf": 0,
-    "publishTime": 1790752188801,
+    "publishTime": 1790840046004,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 117.5,
-   "fairRaw": 117.5,
-   "naiveRaw": 117.5,
+   "fairUi": 113.0099,
+   "fairRaw": 113.0099,
+   "naiveRaw": 113.0099,
    "chainlinkRaw": null,
-   "dexRaw": 118.76859359354852,
+   "dexRaw": 113.14494821236198,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 107.96541221689493
+   "dexErrBp": 11.95012227795722
   },
   {
    "symbol": "TSLAx",
@@ -165,25 +163,25 @@
    "haltCode": "",
    "mOnchain": 1,
    "px": {
-    "price": 354.24,
-    "conf": 0.08004,
-    "publishTime": 1790752379000,
+    "price": 356.56,
+    "conf": 0.045,
+    "publishTime": 1790840239400,
     "source": "pyth-pro",
     "publishers": 7,
     "session": "overnight",
-    "bid": 354.19,
-    "ask": 354.32,
+    "bid": 356.55976,
+    "ask": 356.57,
     "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 354.24,
-   "fairRaw": 354.24,
-   "naiveRaw": 354.24,
-   "chainlinkRaw": 354.33500000000004,
-   "dexRaw": 354.2144085982931,
+   "fairUi": 356.56,
+   "fairRaw": 356.56,
+   "naiveRaw": 356.56,
+   "chainlinkRaw": 356.805,
+   "dexRaw": 356.6599980268241,
    "naiveErrBp": 0,
-   "chainlinkErrBp": 2.6817976513116015,
-   "dexErrBp": -0.7224311683295959
+   "chainlinkErrBp": 6.8712138209559015,
+   "dexErrBp": 2.8045217305394665
   },
   {
    "symbol": "GOOGLx",
@@ -198,21 +196,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.0023772500603487,
    "px": {
-    "price": 341.2,
+    "price": 349.39,
     "conf": 0,
-    "publishTime": 1790752219667,
+    "publishTime": 1790840102444,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 341.2,
-   "fairRaw": 342.01111772059096,
-   "naiveRaw": 342.01111772059096,
+   "fairUi": 349.39,
+   "fairRaw": 350.2205873985852,
+   "naiveRaw": 350.2205873985852,
    "chainlinkRaw": null,
-   "dexRaw": 341.3259852650338,
+   "dexRaw": 351.9561825284945,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -20.03246152123217
+   "dexErrBp": 49.55719887289156
   },
   {
    "symbol": "METAx",
@@ -220,28 +218,26 @@
    "mint": "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
    "session": "overnight",
    "issuerPeriod": "overnight",
-   "status": "Stale",
-   "reasons": [
-    "no fresh underlying price"
-   ],
-   "haltCode": "STAL",
+   "status": "Open",
+   "reasons": [],
+   "haltCode": "",
    "mOnchain": 1.0028515433272898,
    "px": {
-    "price": 743.3,
+    "price": 726.27,
     "conf": 0,
-    "publishTime": 1790752216106,
+    "publishTime": 1790840149159,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
-    "stale": true
+    "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 743.3,
-   "fairRaw": 745.4195521551744,
-   "naiveRaw": 745.4195521551744,
+   "fairUi": 726.27,
+   "fairRaw": 728.3409903723107,
+   "naiveRaw": 728.3409903723107,
    "chainlinkRaw": null,
-   "dexRaw": 741.5142349266883,
+   "dexRaw": 727.0717804342172,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -52.390861189446355
+   "dexErrBp": -17.42604020466665
   },
   {
    "symbol": "NVDAx",
@@ -249,28 +245,26 @@
    "mint": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
    "session": "overnight",
    "issuerPeriod": "overnight",
-   "status": "Stale",
-   "reasons": [
-    "no fresh underlying price"
-   ],
-   "haltCode": "STAL",
+   "status": "Open",
+   "reasons": [],
+   "haltCode": "",
    "mOnchain": 1.001701196801074,
    "px": {
-    "price": 228.3531,
+    "price": 229.6092,
     "conf": 0,
-    "publishTime": 1790752163184,
+    "publishTime": 1790840136757,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
-    "stale": true
+    "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 228.3531,
-   "fairRaw": 228.74157356323536,
-   "naiveRaw": 228.74157356323536,
-   "chainlinkRaw": 228.56317058008506,
-   "dexRaw": 228.66977587016999,
+   "fairUi": 229.6092,
+   "fairRaw": 229.99981043653716,
+   "naiveRaw": 229.99981043653716,
+   "chainlinkRaw": 230.81198976690348,
+   "dexRaw": 230.85293765092817,
    "naiveErrBp": 0,
-   "chainlinkErrBp": -7.799324817575615,
-   "dexErrBp": -3.1388125886755436
+   "chainlinkErrBp": 35.312173902439795,
+   "dexErrBp": 37.092518153463146
   },
   {
    "symbol": "AAPLx",
@@ -278,28 +272,26 @@
    "mint": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
    "session": "overnight",
    "issuerPeriod": "overnight",
-   "status": "Stale",
-   "reasons": [
-    "no fresh underlying price"
-   ],
-   "haltCode": "STAL",
+   "status": "Open",
+   "reasons": [],
+   "haltCode": "",
    "mOnchain": 1.0032690125398187,
    "px": {
-    "price": 330.2927,
+    "price": 334.25,
     "conf": 0,
-    "publishTime": 1790752106675,
+    "publishTime": 1790840151158,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
-    "stale": true
+    "stale": false
    },
    "pendingDiv": null,
-   "fairUi": 330.2927,
-   "fairRaw": 331.37243097811063,
-   "naiveRaw": 331.37243097811063,
+   "fairUi": 334.25,
+   "fairRaw": 335.3426674414344,
+   "naiveRaw": 335.3426674414344,
    "chainlinkRaw": null,
-   "dexRaw": 330.37332193363864,
+   "dexRaw": 335.2456512628579,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -30.150638709530718
+   "dexErrBp": -2.893046068866978
   }
  ]
 }
