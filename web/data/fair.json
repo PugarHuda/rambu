@@ -1,5 +1,5 @@
 {
- "at": 1791959739620,
+ "at": 1792045106284,
  "refresh": "daily snapshot; onchain devnet every ~1-10 min",
  "rows": [
   {
@@ -15,21 +15,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 152.51,
+    "price": 141.7124,
     "conf": 0,
-    "publishTime": 1791959591057,
+    "publishTime": 1792044947664,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 152.51,
-   "fairRaw": 152.51,
-   "naiveRaw": 152.51,
+   "fairUi": 141.7124,
+   "fairRaw": 141.7124,
+   "naiveRaw": 141.7124,
    "chainlinkRaw": null,
-   "dexRaw": 153.34457806821135,
+   "dexRaw": 140.41640947651493,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 54.72284231928137
+   "dexErrBp": -91.45216110129195
   },
   {
    "symbol": "CRCLx",
@@ -44,21 +44,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 84.379,
+    "price": 77.45,
     "conf": 0,
-    "publishTime": 1791959555750,
+    "publishTime": 1792044859435,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 84.379,
-   "fairRaw": 84.379,
-   "naiveRaw": 84.379,
+   "fairUi": 77.45,
+   "fairRaw": 77.45,
+   "naiveRaw": 77.45,
    "chainlinkRaw": null,
-   "dexRaw": 84.09110112004491,
+   "dexRaw": 77.21220382860339,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": -34.1197312074204
+   "dexErrBp": -30.703185461150582
   },
   {
    "symbol": "QQQx",
@@ -73,21 +73,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.0034560758968376,
    "px": {
-    "price": 742.8723,
+    "price": 722.1,
     "conf": 0,
-    "publishTime": 1791959590856,
+    "publishTime": 1792044831880,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-09-11)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 742.8723,
-   "fairRaw": 745.4397230504583,
-   "naiveRaw": 745.4397230504583,
-   "chainlinkRaw": 745.9491777001911,
-   "dexRaw": 746.5012847265674,
+   "fairUi": 722.1,
+   "fairRaw": 724.5956324051065,
+   "naiveRaw": 724.5956324051065,
+   "chainlinkRaw": 725.2629306955779,
+   "dexRaw": 725.6004517910399,
    "naiveErrBp": 0,
-   "chainlinkErrBp": 6.834283631251825,
-   "dexErrBp": 14.240744667657346
+   "chainlinkErrBp": 9.209250796289314,
+   "dexErrBp": 13.867312208302174
   },
   {
    "symbol": "SPYx",
@@ -102,9 +102,9 @@
    "haltCode": "STAL",
    "mOnchain": 1.005714560286254,
    "px": {
-    "price": 778.01,
+    "price": 769.6,
     "conf": 0,
-    "publishTime": 1791959590058,
+    "publishTime": 1792044944652,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": true
    },
@@ -114,14 +114,14 @@
     "wht": 0.3,
     "net": 1.3223
    },
-   "fairUi": 779.3323,
-   "fairRaw": 783.785841411375,
-   "naiveRaw": 782.4559850483085,
-   "chainlinkRaw": 783.4717567541976,
-   "dexRaw": 783.2776956356975,
-   "naiveErrBp": -16.967088365258398,
-   "chainlinkErrBp": -4.00727648526833,
-   "dexErrBp": -6.48322218684827
+   "fairUi": 770.9223000000001,
+   "fairRaw": 775.3277819593677,
+   "naiveRaw": 773.9979255963011,
+   "chainlinkRaw": 771.5439820692027,
+   "dexRaw": 769.9807005968408,
+   "naiveErrBp": -17.152182522156558,
+   "chainlinkErrBp": -48.80258360667522,
+   "dexErrBp": -68.96542967948393
   },
   {
    "symbol": "HOODx",
@@ -136,21 +136,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 110.4993,
+    "price": 99.0914,
     "conf": 0,
-    "publishTime": 1791959590559,
+    "publishTime": 1792044854905,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 110.4993,
-   "fairRaw": 110.4993,
-   "naiveRaw": 110.4993,
+   "fairUi": 99.0914,
+   "fairRaw": 99.0914,
+   "naiveRaw": 99.0914,
    "chainlinkRaw": null,
-   "dexRaw": 110.6819618178133,
+   "dexRaw": 99.3461398047161,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 16.530585968717038
+   "dexErrBp": 25.70755935591862
   },
   {
    "symbol": "TSLAx",
@@ -165,21 +165,21 @@
    "haltCode": "STAL",
    "mOnchain": 1,
    "px": {
-    "price": 374.88,
+    "price": 363.8102,
     "conf": 0,
-    "publishTime": 1791959471793,
+    "publishTime": 1792044866036,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-09-11)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 374.88,
-   "fairRaw": 374.88,
-   "naiveRaw": 374.88,
-   "chainlinkRaw": 375.675,
-   "dexRaw": 375.6889367364974,
+   "fairUi": 363.8102,
+   "fairRaw": 363.8102,
+   "naiveRaw": 363.8102,
+   "chainlinkRaw": 362.36,
+   "dexRaw": 362.52365642744905,
    "naiveErrBp": 0,
-   "chainlinkErrBp": 21.206786171574787,
-   "dexErrBp": 21.57855144305998
+   "chainlinkErrBp": -39.861444236583,
+   "dexErrBp": -35.363042942472276
   },
   {
    "symbol": "GOOGLx",
@@ -194,21 +194,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.0023772500603487,
    "px": {
-    "price": 354.3055,
+    "price": 344.33,
     "conf": 0,
-    "publishTime": 1791959522447,
+    "publishTime": 1792044847705,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 354.3055,
-   "fairRaw": 355.1477727712569,
-   "naiveRaw": 355.1477727712569,
+   "fairUi": 344.33,
+   "fairRaw": 345.14855851327985,
+   "naiveRaw": 345.14855851327985,
    "chainlinkRaw": null,
-   "dexRaw": 357.97836083043154,
+   "dexRaw": 343.05471309562273,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 79.70169817164363
+   "dexErrBp": -60.665048890145016
   },
   {
    "symbol": "METAx",
@@ -223,21 +223,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.0028515433272898,
    "px": {
-    "price": 762.5504,
+    "price": 730.16,
     "conf": 0,
-    "publishTime": 1791959602467,
+    "publishTime": 1792044851305,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 762.5504,
-   "fairRaw": 764.724845504842,
-   "naiveRaw": 764.724845504842,
+   "fairUi": 730.16,
+   "fairRaw": 732.2420828758538,
+   "naiveRaw": 732.2420828758538,
    "chainlinkRaw": null,
-   "dexRaw": 768.2288901886644,
+   "dexRaw": 730.3660281364241,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 45.82098652109457
+   "dexErrBp": -25.620689978123057
   },
   {
    "symbol": "NVDAx",
@@ -252,21 +252,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.001701196801074,
    "px": {
-    "price": 228.96,
+    "price": 217.8935,
     "conf": 0,
-    "publishTime": 1791959518450,
+    "publishTime": 1792044958092,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-26)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 228.96,
-   "fairRaw": 229.34950601957394,
-   "naiveRaw": 229.34950601957394,
-   "chainlinkRaw": 228.87369795109336,
-   "dexRaw": 228.72117330047487,
+   "fairUi": 217.8935,
+   "fairRaw": 218.2641797251748,
+   "naiveRaw": 218.2641797251748,
+   "chainlinkRaw": 219.6630554465075,
+   "dexRaw": 219.60035288849298,
    "naiveErrBp": 0,
-   "chainlinkErrBp": -20.745981830890827,
-   "dexErrBp": -27.396297031720973
+   "chainlinkErrBp": 64.09094351139456,
+   "dexErrBp": 61.21816071700703
   },
   {
    "symbol": "AAPLx",
@@ -281,21 +281,21 @@
    "haltCode": "STAL",
    "mOnchain": 1.0032690125398187,
    "px": {
-    "price": 340.35,
+    "price": 344.8,
     "conf": 0,
-    "publishTime": 1791959547352,
+    "publishTime": 1792044906765,
     "source": "xstocks-mark (pyth-pro not entitled; pyth-push stale since 2026-08-14)",
     "stale": true
    },
    "pendingDiv": null,
-   "fairUi": 340.35,
-   "fairRaw": 341.4626084179273,
-   "naiveRaw": 341.4626084179273,
+   "fairUi": 344.8,
+   "fairRaw": 345.9271555237295,
+   "naiveRaw": 345.9271555237295,
    "chainlinkRaw": null,
-   "dexRaw": 343.2704522608574,
+   "dexRaw": 346.02088576866714,
    "naiveErrBp": 0,
    "chainlinkErrBp": null,
-   "dexErrBp": 52.94412326158459
+   "dexErrBp": 2.7095370641183614
   }
  ]
 }
